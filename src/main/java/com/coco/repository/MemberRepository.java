@@ -24,10 +24,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {	// Strin
     // 추가된 메서드
     Optional<Member> findById(String memberId);
  
-    // 이메일이 중복되는지 확인
-//  @Query("SELECT COUNT(m.mid) FROM Member m WHERE m.email = :email")
-//  int findEmailCheck(@Param("email") String email);
-
   // 이메일로 멤버 찾기
   @Query("SELECT m FROM Member m WHERE m.email = :email")
   List<Member> findMembersByEmail(@Param("email") String email) throws Exception;
