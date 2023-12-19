@@ -5,7 +5,26 @@
     <title>열차 예약 시스템</title>
 </head>
 <body>
-    <h1>백엔드 테스트 공간</h1>
+
+	<h1>백엔드 테스트 공간</h1>
+    <form id="trainSearchForm" action="/train/trainInfo" method="get">
+        <div>
+            <label for="depPlaceId">출발지:</label>
+            <input type="text" id="depPlaceId" name="depPlaceId" placeholder="출발지 ID">
+        </div>
+        <div>
+            <label for="arrPlaceId">도착지:</label>
+            <input type="text" id="arrPlaceId" name="arrPlaceId" placeholder="도착지 ID">
+        </div>
+        <div>
+            <label for="depPlandTime">출발 날짜 및 시간:</label>
+            <input type="date" id="depPlandTime" name="depPlandTime">
+        </div>
+        <div>
+            <input type="submit" value="기차표 검색">
+        </div>
+    </form>
+    
     <ul>
         <li><a href="/train/cityCodes" th:href="@{/train/cityCodes}">도시 코드 보기</a></li>
         <li><a href="#" onclick="promptForCityCode()">도시 번호로 기차역 보기</a></li>
@@ -13,9 +32,18 @@
     </ul>
 
 	<form action="/train/trainInfo" method="get">
-	    <input type="text" name="depPlaceId" placeholder="Departure Place ID">
-	    <input type="text" name="arrPlaceId" placeholder="Arrival Place ID">
-	    <input type="text" name="depPlandTime" placeholder="Departure Planned Time">
+		<div>
+			<label for="dePlaceId">출발지 </label>
+	    	<input type="text" name="depPlaceId" placeholder="Departure Place ID">
+	    </div>
+	    <div>
+	    	<label for="arrPlaceId">도착지 </label>
+	    	<input type="text" name="arrPlaceId" placeholder="Arrival Place ID">
+	    </div>
+	    <div>
+	    	<label for="depPlandTime">출발 날짜</label>
+	    	<input type="text" name="depPlandTime" placeholder="Departure Planned Time">
+	    </div>
 	    <input type="submit" value="Get Train Info">
 	</form>
 	
@@ -26,6 +54,12 @@
                 window.location.href = "/train/stations?cityCode=" + cityCode;
             }
         }
+        
+        document.getElementById('trainSearchForm').addEventListener('submit', function(event) {
+            var dateInput = document.getElementById('depPlandTime');
+            var formattedDate = dateInput.value.replaceAll('-', '');
+            dateInput.value = formattedDate;
+        });
     </script>
 </body>
 </html>
