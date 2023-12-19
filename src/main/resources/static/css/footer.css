@@ -1,0 +1,55 @@
+@charset "EUC-KR";
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+footer {
+  border-top: 50px solid white;
+  background-color: #f8f9fa;
+  padding: 1rem 0;
+  margin: 1rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-message,
+.footer-contact,
+.footer-copyright {
+  font-size: 0.9rem;
+  color: #545e6f;
+  text-align: left;
+  margin: 0.6rem;
+  display: flex;
+  flex-direction: column; /* 텍스트를 세로로 나열하기 위해 세로 방향으로 설정 */
+}
+
+.footer-message {
+  font-weight: bold;
+  margin-bottom: 0.3rem;
+  display: flex; /* 텍스트를 가로로 나열하기 위해 가로 방향으로 설정 */
+  flex-wrap: wrap; /* 여러 줄로 나누기 위해 설정 */
+}
+
+.footer-message span {
+  flex: 1; /* 여러 열로 나누기 위해 공간을 동일하게 분할 */
+}
+
+.footer-contact {
+  align-items: center; /* 수직 중앙 정렬 */
+}
+
+.footer-contact img {
+  display: inline-block;
+  margin-left: 0.5rem;
+}
+
+.footer-copyright {
+  align-items: center; /* 수직 중앙 정렬 */
+}
+
+.footer-copyright img {
+  display: inline-block;
+  margin-right: 0.5rem; /* 텍스트와 이미지 사이 간격 조절 */
+}
