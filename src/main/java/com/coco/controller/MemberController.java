@@ -54,15 +54,6 @@ public class MemberController {
 		return "/system/join";
 	}
 
-	@GetMapping("/contract")
-	public String contract() {
-		return "/system/contract";
-	}
-
-	@PostMapping("/contract")
-	public String showcontract(Model model) {
-		return "/system/contract";
-	}
 
 	@GetMapping("/findIdView")
 	public String findIdView() throws Exception {

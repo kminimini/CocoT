@@ -77,15 +77,6 @@ public class SecurityController {
 	    return (count > 0) ? "no_use" : "useable";
 	}
 	
-	 // AJAX를 통한 아이디 중복 확인
-//		@PostMapping("/checkEmailAvailability")
-//		@ResponseBody
-//		public String checkEmailAvailability(@RequestParam String email) {
-//		    int count = memberService.findemailCheck(email);
-//		    return (count > 0) ? "no_use" : "useable";
-//		}
-	
-	
 	/* TODO 회원가입 */
 	@PostMapping("/join")
 	public String registerUser(@ModelAttribute("joinFormDto") JoinFormDto joinFormDto, BindingResult bindingResult) {
