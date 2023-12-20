@@ -97,7 +97,8 @@
             <th width="100">조회수</th>
         </tr>
         <tr>
-            <td colspan="5"><a th:href="@{/qna.html}" class="">자주 묻는 질문</a></td>
+            <td colspan="5"><a th:href="@{/qna}" class="">자주 묻는 질문</a></td>
+
         </tr>
         <tr th:each="board, iterStat : ${boardList}" th:height="50px">
             <td th:text="${board.bseq}"></td>

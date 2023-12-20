@@ -164,5 +164,11 @@ public class BoardController {
     public String accessDenied() {
         return "accessDenied"; // accessDenied.html 뷰 파일 이름에 따라 수정
     }
+	
+	@GetMapping("/qna")
+	public String showQnAPage() {
+	    // 여기에서 추가로 로직을 처리할 수 있음
+	    return "qna"; // Thymeleaf 템플릿의 이름
+	}
 
 }
