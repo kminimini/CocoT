@@ -4,115 +4,173 @@
     <meta charset="UTF-8">
     <title>My Page</title>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script>
-	function validatePasswordForm() {
-	    var currentPassword = document.getElementById('currentPassword').value;
-	    var newPassword = document.getElementById('newPassword').value;
-	    var confirmPassword = document.getElementById('confirmPassword').value;
-	
-	    // 콘솔에 입력값 출력
-	    console.log("currentPassword:", currentPassword);
-	    console.log("newPassword:", newPassword);
-	    console.log("confirmPassword:", confirmPassword);
-	
-	    if (currentPassword =="") {
-	    	alert("현재 비밀번호를 입력해 주세요!.");
-	    	document.getElementById('currentPassword').focus();
-	    	return false;
-	    } else if (newPassword == "") {
-	    	alert("새 비밀번호를 입력해 주세요!.");
-	    	document.getElementById('newPassword').focus();
-	    	return false;
-	    }else if (newPassword != confirmPassword) {
-	    	alert("새로운 비밀번호가 맞지 않습니다. 다시 입력해 주세요!");
-	    	return false;
-	    } else {
-	    // 서버에 비밀번호 검증을 위한 AJAX 요청
-	    $.ajax({
-	        type: 'POST',
-	        url: '/myPage/validatePassword',
-	        data: {
-	            currentPassword: currentPassword,
-	            newPassword: newPassword
-	        },
-	        success: function (response) {
-	            // 서버에서 받은 응답을 처리
-	            console.log("Server response:", response); // 콘솔에 서버 응답 출력
-	
-	            if (response == 'success') {
-	                // 비밀번호가 일치하는 경우 폼을 제출
-	                //document.getElementById('passwordForm').submit();
-	                alert("비밀번호가 변경되었습니다.");
-	            } else {
-	                // 비밀번호가 일치하지 않는 경우 알림을 표시하고 폼 제출을 막음
-	                alert('현재 비밀번호가 일치하지 않습니다.');
-	                document.getElementById('currentPassword').focus();
-	            }
-	        },
-	        error: function () {
-	            // 오류 처리 로직을 추가할 수 있습니다.
-	            alert('서버 오류가 발생했습니다.');
-	        }
-	    });
-	
-	    }
-	    // AJAX 요청이 완료되기 전에 폼 제출을 막음
-	    return false;
-	}
-	
-	function confirmWithdraw() {
-	    var confirmWithdraw = confirm('정말 탈퇴하시겠습니까?');
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column; /* 세로 중앙 정렬을 위해 추가 */
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+            font-family: 'Arial', sans-serif;
+        }
 
-	    if (confirmWithdraw) {
-	        document.getElementById('withdrawForm').submit(); // 확인을 누르면 폼 제출
-	    } else {
-	        // 사용자가 취소를 눌렀을 경우 추가적인 처리 가능
-	        alert('탈퇴가 취소되었습니다.');
-	    }
-	}
-	</script>
+        /* 스타일 직접 적용 */
+        #myPageContainer {
+            text-align: center;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            margin-top: 20px; /* 수정된 부분: 컨테이너 상단에 여백 추가 */
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input,
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        input[type="button"],
+        button {
+            background-color: #f9f9f9;
+            color: black;
+            cursor: pointer;
+        }
+
+        input[type="button"]:hover,
+        button:hover {
+            background-color: #f2f2f2;
+        }
+
+        a {
+            margin-top: 20px;
+        }
+    </style>
+    <script>
+        function validatePasswordForm() {
+            var currentPassword = document.getElementById('currentPassword').value;
+            var newPassword = document.getElementById('newPassword').value;
+            var confirmPassword = document.getElementById('confirmPassword').value;
+
+            // 콘솔에 입력값 출력
+            console.log("currentPassword:", currentPassword);
+            console.log("newPassword:", newPassword);
+            console.log("confirmPassword:", confirmPassword);
+
+            if (currentPassword =="") {
+                alert("현재 비밀번호를 입력해 주세요!.");
+                document.getElementById('currentPassword').focus();
+                return false;
+            } else if (newPassword == "") {
+                alert("새 비밀번호를 입력해 주세요!.");
+                document.getElementById('newPassword').focus();
+                return false;
+            } else if (newPassword != confirmPassword) {
+                alert("새로운 비밀번호가 맞지 않습니다. 다시 입력해 주세요!");
+                return false;
+            } else {
+                // 서버에 비밀번호 검증을 위한 AJAX 요청
+                $.ajax({
+                    type: 'POST',
+                    url: '/myPage/validatePassword',
+                    data: {
+                        currentPassword: currentPassword,
+                        newPassword: newPassword
+                    },
+                    success: function (response) {
+                        // 서버에서 받은 응답을 처리
+                        console.log("Server response:", response); // 콘솔에 서버 응답 출력
+
+                        if (response == 'success') {
+                            // 비밀번호가 일치하는 경우 폼을 제출
+                            //document.getElementById('passwordForm').submit();
+                            alert("비밀번호가 변경되었습니다.");
+                        } else {
+                            // 비밀번호가 일치하지 않는 경우 알림을 표시하고 폼 제출을 막음
+                            alert('현재 비밀번호가 일치하지 않습니다.');
+                            document.getElementById('currentPassword').focus();
+                        }
+                    },
+                    error: function () {
+                        // 오류 처리 로직을 추가할 수 있습니다.
+                        alert('서버 오류가 발생했습니다.');
+                    }
+                });
+
+            }
+            // AJAX 요청이 완료되기 전에 폼 제출을 막음
+            return false;
+        }
+
+        function confirmWithdraw() {
+            var confirmWithdraw = confirm('정말 탈퇴하시겠습니까?');
+
+            if (confirmWithdraw) {
+                document.getElementById('withdrawForm').submit(); // 확인을 누르면 폼 제출
+            } else {
+                // 사용자가 취소를 눌렀을 경우 추가적인 처리 가능
+                alert('탈퇴가 취소되었습니다.');
+            }
+        }
+    </script>
 </head>
 <body>
+    <div th:replace="~{fragments/header}"></div>
 
-<h2>Welcome to My Page</h2>
+    <div id="myPageContainer">
+        <p>ID: <span th:text="${currentMember.id}"></span></p>
+        <p>Name: <span th:text="${currentMember.name}"></span></p>
+        <p>Email: <span th:text="${currentMember.email}"></span></p>
+        <p>Phone: <span th:text="${currentMember.phone}"></span></p>
 
-<div>
-    <p>ID: <span th:text="${currentMember.id}"></span></p>
-    <p>Name: <span th:text="${currentMember.name}"></span></p>
-    <p>Email: <span th:text="${currentMember.email}"></span></p>
-    <p>Phone: <span th:text="${currentMember.phone}"></span></p>
-    
-    <!-- 추가적인 정보들을 필요에 따라 표시 -->
-    
-    <!-- 비밀번호 변경 폼 추가 -->
-    <form id="passwordForm" action="/myPage/changePassword" method="post">
-    <!-- 기존 비밀번호 입력 필드 -->
-    <label for="currentPassword">현재 비밀번호:</label>
-    <input type="password" id="currentPassword" name="currentPassword" required>
+        <!-- 추가적인 정보들을 필요에 따라 표시 -->
 
-    <!-- 새로운 비밀번호 입력 필드 -->
-    <label for="newPassword">새로운 비밀번호:</label>
-    <input type="password" id="newPassword" name="newPassword" required>
+        <!-- 비밀번호 변경 폼 추가 -->
+        <form id="passwordForm" action="/myPage/changePassword" method="post">
+            <!-- 기존 비밀번호 입력 필드 -->
+            <label for="currentPassword">현재 비밀번호:</label>
+            <input type="password" id="currentPassword" name="currentPassword" required>
 
-    <!-- 비밀번호 확인 입력 필드 -->
-    <label for="confirmPassword">비밀번호 확인:</label>
-    <input type="password" id="confirmPassword" name="confirmPassword" required>
+            <!-- 새로운 비밀번호 입력 필드 -->
+            <label for="newPassword">새로운 비밀번호:</label>
+            <input type="password" id="newPassword" name="newPassword" required>
 
-    <!-- 제출 버튼 -->
-    <input type="button" value="비밀번호 변경" onclick="return validatePasswordForm()">
-	</form>
-    
-    <br>
-    <!-- 회원 탈퇴 폼 추가 -->
-    <form id="withdrawForm" action="/myPage/deleteAccount" method="post">
-        <input type="hidden" name="memberId" th:value="${currentMember.id}" />
-        <button type="button" onclick="confirmWithdraw()">회원 탈퇴</button>
-    </form>
-    
-    <h4>메인 화면으로 <a th:href="@{/index}">이동</a></h4>
-</div>
+            <!-- 비밀번호 확인 입력 필드 -->
+            <label for="confirmPassword">비밀번호 확인:</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" required>
 
+            <!-- 제출 버튼 -->
+            <input type="button" value="비밀번호 변경" onclick="return validatePasswordForm()">
+        </form>
 
+        <br>
+        <!-- 회원 탈퇴 폼 추가 -->
+        <form id="withdrawForm" action="/myPage/deleteAccount" method="post">
+            <input type="hidden" name="memberId" th:value="${currentMember.id}" />
+            <button type="button" onclick="confirmWithdraw()">회원 탈퇴</button>
+        </form>
 
+        <a th:href="@{/system/login}">로그아웃</a>
+    </div>
+
+    <div th:replace="~{fragments/footer}"></div>
 </body>
 </html>

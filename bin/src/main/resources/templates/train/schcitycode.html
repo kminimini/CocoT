@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>백엔드 테스트 페이지</title>
+</head>
+<body>
+    <h1>백엔드 테스트 페이지</h1>
+    
+    <!-- 도시 코드 목록 표시 -->
+    <h2>도시 코드 목록</h2>
+    <ul>
+        <li th:each="cityCode : ${cityCodes}" th:text="${cityCode}"></li>
+    </ul>
+    
+    <!-- 출발역 선택 폼 -->
+    <h2>출발역 선택</h2>
+    <form action="/train/stations" method="get">
+        <label for="startStation">출발역:</label>
+        <select id="startStation" name="startStation">
+            <option th:each="station : ${startStations}" th:value="${station}" th:text="${station}"></option>
+        </select>
+        <button type="submit">조회</button>
+    </form>
+    
+    <!-- 도착역 선택 폼 -->
+    <h2>도착역 선택</h2>
+    <form action="/train/stations" method="get">
+        <label for="endStation">도착역:</label>
+        <select id="endStation" name="endStation">
+            <option th:each="station : ${endStations}" th:value="${station}" th:text="${station}"></option>
+        </select>
+        <button type="submit">조회</button>
+    </form>
+</body>
+</html>

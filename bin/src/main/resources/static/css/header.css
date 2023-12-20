@@ -1,0 +1,41 @@
+@charset "EUC-KR";
+
+.wrapper {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 20px;
+	/* 여백 및 정렬을 설정하는 박스 디자인 */
+}
+
+.container {
+	margin: 0 auto;
+	width: 150%;
+	font-weight: bold;
+	border-bottom: 2px solid #eee;
+	/* 가운데 정렬 및 텍스트 굵게, 하단 선 디자인 */
+	padding-bottom: 10px;
+	/* 하단 여백 및 그림자 효과 디자인 */
+}
+
+.fs-4 {
+	text-decoration: none;
+	/* 텍스트에 밑줄 제거 */
+}
+
+.nav {
+	float: left;
+	/* 왼쪽으로 정렬하여 다음 줄에 배치되지 않도록 설정 */
+}
+
+.btn {
+	float: right;
+	font-weight: bold;
+}
+
+/* float 속성을 사용한 요소들을 clearfix로 정리 */
+.clearfix::after {
+	content: "";
+	clear: both;
+	display: table;
+}
