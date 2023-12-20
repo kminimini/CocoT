@@ -49,7 +49,7 @@
 .btn-container button {
 	padding: 5px 10px;
 	/* 버튼 내부 여백 조절 */
-	margin: 10px 5px;
+	margin: 15px 20px;
 	/* 버튼 간격 조절 */
 	width: 200px;
 	/* 버튼 너비 조절 */
@@ -75,5 +75,21 @@
 
 /* 수정: 로그인과 아이디 찾기를 왼쪽으로 이동 */
 .row.justify-content-center {
-    margin-right: -1px;
+    margin-right: -40px;
+}
+
+
+/*여기 3개는 footer를 밑으로 내리는 작업*/
+html, body {
+    height: 100%
+}
+
+form {
+    min-height: 100%;
+    position: relative;
+    padding-bottom: 150px;
+}
+
+footer {
+    bottom: 0;
 }

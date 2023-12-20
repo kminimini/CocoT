@@ -7,7 +7,7 @@ body {
 
 .agreement-container {
 	max-width: 600px;
-	margin: 20px auto;
+	margin: 40px auto;
 }
 
 .agreement-container h2 {
@@ -23,7 +23,7 @@ body {
 	height: 150px;
 	border: 1px solid black;
 	overflow-y: scroll;
-	margin: 0 auto;
+	margin: 10px auto;
 	/* 가운데 정렬을 위해 추가 */
 	text-align: left;
 	/* 텍스트는 왼쪽 정렬을 유지 */
@@ -34,13 +34,13 @@ body {
 	/* 가로로 정렬되도록 설정 */
 	justify-content: center;
 	/* 가운데 정렬 */
-	margin-top: 20px;
+	margin-top: 1px;
 }
 
 .btn-container button {
 	padding: 5px 10px;
 	/* 버튼 내부 여백 조절 */
-	margin: 10px 5px;
+	margin: 15px 20px;
 	/* 버튼 간격 조절 */
 	width: 200px;
 	/* 버튼 너비 조절 */

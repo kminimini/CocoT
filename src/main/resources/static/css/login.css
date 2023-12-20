@@ -16,7 +16,7 @@
 	align-items: center;
 	margin-top: 15px;
 	text-align: center;
-	padding-bottom: 50px;
+	padding-bottom: 40px;
 }
 
 .group a {
@@ -63,4 +63,31 @@
 
 .form-group input:focus {
 	border-bottom: 2px solid #007bff;
+}
+
+/* 로그인 버튼 스타일 수정 */
+.form-group button[type="submit"] {
+    background-color: navy;
+    color: white;
+    /* 텍스트를 흰색으로 설정 */
+}
+
+/* 회원가입 버튼 스타일 수정 */
+.form-group button[type="button"] {
+    background-color: white;
+    color: navy;
+    /* 텍스트를 남색으로 설정 */
+}
+
+
+
+/*여기 2개는 footer를 밑으로 내리는 작업*/
+
+div {
+    position: relative;
+    padding-bottom: 15px;
+}
+
+footer {
+    bottom: 0;
 }
