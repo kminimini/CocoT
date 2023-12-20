@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 0;
+            text-align: center; /* 추가된 부분 */
+        }
+
+		.category-container {
+		    display: flex;
+		    overflow-x: auto;
+		    padding: 10px;
+		    background-color: white;
+		    color: white;
+		    white-space: nowrap;
+		    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+		    z-index: 2;
+		    justify-content: center; /* 오른쪽으로 정렬 */
+		}
+
+        .category-button {
+		    cursor: pointer;
+		    padding: 15px; /* 사이즈를 키움 */
+		    margin-right: 20px; /* 오른쪽 마진 추가 */
+		    color: black;
+		    background-color: #f2f2f2; /* 더 진한 파란색 */
+		    border-radius: 5px;
+		    text-align: center;
+		    transition: background-color 0.3s;
+		}
+
+        .category-button:hover {
+            background-color: #2c3e50; /* 마우스를 올렸을 때 더 어두운 색으로 변경 */
+        }
+
+        .faq-card {            
+            width: 70%;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-sizing: border-box;
+            background-color: #f9f9f9;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .faq-card:hover {
+            transform: scale(1.02); /* 마우스를 올렸을 때 확대 효과 */
+        }
+
+        .faq-card-title {
+            display: inline-block;
+            padding: 1rem;
+            cursor: pointer;
+            margin-right: 10px;
+            color: black;
+            background-color: #f2f2f2; /* 더 진한 파란색 */
+            border-radius: 5px;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+
+        .faq-card-title:hover {
+            background-color: #2c3e50; /* 마우스를 올렸을 때 더 어두운 색으로 변경 */
+        }
+
+        .faq-card-answer {
+            display: none;
+            padding-top: 1rem;
+            padding-bottom: 1.5rem;
+            padding-right: 2rem;
+            border: 0px solid rgba(225, 228, 230, .5);
+            border-top-width: 1px;
+            color: #555;
+        }
+
+        .question-mark {
+            color: rgb(12, 77, 162);
+            font-size: 20px;
+            margin-right: 10px;
+        }
+
+        .answer-mark {
+            color: skyblue;
+            font-size: 20px;
+            margin-right: 10px;
+        }
+
+        .faq-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            padding-top: 50px;
+        }
+		
+		/* "상단으로" 버튼 스타일 */
+        .scroll-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: gray;
+            color: white;
+            font-size: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: none;
+        }
+
+        .scroll-button:hover {
+            background-color: #2c3e50;
+        }     
+
+		/* 검색 버튼 */
+		/* 공통 스타일 */
+		.button-container {
+		    padding: 10px;
+		    font-size: 16px;
+		    cursor: pointer;
+		    border: none;
+		    border-radius: 5px;
+		    transition: background-color 0.3s;
+		    margin-right: 10px;
+		}
+		
+		#searchInput {
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 20px;
+            margin-right: 10px;
+            margin-left: 300px;
+        }
+		
+		/* 검색 버튼 스타일 */
+		#searchButton {
+		    background-color: #3498db;
+		    color: white;
+		}
+		
+		#searchButton:hover {
+		    background-color: #2980b9;
+		}
+		
+		/* "목록" 버튼 스타일 */
+		#goBackButton {
+		    background-color: #f2f2f2;
+		    color: black;
+		}
+		
+		#goBackButton:hover {
+		    background-color: #e6e6e6;
+		}
+
+
+    </style>
+</head>
+<body>
+<div th:replace="~{fragments/header}"></div>
+	<!-- 카테고리 및 FAQ 목록을 표시할 컨테이너 -->
+    <div class="category-container" id="category-list"></div>
+    
+    <div class="header-container">
+        <!-- 검색 입력 상자 및 버튼 추가 -->
+		<div>
+		    
+		    <input type="text" id="searchInput" placeholder="검색어를 입력하세요...">
+		    <button onclick="searchFAQ()">검색</button>
+		    <button id="goBackButton" onclick="goBack()">목록</button>
+		</div>
+		<div id="faqListElement"></div>
+
+        <!-- 추가적인 요소가 있다면 여기에 추가할 수 있습니다. -->
+    </div>
+   
+    <div class="faq-list" id="faq-list"></div>
+    
+    <!-- "상단으로" 버튼 추가 -->
+    <div class="scroll-button" id="scroll-top-button" onclick="scrollToTop()">▲</div>
+    
+    <script>
+    	
+		// 카테고리 및 Q&A 목록 데이터
+        const categories = [
+            {
+                name: "전체",
+                value: "all",
+            },
+            {
+                name: "체크인",
+                value: "category1",
+            },
+            {
+                name: "예약/좌석배정",
+                value: "category2",
+            },
+        ];
+		
+
+        const qnaList = [
+        	// 체크인
+            {
+                category: "category1",
+                question: "국내선에서 국제선으로 환승 시 수하물 연결 수속 가능한가요?",
+                answer: "국내선에서 국제선으로 환승 시 수하물 연결 수속 관련 안내입니다.<br><br>• 대한항공 국내선 - 국제선 연결 시<br> - 국내선 김포공항에 도착하여 인천공항에서 국제선으로 환승하는 경우 수하물 찾으신 후 인천 공항에서 재위탁하시기 바랍니다.<br>- 그 외 국내 공항에서 환승하는 경우 아래 [취항지 공항 환승 정보] 링크를 통해 환승하는 공항 선택 후 [환승 정보]에서 확인할 수 있습니다.<br>• 타 항공사 국내선 - 대한항공 국제선 연결 시<br> - 최초 탑승하시는 항공사에서 수하물 연결 가능 여부를 문의하시기 바랍니다.",
+            },
+            // 예약/좌석배정
+            {
+                category: "category2",
+                question: "국제선 사전 좌석 배정한 경우 탑승 당일 언제까지 탑승 수속을 해야하나요?",
+                answer: "국제선 사전 좌석 배정 서비스 신청 후, 탑승 수속 완료 시간 관련 안내입니다.<br><br>사전에 국제선 항공기의 좌석을 배정 받으셨다고 하더라도 아래의 시각까지 탑승 수속을 완료하셔야 합니다.<br><br>• 일등석/프레스티지석은 항공편 출발 1시간 전까지<br><br>• 일반석은 항공편 출발 1시간 30분 전까지<br><br>탑승 수속이 늦어질 경우 배정되었던 좌석이 변경될 수 있다는 점 참고해 주세요.",
+            },   
+        ];
+        
+     	// DOM 요소 가져오기
+        const categoryListElement = document.getElementById('category-list');
+        const faqListElement = document.getElementById('faq-list');
+        const arrowButtonElement = document.getElementById('scroll-top-button');
+        
+     	// "상단으로" 버튼 동적으로 생성 및 추가
+        const scrollTopButtonElement = document.createElement('div');
+		scrollTopButtonElement.className = 'scroll-button';
+		scrollTopButtonElement.id = 'scroll-top-button';	// ID 지정
+		scrollTopButtonElement.innerHTML = '▲';
+
+        // 오른쪽 하단에 추가
+        document.body.appendChild(scrollTopButtonElement);
+
+        // "상단으로" 버튼 클릭 시 상단으로 스크롤
+        scrollTopButtonElement.addEventListener('click', () => {
+		    window.scrollTo({ top: 0, behavior: 'smooth' });
+		});
+        
+        // 초기에는 숨겨진 상태로 설정
+        scrollTopButtonElement.style.display = 'none';
+
+        // 스크롤 이벤트 추가
+        window.addEventListener('scroll', handleScroll);
+
+     	// 스크롤 이벤트 핸들러
+        function handleScroll() {
+            // 스크롤이 100px 이상이면 버튼을 보이게, 그렇지 않으면 숨기게 설정
+            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                scrollTopButtonElement.style.display = 'block';
+            } else {
+                scrollTopButtonElement.style.display = 'none';
+            }
+        }
+     	
+     	// "이전으로" 버튼 클릭 시 이전 페이지로 돌아가기
+        function goBack() {
+            window.history.back();
+        }
+
+        // 버튼을 항상 오른쪽 하단에 고정하기 위한 스타일 추가
+        scrollTopButtonElement.style.position = 'fixed';
+        scrollTopButtonElement.style.bottom = '20px';
+        scrollTopButtonElement.style.right = '20px';
+
+        // 모든 카테고리를 보여주도록 설정
+        displayedCategories = categories.slice();
+        displayCategories();
+
+        function displayCategories() {
+            categoryListElement.innerHTML = '';
+            displayedCategories.forEach(category => {
+                const categoryTitleElement = document.createElement('div');
+                categoryTitleElement.className = 'category-button';
+                categoryTitleElement.textContent = category.name;
+                categoryTitleElement.addEventListener('click', () => {
+                    showFAQ(category.value);
+                });
+                categoryListElement.appendChild(categoryTitleElement);
+            });
+
+            // 초기에 첫 카테고리에 해당하는 FAQ 보여주기
+            showFAQ(displayedCategories[0].value);
+        } 
+
+     	// 카테고리에 해당하는 FAQ를 표시하는 함수
+        function showFAQ(category) {
+            faqListElement.innerHTML = '';
+
+            qnaList.forEach((item, index) => {
+                if (category === "all" || category === item.category) {
+                	// FAQ 카드 생성
+                    const faqCardElement = document.createElement('div');
+                    faqCardElement.className = 'faq-card';
+
+                 	// FAQ 제목 생성
+                    const faqCardTitleElement = document.createElement('div');
+                    faqCardTitleElement.className = 'faq-card-title';
+                    faqCardTitleElement.innerHTML = `
+                        <span class="question-mark">Q.</span>
+                        <span>${item.question}</span>
+                    `;
+
+                    // FAQ 답변 생성
+                    const faqCardAnswerElement = document.createElement('div');
+                    faqCardAnswerElement.className = 'faq-card-answer';
+                    faqCardAnswerElement.innerHTML = `
+                        <span class="answer-mark">A.</span>
+                        <span class="FAQ-card-answer">${item.answer}</span>
+                    `;
+
+                    // FAQ 제목 클릭 시 답변 토글
+                    faqCardTitleElement.addEventListener('click', () => {
+                        faqCardAnswerElement.style.display = faqCardAnswerElement.style.display === 'none' ? 'block' : 'none';
+                    });
+
+                 	// FAQ 카드에 제목과 답변 추가
+                    faqCardElement.appendChild(faqCardTitleElement);
+                    faqCardElement.appendChild(faqCardAnswerElement);
+                    faqListElement.appendChild(faqCardElement);
+                }
+                
+             // 검색 기능 구현
+                function searchFAQ() {
+                    const searchInput = document.getElementById('searchInput');
+                    const searchTerm = searchInput.value.toLowerCase(); // 입력된 검색어를 소문자로 변환
+                 // 검색 버튼 클릭 시 검색 함수 호출
+                    const searchButton = document.querySelector('button[onclick="searchFAQ()"]');
+                    if (searchButton) {
+                        searchButton.addEventListener('click', searchFAQ);
+                    }
+
+                    faqListElement.innerHTML = ''; // 기존 FAQ 목록 초기화
+
+                    qnaList.forEach((item, index) => {
+                        // 검색어가 포함된 경우에만 FAQ를 표시
+                        if (
+                            searchTerm === '' ||
+                            item.question.toLowerCase().includes(searchTerm)
+                        ) {
+                            const faqCardElement = document.createElement('div');
+                            faqCardElement.className = 'faq-card';
+
+                            const faqCardTitleElement = document.createElement('div');
+                            faqCardTitleElement.className = 'faq-card-title';
+                            faqCardTitleElement.innerHTML = `
+                                <span class="question-mark">Q.</span>
+                                <span>${item.question}</span>
+                            `;
+
+                            const faqCardAnswerElement = document.createElement('div');
+                            faqCardAnswerElement.className = 'faq-card-answer';
+                            faqCardAnswerElement.innerHTML = `
+                                <span class="answer-mark">A.</span>
+                                <span class="FAQ-card-answer">${item.answer}</span>
+                            `;
+
+                            faqCardTitleElement.addEventListener('click', () => {
+                                faqCardAnswerElement.style.display =
+                                    faqCardAnswerElement.style.display === 'none' ? 'block' : 'none';
+                            });
+
+                            faqCardElement.appendChild(faqCardTitleElement);
+                            faqCardElement.appendChild(faqCardAnswerElement);
+                            faqListElement.appendChild(faqCardElement);
+                        }
+                    });
+                }
+
+	
+	            // 엔터 키로도 검색할 수 있도록 이벤트 추가
+	            document.getElementById('searchInput').addEventListener('keyup', function (event) {
+	                if (event.key === 'Enter') {
+	                    searchFAQ();
+	                }
+	            });
+	            
+	      
+	       
+
+            });
+        }
+    </script>
+<div th:replace="~{fragments/footer}"></div>    
+</body>
+</html>
