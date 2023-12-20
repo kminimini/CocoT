@@ -1,65 +1,48 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>열차 예약 시스템</title>
+<meta charset="UTF-8">
+<title>열차 예약 시스템</title>
 </head>
 <body>
 
 	<h1>백엔드 테스트 공간</h1>
-    <form id="trainSearchForm" action="/train/trainInfo" method="get">
-        <div>
-            <label for="depPlaceId">출발지:</label>
-            <input type="text" id="depPlaceId" name="depPlaceId" placeholder="출발지 ID">
-        </div>
-        <div>
-            <label for="arrPlaceId">도착지:</label>
-            <input type="text" id="arrPlaceId" name="arrPlaceId" placeholder="도착지 ID">
-        </div>
-        <div>
-            <label for="depPlandTime">출발 날짜 및 시간:</label>
-            <input type="date" id="depPlandTime" name="depPlandTime">
-        </div>
-        <div>
-            <input type="submit" value="기차표 검색">
-        </div>
-    </form>
-    
-    <ul>
-        <li><a href="/train/cityCodes" th:href="@{/train/cityCodes}">도시 코드 보기</a></li>
-        <li><a href="#" onclick="promptForCityCode()">도시 번호로 기차역 보기</a></li>
-        <li><a href="/train/vhcleKndList" th:href="@{/train/vhcleKndList}">차량 종류 목록 보기</a></li>
-    </ul>
+	<ul>
+		<li><a href="/train/cityCodes" th:href="@{/train/cityCodes}">도시	코드 보기</a></li>
+		<li><a href="#" onclick="promptForCityCode()">도시 번호로 기차역 보기</a></li>
+		<li><a href="/train/vhcleKndList" th:href="@{/train/vhcleKndList}">차량 종류 목록 보기</a></li>
+	</ul>
 
 	<form action="/train/trainInfo" method="get">
 		<div>
-			<label for="dePlaceId">출발지 </label>
-	    	<input type="text" name="depPlaceId" placeholder="Departure Place ID">
-	    </div>
-	    <div>
-	    	<label for="arrPlaceId">도착지 </label>
-	    	<input type="text" name="arrPlaceId" placeholder="Arrival Place ID">
-	    </div>
-	    <div>
-	    	<label for="depPlandTime">출발 날짜</label>
-	    	<input type="text" name="depPlandTime" placeholder="Departure Planned Time">
-	    </div>
-	    <input type="submit" value="Get Train Info">
+			<label for="dePlaceId">출발지 </label> 
+			<input type="text" id="depPlaceId" name="depPlaceId" placeholder="Departure Place ID">
+			<button type="button" onclick="openDepartureLocationPopup()">출발지 검색</button>
+		</div>
+		<div>
+			<label for="arrPlaceId">도착지 </label> 
+			<input type="text" name="arrPlaceId" placeholder="Arrival Place ID">
+		</div>
+		<div>
+			<label for="depPlandTime">출발 날짜</label> 
+			<input type="text" name="depPlandTime" placeholder="Departure Planned Time">
+		</div>
+		<div>
+			<input type="submit" value="기차표 검색">
+		</div>
 	</form>
-	
-    <script>
-        function promptForCityCode() {
-            var cityCode = prompt("Please enter the city code:", "");
-            if (cityCode != null && cityCode != "") {
-                window.location.href = "/train/stations?cityCode=" + cityCode;
-            }
-        }
-        
-        document.getElementById('trainSearchForm').addEventListener('submit', function(event) {
-            var dateInput = document.getElementById('depPlandTime');
-            var formattedDate = dateInput.value.replaceAll('-', '');
-            dateInput.value = formattedDate;
-        });
-    </script>
+	<!-- Departure location popup -->
+	<div id="departureLocationPopup" class="popup">
+	    <div class="popup-content">
+	        <span class="close" onclick="closeDepartureLocationPopup()">&times;</span>
+	        <h2>도시를 선택하세요.</h2>
+	        <ul id="cityCodeList"></ul>
+	        
+	        <h3>기차역을 선택하세ㅇ</h3>
+	        <ul id="trainStationList"></ul>
+	    </div>
+	</div>
 </body>
+<link rel="stylesheet" type="text/css" href="css/train.css">
+<script type="text/javascript" src="js/train.js"></script>
 </html>
