@@ -68,8 +68,8 @@
 .btn-container button {
 	padding: 5px 10px;
 	/* 버튼 내부 여백 조절 */
-	margin: 10px 5px;
-	/* 버튼 간격 조절 */
+	 margin: 15px 20px;
+    /* 왼쪽으로 조금 이동하도록 수정 */
 	width: 200px;
 	/* 버튼 너비 조절 */
 	height: 30px;
@@ -78,3 +78,4 @@
 	/* 폰트 크기 조절 */
 
 }
+
