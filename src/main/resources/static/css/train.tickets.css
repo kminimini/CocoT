@@ -1,0 +1,18 @@
+@charset "UTF-8";
+#ticketsTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#ticketsTable, #ticketsTable th, #ticketsTable td {
+    border: 1px solid black;
+}
+
+#ticketsTable th, #ticketsTable td {
+    padding: 8px;
+    text-align: left;
+}
+
+#ticketsTable th {
+    background-color: #f2f2f2;
+}

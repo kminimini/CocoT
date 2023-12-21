@@ -5,11 +5,18 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import com.coco.domain.TrainInfo;
 
 @Service
 public class TrainServiceImpl implements TrainService {
@@ -126,7 +133,7 @@ public class TrainServiceImpl implements TrainService {
 
     /* TODO 출/도착지 기반 열차정보 조회 */
     @Override
-    public String getStrtpntAlocFndTrainInfo(String depPlaceId, String arrPlaceId, String depPlandTime) {
+    public String getStrtpntAlocFndTrainInfoRaw(String depPlaceId, String arrPlaceId, String depPlandTime) {
         try {
             String urlStr = ctyStrt + "?serviceKey=" + serviceKey + "&depPlaceId=" + depPlaceId + "&arrPlaceId=" + arrPlaceId + "&depPlandTime=" + depPlandTime + "&_type=json";
             URL url = new URL(urlStr);
@@ -153,5 +160,34 @@ public class TrainServiceImpl implements TrainService {
         }
     }
 
+    /* TODO 출/도착지 기반 기차표 정보 -> 화면에 */
+    @Override
+    public List<TrainInfo> getStrtpntAlocFndTrainInfo(String depPlaceId, String arrPlaceId, String depPlandTime) throws IOException, JSONException {
+        String response = getStrtpntAlocFndTrainInfoRaw(depPlaceId, arrPlaceId, depPlandTime);
 
+        JSONObject jsonResponse = new JSONObject(response);
+        JSONArray items = jsonResponse.getJSONObject("response").getJSONObject("body").getJSONObject("items").getJSONArray("item");
+
+        List<TrainInfo> trainInfos = new ArrayList<>();
+        for (int i = 0; i < items.length(); i++) {
+            JSONObject item = items.getJSONObject(i);
+            TrainInfo trainInfo = new TrainInfo();
+            trainInfo.setTrainNo(item.getInt("trainno"));
+            trainInfo.setTrainType(item.getString("traingradename"));
+            trainInfo.setDepartureTime(formatDateTime(item.getLong("depplandtime")));
+            trainInfo.setArrivalTime(formatDateTime(item.getLong("arrplandtime")));
+            trainInfo.setPrice(item.getInt("adultcharge"));
+            trainInfos.add(trainInfo);
+        }
+
+        return trainInfos;
+    }
+    
+    /* TODO 날짜형식 변환 '20231222051200' -> '2023-12-22 05:12:00' */
+    private String formatDateTime(long dateTime) {
+        String dateTimeStr = String.valueOf(dateTime);
+        return dateTimeStr.substring(0, 4) + "-" + dateTimeStr.substring(4, 6) + "-" +
+               dateTimeStr.substring(6, 8) + " " + dateTimeStr.substring(8, 10) + ":" +
+               dateTimeStr.substring(10, 12) + ":" + dateTimeStr.substring(12, 14);
+    }
 }

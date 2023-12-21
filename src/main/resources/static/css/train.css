@@ -8,12 +8,13 @@ button {
 .popup {
     display: none;
     position: fixed;
+    z-index: 1;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
 .popup-content {
@@ -21,7 +22,7 @@ button {
     margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 60%;
+    width: 80%;
 }
 
 .close {
