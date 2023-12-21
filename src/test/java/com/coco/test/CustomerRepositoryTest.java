@@ -21,17 +21,25 @@ public class CustomerRepositoryTest {
 	private MemberRepository memberRepo;
 	
 	
-//	@Disabled
+	@Disabled
     @Test
     public void testManyToOneInsert() {
-		/*
-		 * Member member1 = Member.builder() .name("김양현") .id("didgus67")
-		 * .ename("KIMYANGHYEON") .rrnumber("1998.01.08") .password("didgus5766!")
-		 * .address("서울시 강남구") .detailAddress("청담동") .email("didgus67@naver.com")
-		 * .phone("010-1234-1234") .role(Role.ROLE_MEMBER) .enabled("true") .build();
-		 * 
-		 * memberRepo.save(member1);
-		 */
+		 Member member1 = Member.builder() 
+				 .name("김양현") 
+				 .id("didgus67")		 
+				 .ename("KIMYANGHYEON") 
+				 .rrnumber("1998.01.08") 
+				 .password("didgus5766!")		 
+				 .address("서울시 강남구") 
+				 .detailAddress("청담동") 
+				 .email("didgus67@naver.com")		  
+				 .phone("010-1234-1234") 
+				 .role(Role.ROLE_MEMBER) 
+				 .enabled("true") 
+				 .build();
+		  
+		 memberRepo.save(member1);
+		 
         
         Member member2 = Member.builder()
                 .name("관리자")

@@ -100,14 +100,18 @@
             <td colspan="5"><a th:href="@{/qna}" class="">자주 묻는 질문</a></td>
 
         </tr>
-        <tr th:each="board, iterStat : ${boardList}" th:height="50px">
-            <td th:text="${board.bseq}"></td>
-            <td align="left"><a th:href="@{/getBoard(bseq=${board.bseq})}" th:text="${board.btitle}"></a></td>
-            <td th:text="${board.member.id}"></td>
-            <td><span th:text="${#dates.format(board.createDate, 'yyyy-MM-dd')}"></span></td>
-            <td th:text="${board.cnt}"></td>
-        </tr>
-    </table>
+		<tr th:each="board, iterStat : ${boardList}" th:height="50px">
+    <td th:text="${board.bseq}"></td>
+    <td align="left">
+        <a th:href="@{/getBoard(bseq=${board.bseq})}" th:text="${board.btitle}"></a>
+        <!-- 비밀글인 경우 "비밀글" 표시 -->
+        <span th:if="${board.secret}">[비밀글]</span>
+    </td>
+    <td th:text="${board.member.id}"></td>
+    <td><span th:text="${#dates.format(board.createDate, 'yyyy-MM-dd')}"></span></td>
+    <td th:text="${board.cnt}"></td>
+</tr>
+	</table>
 
     <!-- 페이징 처리 -->
     <div th:if="${boardList != null and boardList.totalPages > 1}" style="margin-top: 20px; text-align: center;">
@@ -119,6 +123,7 @@
         </span>
     </div>
     <div th:replace="~{fragments/footer}"></div>
+    
 </body>
 
 </html>
