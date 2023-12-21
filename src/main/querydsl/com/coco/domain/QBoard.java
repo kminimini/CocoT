@@ -34,6 +34,10 @@ public class QBoard extends EntityPathBase<Board> {
 
     public final QMember member;
 
+    public final BooleanPath secret = createBoolean("secret");
+
+    public final StringPath secretPassword = createString("secretPassword");
+
     public QBoard(String variable) {
         this(Board.class, forVariable(variable), INITS);
     }

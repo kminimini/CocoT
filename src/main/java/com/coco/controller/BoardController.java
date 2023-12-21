@@ -89,29 +89,50 @@ public class BoardController {
 	}
 
 	@PostMapping("/insertBoard")
-	public String insertBoard(Board board) {
-		// Spring Security를 사용하여 로그인 상태 확인
+	public String insertBoard(Board board, @RequestParam(name = "isSecret", defaultValue = "false") boolean isSecret) {
+	    // Spring Security를 사용하여 로그인 상태 확인
 	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 	    if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof SecurityUser) {
 	        // 로그인 상태일 때의 로직 처리
 	        SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
 	        Member member = securityUser.getMember();
-		board.setMember(member);
-		boardService.insertBoard(board);
-		
-		return "redirect:getBoardList";
+
+	        // 비밀글 여부 설정
+	        board.setSecret(isSecret);
+	        
+	        // 작성자 정보 설정
+	        board.setMember(member);
+
+	        // 게시글 등록 로직
+	        boardService.insertBoard(board);
+
+	        return "redirect:getBoardList";
 	    } else {
 	        // 로그인 상태가 아니면 로그인 페이지로 리디렉션
 	        return "redirect:/system/login";
 	    }
 	}
 	
-	@GetMapping("getBoard")
-	public String getBoard(Board board, Model model) {
-		
-		model.addAttribute("board", boardService.getBoard(board));
-		
-		return "getBoard";
+	@GetMapping("/getBoard")
+	public String getBoard(@RequestParam Long bseq, Model model, @AuthenticationPrincipal SecurityUser principal) {
+	    // 글 정보 가져오기
+	    Board board = boardService.getBoardById(bseq);
+
+	    // Spring Security를 이용하여 현재 로그인한 사용자 정보 가져오기
+	    SecurityUser securityUser = principal != null ? principal : null;
+
+	    // 만약 글이 비밀글이라면, 그리고 현재 사용자가 작성자나 어드민이 아니라면 접근을 거부합니다.
+	    if (board.isSecret() && (securityUser == null || (!securityUser.getAuthorities().stream().anyMatch(role -> role.getAuthority().equals("ROLE_ADMIN")) && !securityUser.getMember().getId().equals(board.getMember().getId())))) {
+	        // 비밀글이고 현재 사용자가 작성자나 어드민이 아닌 경우
+	        return "accessDenied"; // 접근 거부 페이지로 리다이렉트
+	    }
+
+	    // 조회수 증가 로직
+	    boardService.getBoard(board);
+
+	    model.addAttribute("board", board);
+
+	    return "getBoard"; // 글 조회 페이지로 이동
 	}
 	
 	@PostMapping("/updateBoard")
@@ -167,7 +188,7 @@ public class BoardController {
 	
 	@GetMapping("/qna")
 	public String showQnAPage() {
-	    // 여기에서 추가로 로직을 처리할 수 있음
+	    
 	    return "qna"; // Thymeleaf 템플릿의 이름
 	}
 

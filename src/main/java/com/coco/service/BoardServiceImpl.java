@@ -37,7 +37,6 @@ public class BoardServiceImpl implements BoardService {
 		boardRepo.save(board);
 	}
 
-	
 	@Transactional
 	@Override
 	public Board getBoard(Board board) {
@@ -50,7 +49,7 @@ public class BoardServiceImpl implements BoardService {
 	        existingBoard.setCnt(newCnt);
 	        board = existingBoard;
 	        boardRepo.save(board);
-	        
+
 	        return board;
 	    } else {
 	        // 해당하는 seq에 해당하는 Board가 없을 경우 처리 (예: 예외를 던지거나 새로운 Board를 생성하는 등)
