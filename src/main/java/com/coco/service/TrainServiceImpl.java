@@ -5,7 +5,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -165,17 +168,32 @@ public class TrainServiceImpl implements TrainService {
     public List<TrainInfo> getStrtpntAlocFndTrainInfo(String depPlaceId, String arrPlaceId, String depPlandTime) throws IOException, JSONException {
         String response = getStrtpntAlocFndTrainInfoRaw(depPlaceId, arrPlaceId, depPlandTime);
 
+        logger.debug("Raw API 응답: {}", response);
+        
         JSONObject jsonResponse = new JSONObject(response);
-        JSONArray items = jsonResponse.getJSONObject("response").getJSONObject("body").getJSONObject("items").getJSONArray("item");
+        JSONArray items = jsonResponse
+        		.getJSONObject("response")
+        		.getJSONObject("body")
+        		.getJSONObject("items")
+        		.getJSONArray("item");
 
         List<TrainInfo> trainInfos = new ArrayList<>();
         for (int i = 0; i < items.length(); i++) {
             JSONObject item = items.getJSONObject(i);
+            logger.debug("처리 항목: {}", item.toString());
+            
             TrainInfo trainInfo = new TrainInfo();
             trainInfo.setTrainNo(item.getInt("trainno"));
             trainInfo.setTrainType(item.getString("traingradename"));
-            trainInfo.setDepartureTime(formatDateTime(item.getLong("depplandtime")));
-            trainInfo.setArrivalTime(formatDateTime(item.getLong("arrplandtime")));
+            
+            String depTime = item.getString("depplandtime");
+            String arrTime = item.getString("arrplandtime");
+            logger.debug("Original 출발 시간: {}, Original 도착 시간: {}", depTime, arrTime);
+
+            trainInfo.setDepartureTime(formatDateTime(item.getString("depplandtime")));
+            trainInfo.setArrivalTime(formatDateTime(item.getString("arrplandtime")));
+            logger.debug("Formatted 출발 시간: {}, Formatted 도착 시간: {}", trainInfo.getDepartureTime(), trainInfo.getArrivalTime());
+
             trainInfo.setPrice(item.getInt("adultcharge"));
             trainInfos.add(trainInfo);
         }
@@ -183,11 +201,19 @@ public class TrainServiceImpl implements TrainService {
         return trainInfos;
     }
     
-    /* TODO 날짜형식 변환 '20231222051200' -> '2023-12-22 05:12:00' */
-    private String formatDateTime(long dateTime) {
-        String dateTimeStr = String.valueOf(dateTime);
-        return dateTimeStr.substring(0, 4) + "-" + dateTimeStr.substring(4, 6) + "-" +
-               dateTimeStr.substring(6, 8) + " " + dateTimeStr.substring(8, 10) + ":" +
-               dateTimeStr.substring(10, 12) + ":" + dateTimeStr.substring(12, 14);
+    /* TODO 날짜형식 변환 '20231222051200' -> '2023-12-22 05:12' */
+    private String formatDateTime(String dateTimeStr) {
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+        inputFormat.setLenient(false);
+        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
+        try {
+            Date date = inputFormat.parse(dateTimeStr);
+            return outputFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return "Invalid Date";
+        }
     }
+
 }

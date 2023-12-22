@@ -3,45 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>열차 정보</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/train.tickets.css}">
 </head>
 <body>
     <h1>열차 정보</h1>
-
-    <div th:if="${trainInfo != null and trainInfo.response != null and trainInfo.response.body != null and trainInfo.response.body.items != null}">
-        <table>
-            <thead>
-                <tr>
-                    <th>Train Number</th>
-                    <th>Train Grade</th>
-                    <th>Departure Station</th>
-                    <th>Arrival Station</th>
-                    <th>Departure Time</th>
-                    <th>Arrival Time</th>
-                    <th>Adult Charge</th>
-                    <th>Select</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="ticket : ${trainInfo.response.body.items.item}">
-                	<td th:text="'Debug: ' + ${ticket.trainno}"></td>
-                    <td th:text="${ticket.trainno}"></td>
-                    <td th:text="${ticket.traingradename}"></td>
-                    <td th:text="${ticket.depplacename}"></td>
-                    <td th:text="${ticket.arrplacename}"></td>
-                    <td th:text="${#dates.format(ticket.depplandtime, 'yyyy-MM-dd HH:mm')}"></td>
-                    <td th:text="${#dates.format(ticket.arrplandtime, 'yyyy-MM-dd HH:mm')}"></td>
-                    <td th:text="${ticket.adultcharge}"></td>
-                    <td><button th:onclick="'selectTicket(\'' + ${ticket} + '\')'">Select</button></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div th:unless="${trainInfo != null and trainInfo.response != null and trainInfo.response.body != null and trainInfo.response.body.items != null}">
-        <p>열차 정보가 없습니다.</p>
-    </div>
-
+    <div th:text="${trainInfo}">[열차 정보가 여기에 표시됩니다.]</div>
     <a href="/" th:href="@{/test.html}">홈으로 돌아가기</a>
-    <script type="text/javascript" th:src="@{/js/train.tickets.js}"></script>
 </body>
 </html>

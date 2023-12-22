@@ -1,5 +1,7 @@
 package com.coco.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.coco.service.TrainService;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 @Controller
@@ -60,18 +64,22 @@ public class TrainController {
 	// 출/도착지 기반 열차정보 조회
 	@GetMapping("/trainInfo")
 	public String trainInfo(
-			@RequestParam("depPlaceId") String depPlaceId,
-			@RequestParam("arrPlaceId") String arrPlaceId,
-			@RequestParam("depPlandTime") String depPlandTime,
-			Model model) {
-		try {
-			String trainInfo = trainService.getStrtpntAlocFndTrainInfoRaw(depPlaceId, arrPlaceId, depPlandTime);
-			
-			model.addAttribute("trainInfo", trainInfo);
-		} catch (Exception e) {
-			model.addAttribute("error", "열차 정보 불러오기 오류: " + e.getMessage());
-		}
-		return "train/trainInfo";
+	        @RequestParam("depPlaceId") String depPlaceId,
+	        @RequestParam("arrPlaceId") String arrPlaceId,
+	        @RequestParam("depPlandTime") String depPlandTime,
+	        Model model) {
+	    try {
+	        String trainInfoJson = trainService.getStrtpntAlocFndTrainInfoRaw(depPlaceId, arrPlaceId, depPlandTime);
+	        // Convert the JSON string to a Map or a suitable object that Thymeleaf can handle
+	        ObjectMapper objectMapper = new ObjectMapper();
+	        Map<String, Object> trainInfo = objectMapper.readValue(trainInfoJson, new TypeReference<Map<String, Object>>() {});
+	        
+	        model.addAttribute("trainInfo", trainInfo);
+	    } catch (Exception e) {
+	        model.addAttribute("error", "열차 정보 불러오기 오류: " + e.getMessage());
+	    }
+	    return "train/trainInfo";
 	}
+
 	
 }
