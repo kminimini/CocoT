@@ -2,36 +2,37 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Train Information</title>
+    <title>열차 정보</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/train.tickets.css}">
 </head>
 <body>
-    <h1>Train Information</h1>
+    <h1>열차 정보</h1>
     <table>
         <thead>
             <tr>
-                <th>Train Number</th>
-                <th>Train Type</th>
-                <th>Departure</th>
-                <th>Departure Time</th>
-                <th>Arrival</th>
-                <th>Arrival Time</th>
-                <th>Fare</th>
+                <th>열차 번호</th>
+                <th>열차 유형</th>
+                <th>출발</th>
+                <th>출발 시간</th>
+                <th>도착</th>
+                <th>도착 시간</th>
+                <th>요금</th>
             </tr>
         </thead>
         <tbody>
             <tr th:each="train : ${trainInfo['response']['body']['items']['item']}">
                 <td th:text="${train['trainno']}"></td>
-                <td th:text="${train['traingradename']}"></td>
-                <td th:text="${train['depplacename']}"></td>
-                <td th:text="${#dates.format(train['depplandtime'], 'yyyy-MM-dd HH:mm')}"></td>
-                <td th:text="${train['arrplacename']}"></td>
-                <td th:text="${#dates.format(train['arrplandtime'], 'yyyy-MM-dd HH:mm')}"></td>
-                <td th:text="${train['adultcharge']}"></td>
-            </tr>
+		        <td th:text="${train['traingradename']}"></td>
+		        <td th:text="${train['depplacename']}"></td>
+		        <td th:text="${train['depplandtime']}"></td>
+		        <td th:text="${train['arrplacename']}"></td>
+		        <td th:text="${train['arrplandtime']}"></td>
+		        <td th:text="${train['adultcharge']}"></td>
+	        </tr>
         </tbody>
     </table>
-    <a href="/" th:href="@{/test.html}">Return to Home</a>
+	<a th:href="@{/trainInfo(pageNo=${trainInfo.response.body.pageNo + 1})}">Next</a>
+    <a href="/" th:href="@{/test.html}">테스트홈으로 돌아가기</a>
     <script type="text/javascript" th:src="@{/js/train.js}"></script>
 </body>
 </html>
