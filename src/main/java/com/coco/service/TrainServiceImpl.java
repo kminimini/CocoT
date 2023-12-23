@@ -7,9 +7,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,8 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import com.coco.domain.TrainInfo;
 
 @Service
 public class TrainServiceImpl implements TrainService {
@@ -136,84 +132,83 @@ public class TrainServiceImpl implements TrainService {
 
     /* TODO 출/도착지 기반 열차정보 조회 */
     @Override
-    public String getStrtpntAlocFndTrainInfoRaw(String depPlaceId, String arrPlaceId, String depPlandTime) {
+    public String getStrtpntAlocFndTrainInfoRaw(String depPlaceId, String arrPlaceId, String depPlandTime, int pageNo, int numOfRows) {
         try {
-            String urlStr = ctyStrt + "?serviceKey=" + serviceKey + "&depPlaceId=" + depPlaceId + "&arrPlaceId=" + arrPlaceId + "&depPlandTime=" + depPlandTime + "&_type=json";
-            URL url = new URL(urlStr);
+            String urlStr = ctyStrt + "?serviceKey=" + serviceKey +
+                            "&depPlaceId=" + depPlaceId +
+                            "&arrPlaceId=" + arrPlaceId +
+                            "&depPlandTime=" + depPlandTime +
+                            "&numOfRows=" + numOfRows +
+                            "&pageNo=" + pageNo +
+                            "&_type=json";
+    	        URL url = new URL(urlStr);
 
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
+    	        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+    	        connection.setRequestMethod("GET");
 
-            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            StringBuilder response = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                response.append(line);
-            }
-            reader.close();
+    	        BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+    	        StringBuilder response = new StringBuilder();
+    	        String line;
+    	        while ((line = reader.readLine()) != null) {
+    	            response.append(line);
+    	        }
+    	        reader.close();
 
-            connection.disconnect();
+    	        connection.disconnect();
 
-            logger.info("열차 정보에 대한 응답 수신: {}", response.toString());
+    	        logger.info("열차 정보에 대한 응답 수신: {}", response.toString());
 
-            return response.toString();
-        } catch (IOException e) {
-            logger.error("HTTP GET 요청을 보내는 동안 오류가 발생했습니다.: {}", e.getMessage());
-            return null;
-        }
-    }
+    	        // Parse and format date and time
+    	        String formattedResponse = formatDateTimeInResponse(response.toString());
 
-    /* TODO 출/도착지 기반 기차표 정보 -> 화면에 */
-    @Override
-    public List<TrainInfo> getStrtpntAlocFndTrainInfo(String depPlaceId, String arrPlaceId, String depPlandTime) throws IOException, JSONException {
-        String response = getStrtpntAlocFndTrainInfoRaw(depPlaceId, arrPlaceId, depPlandTime);
-
-        logger.debug("Raw API 응답: {}", response);
-        
-        JSONObject jsonResponse = new JSONObject(response);
-        JSONArray items = jsonResponse
-        		.getJSONObject("response")
-        		.getJSONObject("body")
-        		.getJSONObject("items")
-        		.getJSONArray("item");
-
-        List<TrainInfo> trainInfos = new ArrayList<>();
-        for (int i = 0; i < items.length(); i++) {
-            JSONObject item = items.getJSONObject(i);
-            logger.debug("처리 항목: {}", item.toString());
-            
-            TrainInfo trainInfo = new TrainInfo();
-            trainInfo.setTrainNo(item.getInt("trainno"));
-            trainInfo.setTrainType(item.getString("traingradename"));
-            
-            String depTime = item.getString("depplandtime");
-            String arrTime = item.getString("arrplandtime");
-            logger.debug("Original 출발 시간: {}, Original 도착 시간: {}", depTime, arrTime);
-
-            trainInfo.setDepartureTime(formatDateTime(item.getString("depplandtime")));
-            trainInfo.setArrivalTime(formatDateTime(item.getString("arrplandtime")));
-            logger.debug("Formatted 출발 시간: {}, Formatted 도착 시간: {}", trainInfo.getDepartureTime(), trainInfo.getArrivalTime());
-
-            trainInfo.setPrice(item.getInt("adultcharge"));
-            trainInfos.add(trainInfo);
-        }
-
-        return trainInfos;
+    	        return formattedResponse;
+    	    } catch (IOException e) {
+    	        logger.error("HTTP GET 요청을 보내는 동안 오류가 발생했습니다.: {}", e.getMessage());
+    	        return null;
+    	    }
     }
     
-    /* TODO 날짜형식 변환 '20231222051200' -> '2023-12-22 05:12' */
-    private String formatDateTime(String dateTimeStr) {
-        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyyMMddHHmmss");
-        inputFormat.setLenient(false);
-        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-
+    /* TODO 기차표 정보의 항목 배열 내 날짜, 시간 형식 지정 */
+    private String formatDateTimeInResponse(String response) {
         try {
+            JSONObject jsonResponse = new JSONObject(response);
+            JSONObject header = jsonResponse.getJSONObject("response").getJSONObject("header");
+
+            // 응답이 성공했는지 확인
+            if ("00".equals(header.getString("resultCode"))) {
+                JSONArray items = jsonResponse.getJSONObject("response").getJSONObject("body").getJSONObject("items").getJSONArray("item");
+
+                // 각 항목의 날짜 및 시간 서식 지정
+                for (int i = 0; i < items.length(); i++) {
+                    JSONObject item = items.getJSONObject(i);
+                    String depPlandTime = item.optString("depplandtime");
+                    String arrPlandTime = item.optString("arrplandtime");
+
+                    item.put("depplandtime", formatDateTimeString(depPlandTime));
+                    item.put("arrplandtime", formatDateTimeString(arrPlandTime));
+                }
+
+                // 업데이트된 JSON 문자열을 반환
+                return jsonResponse.toString();
+            } else {
+                return response;
+            }
+        } catch (JSONException e) {
+            return response;
+        }
+    }
+    
+    /* TODO yyyyMMddHHmmss -> yyyy-MM-dd HH:mm */
+    private String formatDateTimeString(String dateTimeStr) {
+        try {
+            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+            SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
             Date date = inputFormat.parse(dateTimeStr);
             return outputFormat.format(date);
         } catch (ParseException e) {
-            e.printStackTrace();
-            return "Invalid Date";
+            // Handle parsing exception
+            return dateTimeStr;
         }
     }
-
 }

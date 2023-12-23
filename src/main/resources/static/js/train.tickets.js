@@ -1,38 +1,66 @@
-// 기차표 리스트
-function displayTrainTickets(tickets) {
-    var ticketsTable = document.getElementById("ticketsTable").getElementsByTagName('tbody')[0];
-    ticketsTable.innerHTML = ""; // Clear existing tickets
+/* train.ticket.js */
+// Global variables to keep track of the current page and size
+var currentPage = 1;
+var pageSize = 10; // You can adjust the page size as needed
 
-    tickets.forEach(ticket => {
-        var row = ticketsTable.insertRow();
-        
-        var cellTrainNumber = row.insertCell(0);
-        var cellDepartureStation = row.insertCell(1);
-        var cellArrivalStation = row.insertCell(2);
-        var cellDepartureTime = row.insertCell(3);
-        var cellArrivalTime = row.insertCell(4);
-        var cellPrice = row.insertCell(5);
-        var cellSelect = row.insertCell(6);
+// Function to load the next page of train tickets
+function loadNextPage(depPlaceId, arrPlaceId, depPlandTime) {
+    currentPage++; // Increment the current page
 
-        cellTrainNumber.innerHTML = ticket.trainNumber;
-        cellDepartureStation.innerHTML = ticket.departureStation;
-        cellArrivalStation.innerHTML = ticket.arrivalStation;
-        cellDepartureTime.innerHTML = ticket.departureTime;
-        cellArrivalTime.innerHTML = ticket.arrivalTime;
-        cellPrice.innerHTML = ticket.price;
+    // Additional check for required elements
+    if (!depPlaceId || !arrPlaceId || !depPlandTime) {
+        console.error("One or more required elements not found.");
+        return;
+    }
 
-        var selectButton = document.createElement("button");
-        selectButton.innerHTML = "Select";
-        selectButton.onclick = function() {
-            // Add your logic for when a ticket is selected
-            console.log("Selected Ticket:", ticket);
-        };
-        cellSelect.appendChild(selectButton);
+    // Make an AJAX request to fetch the next page of train tickets
+    fetchTrainTickets(depPlaceId, arrPlaceId, depPlandTime, currentPage, pageSize);
+}
+
+// Function to make an AJAX request to fetch train tickets
+function fetchTrainTickets(depPlaceId, arrPlaceId, depPlandTime, page, size) {
+    // Construct the URL with the parameters
+    var url = '/train/trainInfoPaginated?depPlaceId=' + depPlaceId + '&arrPlaceId=' + arrPlaceId + '&depPlandTime=' + depPlandTime + '&page=' + page + '&size=' + size;
+
+    // Make the AJAX request
+    fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok: ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Handle the fetched data, update the UI, etc.
+            updateTrainTicketList(data);
+        })
+        .catch(error => {
+            console.error('Error fetching train tickets:', error);
+        });
+}
+
+// Function to update the UI with the fetched train ticket data
+function updateTrainTicketList(data) {
+    // Assuming your data structure is similar to the previous train ticket display logic
+
+    // Update the HTML to display the new train ticket data
+    var trainTableBody = document.getElementById('trainTableBody');
+    // Clear the existing table body content if needed
+
+    data.response.body.items.item.forEach(train => {
+        var row = document.createElement('tr');
+        // Create and append table cells with train information
+        // ...
+
+        trainTableBody.appendChild(row);
     });
 }
-// 기차표 선택
-function selectTicket(ticket) {
-    console.log("Selected Ticket:", ticket);
-    // Additional logic for handling the selected ticket
-}
 
+// Example: Attach the loadNextPage function to a "Next" button click event
+document.getElementById('nextButton').addEventListener('click', function() {
+    loadNextPage();
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Your existing JavaScript code, including the loadNextPage function
+});

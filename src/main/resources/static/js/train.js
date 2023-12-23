@@ -1,3 +1,4 @@
+/* train.js */
 // 도시 번호로 기차역 보기
 function promptForCityCode() {
 	var cityCode = prompt("Please enter the city code:", "");
@@ -14,9 +15,15 @@ document.getElementById('trainInfoForm').addEventListener('submit', function(eve
     var arrPlaceId = document.getElementById('arrivalStationId').value;
     var depPlandTime = document.getElementById('depPlandTime').value;
 
+	// 원래 날짜와 시간 기록
+	console.log("Original 출발 날짜 및 시간 : ", depPlandTime);
+	
     // 날짜에서 하이픈 제거
     depPlandTime = depPlandTime.replace(/-/g, '');
 
+	// 수정된 날짜와 시간 기록
+    console.log("Modified 출발 날짜 및 시간: ", depPlandTime);
+    
     // 요청 URL 생성
     var requestUrl = '/train/trainInfo?depPlaceId=' + depPlaceId + '&arrPlaceId=' + arrPlaceId + '&depPlandTime=' + depPlandTime;
 
