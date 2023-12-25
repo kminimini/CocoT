@@ -7,6 +7,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import org.json.JSONArray;
@@ -158,7 +160,6 @@ public class TrainServiceImpl implements TrainService {
 
     	        logger.info("열차 정보에 대한 응답 수신: {}", response.toString());
 
-    	        // Parse and format date and time
     	        String formattedResponse = formatDateTimeInResponse(response.toString());
 
     	        return formattedResponse;
@@ -207,8 +208,69 @@ public class TrainServiceImpl implements TrainService {
             Date date = inputFormat.parse(dateTimeStr);
             return outputFormat.format(date);
         } catch (ParseException e) {
-            // Handle parsing exception
             return dateTimeStr;
         }
     }
+
+    /* TODO 이전, 다음 버튼표시 여부 */
+	@Override
+	public boolean isLastPage(String depPlaceId, String arrPlaceId, String depPlandTime, int pageNo, int numOfRows) {
+		try {
+            // 첫 페이지의 열차 정보를 가져와 총 개수를 구하고,
+            String firstPageResponse = getStrtpntAlocFndTrainInfoRaw(depPlaceId, arrPlaceId, depPlandTime, 1, numOfRows);
+            JSONObject firstPageJson = new JSONObject(firstPageResponse);
+
+            // 응답에서 총 개수 추출하고,
+            int totalCount = firstPageJson.getJSONObject("response").getJSONObject("body").getInt("totalCount");
+
+            // 총 페이지 수와 페이지당 행 수를 기준으로 총 페이지 수를 계산한다.
+            int totalPages = (int) Math.ceil((double) totalCount / numOfRows);
+
+            // 현재 페이지가 마지막 페이지인지 확인
+            return pageNo >= totalPages;
+        } catch (JSONException e) {
+            // 임시로 예외처리는 false
+            return false;
+        }
+	}
+
+	// 마지막페이지 유무확인 조회용
+	@Override
+	public int getTotalPageCount(String depPlaceId, String arrPlaceId, String depPlandTime, int numOfRows) {
+	    try {
+	        String urlStr = ctyStrt + "?serviceKey=" + serviceKey +
+	                        "&depPlaceId=" + depPlaceId +
+	                        "&arrPlaceId=" + arrPlaceId +
+	                        "&depPlandTime=" + depPlandTime +
+	                        "&numOfRows=" + numOfRows +
+	                        "&pageNo=1" + 
+	                        "&_type=json";
+
+	        URL url = new URL(urlStr);
+	        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+	        connection.setRequestMethod("GET");
+
+	        BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+	        StringBuilder response = new StringBuilder();
+	        String line;
+	        while ((line = reader.readLine()) != null) {
+	            response.append(line);
+	        }
+	        reader.close();
+
+	        connection.disconnect();
+
+	        JSONObject jsonResponse = new JSONObject(response.toString());
+	        JSONObject totalCountInfo = jsonResponse.getJSONObject("response").getJSONObject("body");
+
+	        int totalCount = totalCountInfo.getInt("totalCount");
+	        int numOfPages = (int) Math.ceil((double) totalCount / numOfRows);
+
+	        return numOfPages;
+	    } catch (IOException | JSONException e) {
+	        logger.error("Error getting total page count: {}", e.getMessage());
+	        return 0; 
+	    }
+	}
+
 }
