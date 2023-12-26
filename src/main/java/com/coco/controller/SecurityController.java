@@ -117,9 +117,4 @@ public class SecurityController {
 		return result;
 	}
 
-	@PostMapping("/logout")
-    public String logout(SessionStatus status) {
-        status.setComplete();
-        return "redirect:/"; // 로그아웃 후에 리다이렉트할 경로를 설정
-    }
 }

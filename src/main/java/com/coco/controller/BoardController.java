@@ -40,32 +40,35 @@ public class BoardController {
 	public String getBoardList(Model model, Search search, @RequestParam(defaultValue = "0") int page,
 	                           @AuthenticationPrincipal SecurityUser principal) {
 
-	    // principal을 이용하여 로그인한 사용자의 정보를 가져올 수 있습니다.
-	    Member member = principal.getMember();
+	    // 사용자가 로그인한 경우에만 처리
+	    if (principal != null && principal.getMember() != null) {
+	        Member member = principal.getMember();
 
-	    if (search.getSearchCondition() == null) {
-	        search.setSearchCondition("btitle");
+	        if (search.getSearchCondition() == null) {
+	            search.setSearchCondition("btitle");
+	        }
+
+	        if (search.getSearchKeyword() == null) {
+	            search.setSearchKeyword("");
+	        }
+
+	        // 디버깅을 위한 로그 출력
+	        System.out.println("Search in Controller: " + search);
+
+	        Pageable pageable = PageRequest.of(page, 10, Sort.by("bseq").descending());
+	        Page<Board> boardList = boardService.getBoardList(pageable, search);
+
+	        model.addAttribute("boardList", boardList);
+	        model.addAttribute("member", member);
+	        model.addAttribute("search", search);
+
+	        // Thymeleaf 템플릿의 이름을 반환합니다.
+	        return "getBoardList";
+	    } else {
+	        // 로그인되지 않은 경우 로그인 페이지로 리다이렉트
+	        return "redirect:/system/login";
 	    }
-
-	    if (search.getSearchKeyword() == null) {
-	        search.setSearchKeyword("");
-	    }
-
-	    // 디버깅을 위한 로그 출력
-	    System.out.println("Search in Controller: " + search);
-
-	    Pageable pageable = PageRequest.of(page, 10, Sort.by("bseq").descending());
-	    Page<Board> boardList = boardService.getBoardList(pageable, search);
-
-	    model.addAttribute("boardList", boardList);
-	    model.addAttribute("member", member);
-	    model.addAttribute("search", search);
-
-	    // Thymeleaf 템플릿의 이름을 반환합니다.
-	    return "getBoardList";
-	}
-
-
+	}    
 	
 	@GetMapping("/insertBoard")
 	public String insertBoardView(Model model, HttpSession session) {

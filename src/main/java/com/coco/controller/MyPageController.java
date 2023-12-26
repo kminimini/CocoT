@@ -1,11 +1,12 @@
 package com.coco.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -104,22 +105,36 @@ public class MyPageController {
 
     // 회원탈퇴
     @PostMapping("/myPage/deleteAccount")
-    public String deleteAccount(@AuthenticationPrincipal(expression = "#this == 'anonymousUser' ? null : member") Member currentMember, RedirectAttributes attributes) {
-        try {
-            if (currentMember != null) {
-                // 삭제 로직 실행
-                memberService.deleteMemberById(currentMember.getMid());
-                attributes.addFlashAttribute("message", "Account deleted successfully");
-                return "redirect:/";  // 리다이렉트 수정
-            } else {
-                // 로그인하지 않은 사용자에 대한 처리
-                return "redirect:/system/login";
-            }
-        } catch (Exception e) {
-            // 예외 처리 코드
-            attributes.addFlashAttribute("error", "Error deleting account");
-            return "redirect:/myPage";  // 리다이렉트 수정
-        }
+    public String deleteAccount(
+           @AuthenticationPrincipal(expression = "#this == 'anonymousUser' ? null : member") Member currentMember,
+           RedirectAttributes attributes,
+           HttpServletRequest request,
+           HttpServletResponse response) {
+       try {
+           if (currentMember != null) {
+               // 삭제 로직 실행
+               memberService.deleteMemberById(currentMember.getMid());
+
+               // 현재 세션 무효화
+               HttpSession session = request.getSession(false);
+               if (session != null) {
+                   session.invalidate();
+               }
+
+               // 현재 사용자를 SecurityContext에서 제거
+               SecurityContextHolder.clearContext();
+
+               // 로그아웃 상태로 리다이렉트
+               return "redirect:/system/login";
+           } else {
+               // 로그인하지 않은 사용자에 대한 처리
+               return "redirect:/system/login";
+           }
+       } catch (Exception e) {
+           // 예외 처리 코드
+           attributes.addFlashAttribute("error", "Error deleting account");
+           return "redirect:/myPage";  // 리다이렉트 수정
+       }
     }
 
 }
