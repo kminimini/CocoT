@@ -43,19 +43,33 @@ public class TrainController {
         return "train/cityCodes";
     }
 	
-	// 시/도별 기차역 목록조회
+	// 시/도별 기차역 목록조회 (with pagination)
 	@GetMapping("/stations")
-    public ResponseEntity<String> listStations(@RequestParam("cityCode") String cityCode, Model model) {
-        try {
-            String stations = trainService.getTrainStationByCityCode(cityCode);
-            model.addAttribute("stations", stations);
-            return ResponseEntity.ok(stations);
-        } catch (Exception e) {
-            model.addAttribute("error", "스테이션 가져오기 오류: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("기차역 불러오기 오류");
-        }
-//        return "train/stations";
-    }
+	public ResponseEntity<Map<String, Object>> listStationsWithPagination(
+	        @RequestParam("cityCode") String cityCode,
+	        @RequestParam(name = "pageNo", defaultValue = "1") int pageNo,
+	        @RequestParam(name = "numOfRows", defaultValue = "10") int numOfRows,
+	        Model model) {
+
+	    try {
+	        Map<String, Object> stationInfo = trainService.getTrainStationByCityCodeWithPage(cityCode, pageNo, numOfRows);
+
+	        if (stationInfo != null) {
+	            // If you need to pass the result to the Thymeleaf template, add it to the model
+	            model.addAttribute("stations", stationInfo);
+	            // Return the paginated station information as ResponseEntity
+	            return ResponseEntity.ok(stationInfo);
+	        } else {
+	            // Handle the case where there was an issue fetching station information
+	            model.addAttribute("error", "스테이션 가져오기 오류");
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+	        }
+	    } catch (Exception e) {
+	        // Handle other exceptions
+	        model.addAttribute("error", "스테이션 가져오기 오류: " + e.getMessage());
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+	    }
+	}
 	
 	// 차량 종류 목록
 	@GetMapping("/vhcleKndList")
@@ -76,7 +90,7 @@ public class TrainController {
             @RequestParam(name = "arrPlaceId") String arrPlaceId,
             @RequestParam(name = "depPlandTime") String depPlandTime,
             @RequestParam(name = "pageNo", defaultValue = "1") int pageNo,
-            @RequestParam(name = "numOfRows", defaultValue = "10") int numOfRows,
+            @RequestParam(name = "numOfRows", defaultValue = "12") int numOfRows,
             Model model) {
 
         try {
@@ -90,22 +104,6 @@ public class TrainController {
             
             // 다음날 조회하기 버튼 (마지막페이지 유무 확인)
             boolean lastPage = pageNo >= totalPageCount;
-                        
-            ObjectMapper objectMapper = new ObjectMapper();
-            Map<String, Object> trainInfo = objectMapper.readValue(response, new TypeReference<Map<String, Object>>() {});
-
-            model.addAttribute("trainInfo", trainInfo);
-            model.addAttribute("currentPage", pageNo);
-            model.addAttribute("previousPageUrl", buildPageUrl(depPlaceId, arrPlaceId, depPlandTime, previousPageNo, numOfRows));
-            model.addAttribute("nextPageUrl", buildPageUrl(depPlaceId, arrPlaceId, depPlandTime, nextPageNo, numOfRows));
-            
-            // 이전, 다음 버튼 표시 여부를 결정하는 플래그 설정
-            model.addAttribute("isFirstPage", pageNo == 1);
-//            model.addAttribute("isLastPage", trainService.isLastPage(depPlaceId, arrPlaceId, depPlandTime, pageNo, numOfRows));
-            model.addAttribute("isLastPage", lastPage);
-            
-            // 마지막 페이지에서 다음날 조회하기 버튼 띄우기
-            model.addAttribute("lastPage", lastPage);
             
             // 다음날 조회 설정
             LocalDate nextDay;
@@ -117,8 +115,34 @@ public class TrainController {
             
             nextDay = nextDay.plusDays(1);
             String nextDayFormatted = nextDay.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+                        
+            // 첫 페이지로 이동
+            String firstPageUrl = buildPageUrl(depPlaceId, arrPlaceId, depPlandTime, 1, numOfRows);
+            
+            ObjectMapper objectMapper = new ObjectMapper();
+            Map<String, Object> trainInfo = objectMapper.readValue(response, new TypeReference<Map<String, Object>>() {});
+
+            model.addAttribute("trainInfo", trainInfo);
+            model.addAttribute("currentPage", pageNo);
+            model.addAttribute("previousPageUrl", buildPageUrl(depPlaceId, arrPlaceId, depPlandTime, previousPageNo, numOfRows));
+            model.addAttribute("nextPageUrl", buildPageUrl(depPlaceId, arrPlaceId, depPlandTime, nextPageNo, numOfRows));
+            
+            // 이전, 다음 버튼 표시 여부를 결정하는 플래그 설정
+            model.addAttribute("isFirstPage", pageNo == 1);
+            model.addAttribute("isLastPage", lastPage);
+            
+            // 마지막 페이지에서 다음날 조회하기 버튼 띄우기
+            model.addAttribute("lastPage", lastPage);
+            
             // 다음날 조회
             model.addAttribute("checkNextDayUrl", buildPageUrl(depPlaceId, arrPlaceId, nextDayFormatted, 1, numOfRows));
+            
+            // 마지막페이지로 이동
+            model.addAttribute("lastPageUrl", buildPageUrl(depPlaceId, arrPlaceId, depPlandTime, totalPageCount, numOfRows));
+            
+            // 첫 페이지로 이동
+            model.addAttribute("firstPageUrl", firstPageUrl);
+            
             return "train/trainInfo";
         } catch (IOException e) {
         	model.addAttribute("error", "열차 정보 불러오기 오류: " + e.getMessage());
@@ -136,5 +160,4 @@ public class TrainController {
     	        .queryParam("numOfRows", numOfRows)
     	        .toUriString();
     }
-
 }

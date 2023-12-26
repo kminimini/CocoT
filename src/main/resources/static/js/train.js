@@ -6,7 +6,69 @@ function promptForCityCode() {
 		window.location.href = "/train/stations?cityCode=" + cityCode;
 	}
 }
+/*
+	var currentPage = 1;
+    var totalPages = 1;
 
+    function fetchStationsByPage(page) {
+        // 페이지 번호 갱신
+        currentPage = page;
+
+        // 동적으로 도시 코드 설정 (사용자 입력이나 다른 동적 요소에 따라 설정)
+        var cityCode = prompt("도시 코드를 입력하세요:", "DEFAULT_CITY_CODE");
+        if (!cityCode) {
+            alert("도시 코드가 필요합니다.");
+            return;
+        }
+
+        // 서버에 페이지별로 기차역 목록을 요청
+        var url = `/train/stations?cityCode=${cityCode}&pageNo=${page}&numOfRows=10`;
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                // 기차역 목록 업데이트
+                displayTrainStations(data);
+
+                // 페이징 정보 업데이트
+                totalPages = data.response.body.totalCount;
+                document.getElementById("currentPage").innerText = `Page ${currentPage} of ${totalPages}`;
+            })
+            .catch(error => {
+                console.error("기차역 목록 가져오기 오류:", error);
+            });
+    }
+    */
+var currentPage = 1;
+var totalPages = 1;
+var selectedCityCode = "";  // Variable to store the selected city code
+
+function fetchStationsByPage(page) {
+    // Update page number
+    currentPage = page;
+
+    // Request a list of train stations by page from the server
+    var url = `/train/stations?cityCode=${selectedCityCode}&pageNo=${page}&numOfRows=10`;
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            // Update train station list
+            displayTrainStations(data);
+
+            // Update paging information
+            totalPages = data.response.body.totalCount;
+            document.getElementById("currentPage").innerText = `Page ${currentPage} of ${totalPages}`;
+        })
+        .catch(error => {
+            console.error("Error retrieving train station list:", error);
+        });
+}
+
+// 선택한 도시 코드를 설정하는 기능
+function setSelectedCityCode(cityCode) {
+    selectedCityCode = cityCode;
+}
 // 출발 날짜 선택 후 검색 : ex) 2023-11-11 -> 20231111 (하이픈 제외하고 요청)
 document.getElementById('trainInfoForm').addEventListener('submit', function(event) {
     event.preventDefault(); // 기본 양식 제출 방지
@@ -128,7 +190,7 @@ function populateCityCodesListForArrival(cityCodes) {
 	});
 }
 
-// 출발지 : 선택한 도시의 기차역을 불러와 표시하는 기능
+// 출발지 : 선택한 도시를 서버에 전달해서 도시의 기차역을 불러와 표시하는 기능
 function fetchTrainStationsByCityCode(cityCode) {
     // 도시 코드별로 기차역을 가져오기
     var url = "/train/stations?cityCode=" + cityCode;
@@ -153,7 +215,7 @@ function fetchTrainStationsByCityCode(cityCode) {
         });
 }
 
-// 도착지 : 선택한 도시의 기차역을 불러와 표시하는 기능
+// 도착지 : 선택한 도시를 서버에 전달해서 도시의 기차역을 불러와 표시하는 기능
 function fetchTrainStationsByCityCodeForArrival(cityCode) {
 	var url = "/train/stations?cityCode=" + cityCode;
 	
