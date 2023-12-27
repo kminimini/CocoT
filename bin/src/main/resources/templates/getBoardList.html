@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>글 목록</title>
+    <style>
+        th {
+            background-color: lightblue;
+            color: white;
+        }
+
+        td {
+            background-color: white;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 700px;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+        }
+        
+        body {
+   			text-align: center;
+		}
+		
+		table {
+		    margin: auto;
+		}
+		
+		#searchForm {
+		    margin-bottom: 20px;
+		}
+		
+		#logo {
+		    position: absolute;
+		    top: 10px;
+		    left: 10px;
+		    text-align: left;
+		}
+		
+		h1 {
+		    margin-bottom: 20px;
+		}
+        
+    </style>
+</head>
+<body>
+    <div id="logo">
+    	<a th:href="@{/index.html}">
+        	<img src="/images/비행기.png" alt="비행기 이미지" width="50" height="80"/>
+    	</a>
+	</div>
+
+
+    <h1>QnA</h1>
+
+    <form th:action="@{/getBoardList}" method="post" id="searchForm">
+        <table th:align="center" th:width="700">
+            <tr>
+                <td align="left">
+                    <select name="searchCondition" id="searchCondition">
+                        <option value="btitle">제목</option>
+                        <option value="bcontent">내용</option>
+                    </select>
+                    <input name="searchKeyword" id="searchKeyword" type="text"/>
+                    <input type="submit" value="검색"/>
+                    <a th:href="@{/insertBoard}">새글 등록</a>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    <table th:width="700">
+        <tr>
+            <th bgcolor="lightblue" width="100">번호</th>
+            <th bgcolor="lightblue" width="200">제목</th>
+            <th bgcolor="lightblue" width="150">작성자</th>
+            <th bgcolor="lightblue" width="150">등록일</th>
+            <th bgcolor="lightblue" width="100">조회수</th>
+        </tr>
+        <tr><td colspan="5"><a th:href="@{/qna.html}" class="">QnA 페이지로 이동</a></td></tr>
+        <tr th:each="board : ${boardList}" th:height="50px">
+            <td th:text="${board.bseq}"></td>
+            <td align="left"><a th:href="@{/getBoard(bseq=${board.bseq})}" th:text="${board.btitle}"></a></td>
+            <td th:text="${board.member.id}"></td>
+            <td><span th:text="${#dates.format(board.createDate, 'yyyy-MM-dd')}"></span></td>
+            <td th:text="${board.cnt}"></td>
+        </tr>
+    </table>
+
+    <!-- 페이징 처리 -->
+<div th:if="${boardList != null and boardList.totalPages > 1}" style="margin-top: 20px; text-align: center;">
+    <span style="font-weight: bold;">페이지: </span>
+    <span th:each="i, stat : ${#numbers.sequence(0, boardList.totalPages - 1)}">
+        <a th:href="@{/getBoardList(page=${i}, searchCondition=${search.searchCondition}, searchKeyword=${search.searchKeyword})}" 
+        th:text="${i + 1}" style="display: inline-block; padding: 8px 12px; margin: 5px; 
+        background-color: #f2f2f2; color: #333; text-decoration: none; border: 1px solid #ccc; border-radius: 5px; cursor: pointer;"></a>
+    </span>
+</div>
+
+</body>
+</html>

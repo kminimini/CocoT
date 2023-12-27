@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>글 상세</title>
+</head>
+<body>
+
+        <h1>게시글 상세</h1>
+        <hr>
+        <form th:action="@{/updateBoard}" method="post">
+            <input type="hidden" name="bseq" th:value="${board.bseq}" />
+            <table border="1" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td bgcolor="lightblue" width="70" style="color: white;">제목</td>
+                    <td align="left"><input type="text" name="btitle" th:value="${board.btitle}" /></td>
+                </tr>
+                <tr>
+                    <td bgcolor="lightblue" style="color: white;">작성자</td>
+                    <td align="left" th:text="${board.member.id}"></td>
+                </tr>
+                <tr>
+                    <td bgcolor="lightblue" style="color: white;">내용</td>
+                    <td align="left"><textarea name="bcontent" cols="40" rows="10" th:text="${board.bcontent}"></textarea></td>
+                </tr>
+                <tr>
+                    <td bgcolor="lightblue" style="color: white;">등록일</td>
+                    <td align="left"><span th:text="${#dates.format(board.createDate, 'yyyy-MM-dd')}"></span></td>
+                </tr>
+                <tr>
+                    <td bgcolor="lightblue" style="color: white;">조회수</td>
+                    <td align="left" th:text="${board.cnt}"></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <input type="submit" value="글 수정"/>
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <hr>
+        <a th:href="@{/insertBoard}" style="color: black;">글등록</a>&nbsp;&nbsp;&nbsp;
+        <a th:href="@{/deleteBoard(bseq=${board.bseq})}" style="color: black;">글삭제</a>&nbsp;&nbsp;&nbsp;
+        <a th:href="@{/getBoardList}" style="color: black;">글목록</a>
+</body>
+</html>

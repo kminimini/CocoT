@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Dot Study</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+	<link rel="stylesheet" href="/css/login.css">
+	<script src="/javascript/login.js"></script>
+	<script th:if="${param.error}" th:inline="javascript">
+		/*<![CDATA[*/
+		alert('이메일이나 비밀번호가 틀렸습니다.');
+	/*]]>*/
+	</script>
+</head>
+
+<body>
+	<div th:replace="~{fragments/header}"></div>
+	<div class="container">
+		<div class="py-5 text-center">
+			<h2>로그인</h2>
+		</div>
+		<div class="row justify-content-center">
+			<form class="needs-validation col-sm-6" th:action="@{/system/login}" method="post" novalidate>
+				<div class="form-group">
+					<label for="email">이메일</label> <input id="email" type="email" name="username" class="form-control"
+						placeholder="your@email.com" aria-describedby="emailHelp" required>
+				</div>
+
+				<div class="form-group">
+					<label for="password">비밀번호</label> <input id="password" type="password" class="form-control"
+						name="password" aria-describedby="passwordHelp" required>
+				</div>
+				<div class="form-group">
+					<button class="btn btn-primary btn-block" type="submit" aria-describedby="submitHelp"
+						onclick="return validateForm()">로그인
+					</button>
+
+				</div>
+
+				<div class="form-group">
+					<button class="btn btn-primary btn-block" type="button"
+						onclick="location.href='/agree'">회원가입</button>
+				</div>
+				<div class="group">
+					<a th:href="@{/findIdView}">아이디 찾기</a> <a th:href="@{/system/findPwdView}">비밀번호 찾기</a>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div th:replace="~{fragments/footer}"></div>
+	<!--부트스트랩 경고창 뜨는거-->
+	<script type="application/javascript">
+
+		(function () {
+			'use strict';
+
+			window.addEventListener('load', function () {
+				var forms = document.getElementsByClassName('needs-validation');
+
+				Array.prototype.filter.call(forms, function (form) {
+					form.addEventListener('submit', function (event) {
+						if (form.checkValidity() === false) {
+							event.preventDefault();
+							event.stopPropagation();
+						}
+
+						form.classList.add('was-validated');
+					}, false);
+				});
+			}, false);
+		}());
+
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+		crossorigin="anonymous"></script>
+</body>
+
+</html>

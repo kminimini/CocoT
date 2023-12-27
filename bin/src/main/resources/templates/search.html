@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Include CSS for styling -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script th:src="@{/js/search.js}"></script>
+</head>
+<body>
+<form th:action="@{/search}" method="get">
+    <input type="text" id="departureStation" name="departureStation" placeholder="Departure Station" readonly/>
+    <button type="button" id="departureSearch">🔍</button>
+    
+    <!-- ... other form fields ... -->
+
+    <input type="submit" value="Search Tickets"/>
+</form>
+
+<div id="regionSelection" style="display:none;">
+    <!-- This will be populated with the region selection content -->
+</div>
+<div th:fragment="regionList">
+    <ul>
+        <li th:each="region : ${regions}" th:text="${region.cityName}" th:data-city-code="${region.cityCode}"></li>
+    </ul>
+</div>
+<script>
+    // Include your JavaScript here
+</script>
+</body>
+</html>

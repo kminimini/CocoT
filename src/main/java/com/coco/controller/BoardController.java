@@ -40,32 +40,35 @@ public class BoardController {
 	public String getBoardList(Model model, Search search, @RequestParam(defaultValue = "0") int page,
 	                           @AuthenticationPrincipal SecurityUser principal) {
 
-	    // principal을 이용하여 로그인한 사용자의 정보를 가져올 수 있습니다.
-	    Member member = principal.getMember();
+	    // 사용자가 로그인한 경우에만 처리
+	    if (principal != null && principal.getMember() != null) {
+	        Member member = principal.getMember();
 
-	    if (search.getSearchCondition() == null) {
-	        search.setSearchCondition("btitle");
+	        if (search.getSearchCondition() == null) {
+	            search.setSearchCondition("btitle");
+	        }
+
+	        if (search.getSearchKeyword() == null) {
+	            search.setSearchKeyword("");
+	        }
+
+	        // 디버깅을 위한 로그 출력
+	        System.out.println("Search in Controller: " + search);
+
+	        Pageable pageable = PageRequest.of(page, 10, Sort.by("bseq").descending());
+	        Page<Board> boardList = boardService.getBoardList(pageable, search);
+
+	        model.addAttribute("boardList", boardList);
+	        model.addAttribute("member", member);
+	        model.addAttribute("search", search);
+
+	        // Thymeleaf 템플릿의 이름을 반환합니다.
+	        return "getBoardList";
+	    } else {
+	        // 로그인되지 않은 경우 로그인 페이지로 리다이렉트
+	        return "redirect:/system/login";
 	    }
-
-	    if (search.getSearchKeyword() == null) {
-	        search.setSearchKeyword("");
-	    }
-
-	    // 디버깅을 위한 로그 출력
-	    System.out.println("Search in Controller: " + search);
-
-	    Pageable pageable = PageRequest.of(page, 10, Sort.by("bseq").descending());
-	    Page<Board> boardList = boardService.getBoardList(pageable, search);
-
-	    model.addAttribute("boardList", boardList);
-	    model.addAttribute("member", member);
-	    model.addAttribute("search", search);
-
-	    // Thymeleaf 템플릿의 이름을 반환합니다.
-	    return "getBoardList";
-	}
-
-
+	}    
 	
 	@GetMapping("/insertBoard")
 	public String insertBoardView(Model model, HttpSession session) {
@@ -89,29 +92,50 @@ public class BoardController {
 	}
 
 	@PostMapping("/insertBoard")
-	public String insertBoard(Board board) {
-		// Spring Security를 사용하여 로그인 상태 확인
+	public String insertBoard(Board board, @RequestParam(name = "isSecret", defaultValue = "false") boolean isSecret) {
+	    // Spring Security를 사용하여 로그인 상태 확인
 	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 	    if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof SecurityUser) {
 	        // 로그인 상태일 때의 로직 처리
 	        SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
 	        Member member = securityUser.getMember();
-		board.setMember(member);
-		boardService.insertBoard(board);
-		
-		return "redirect:getBoardList";
+
+	        // 비밀글 여부 설정
+	        board.setSecret(isSecret);
+	        
+	        // 작성자 정보 설정
+	        board.setMember(member);
+
+	        // 게시글 등록 로직
+	        boardService.insertBoard(board);
+
+	        return "redirect:getBoardList";
 	    } else {
 	        // 로그인 상태가 아니면 로그인 페이지로 리디렉션
 	        return "redirect:/system/login";
 	    }
 	}
 	
-	@GetMapping("getBoard")
-	public String getBoard(Board board, Model model) {
-		
-		model.addAttribute("board", boardService.getBoard(board));
-		
-		return "getBoard";
+	@GetMapping("/getBoard")
+	public String getBoard(@RequestParam Long bseq, Model model, @AuthenticationPrincipal SecurityUser principal) {
+	    // 글 정보 가져오기
+	    Board board = boardService.getBoardById(bseq);
+
+	    // Spring Security를 이용하여 현재 로그인한 사용자 정보 가져오기
+	    SecurityUser securityUser = principal != null ? principal : null;
+
+	    // 만약 글이 비밀글이라면, 그리고 현재 사용자가 작성자나 어드민이 아니라면 접근을 거부합니다.
+	    if (board.isSecret() && (securityUser == null || (!securityUser.getAuthorities().stream().anyMatch(role -> role.getAuthority().equals("ROLE_ADMIN")) && !securityUser.getMember().getId().equals(board.getMember().getId())))) {
+	        // 비밀글이고 현재 사용자가 작성자나 어드민이 아닌 경우
+	        return "accessDenied"; // 접근 거부 페이지로 리다이렉트
+	    }
+
+	    // 조회수 증가 로직
+	    boardService.getBoard(board);
+
+	    model.addAttribute("board", board);
+
+	    return "getBoard"; // 글 조회 페이지로 이동
 	}
 	
 	@PostMapping("/updateBoard")
@@ -164,5 +188,11 @@ public class BoardController {
     public String accessDenied() {
         return "accessDenied"; // accessDenied.html 뷰 파일 이름에 따라 수정
     }
+	
+	@GetMapping("/qna")
+	public String showQnAPage() {
+	    
+	    return "qna"; // Thymeleaf 템플릿의 이름
+	}
 
 }

@@ -1,0 +1,93 @@
+@charset "EUC-KR";
+
+/*login.html*/
+.form-group {
+	margin-bottom: 30px;
+}
+
+.btn-primary {
+	width: 100%;
+	margin-bottom: 30px;
+	justify-content: space-between;
+}
+
+.group {
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 15px;
+	text-align: center;
+	padding-bottom: 40px;
+}
+
+.group a {
+	margin-right: 30px;
+	margin-left: 30px;
+	margin-bottom: 20px;
+	/* 원하는 여백으로 조절하세요 */
+	text-decoration: none;
+	/* 텍스트에 밑줄 제거 */
+}
+
+/* 입력 칸 스타일 */
+.form-group {
+	position: relative;
+	margin-bottom: 70px;
+}
+
+.form-group input {
+	width: 100%;
+	padding: 5px;
+	border: none;
+	border-bottom: 1px solid #ccc;
+	outline: none;
+	margin-top: 5px;
+	/* 밑줄 사이의 공간 조절 */
+}
+
+.form-group label {
+	position: absolute;
+	top: 10px;
+	left: 0;
+	pointer-events: none;
+	transition: 0.2s ease-out;
+	margin-top: -40px;
+	/* 밑줄과 글자 간의 간격 조절 */
+}
+
+.form-group input:focus+label,
+.form-group input:valid+label {
+	top: -12px;
+	font-size: 12px;
+	color: #007bff;
+}
+
+.form-group input:focus {
+	border-bottom: 2px solid #007bff;
+}
+
+/* 로그인 버튼 스타일 수정 */
+.form-group button[type="submit"] {
+    background-color: navy;
+    color: white;
+    /* 텍스트를 흰색으로 설정 */
+}
+
+/* 회원가입 버튼 스타일 수정 */
+.form-group button[type="button"] {
+    background-color: white;
+    color: navy;
+    /* 텍스트를 남색으로 설정 */
+}
+
+
+
+/*여기 2개는 footer를 밑으로 내리는 작업*/
+
+div {
+    position: relative;
+    padding-bottom: 15px;
+}
+
+footer {
+    bottom: 0;
+}

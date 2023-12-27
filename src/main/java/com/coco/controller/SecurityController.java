@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.coco.domain.Member;
-import com.coco.domain.Role;
 import com.coco.dto.JoinFormDto;
 import com.coco.dto.MailDto;
 import com.coco.service.MemberService;
@@ -25,6 +25,7 @@ import com.coco.service.SendEmailService;
 
 @Controller
 @RequestMapping("/system")
+@SessionAttributes("user")
 public class SecurityController {
 
 	@Autowired
@@ -77,15 +78,6 @@ public class SecurityController {
 	    return (count > 0) ? "no_use" : "useable";
 	}
 	
-	 // AJAX를 통한 아이디 중복 확인
-//		@PostMapping("/checkEmailAvailability")
-//		@ResponseBody
-//		public String checkEmailAvailability(@RequestParam String email) {
-//		    int count = memberService.findemailCheck(email);
-//		    return (count > 0) ? "no_use" : "useable";
-//		}
-	
-	
 	/* TODO 회원가입 */
 	@PostMapping("/join")
 	public String registerUser(@ModelAttribute("joinFormDto") JoinFormDto joinFormDto, BindingResult bindingResult) {
@@ -125,11 +117,4 @@ public class SecurityController {
 		return result;
 	}
 
-	@GetMapping("/logout")
-	public String logout(SessionStatus status) {
-
-		status.setComplete();
-
-		return "redirect:index";
-	}
 }

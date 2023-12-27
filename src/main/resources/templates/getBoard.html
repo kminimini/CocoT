@@ -3,44 +3,60 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>글 상세</title>
+    <style>
+        body {
+            text-align: center;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 700px;
+            margin: auto;
+            margin-top: 20px; /* 상단 마진 추가 */
+        }
+    </style>
 </head>
 <body>
+    <div th:replace="~{fragments/header}"></div>	
 
-        <h1>게시글 상세</h1>
-        <hr>
-        <form th:action="@{/updateBoard}" method="post">
-            <input type="hidden" name="bseq" th:value="${board.bseq}" />
-            <table border="1" cellpadding="0" cellspacing="0">
-                <tr>
-                    <td bgcolor="lightblue" width="70" style="color: white;">제목</td>
-                    <td align="left"><input type="text" name="btitle" th:value="${board.btitle}" /></td>
-                </tr>
-                <tr>
-                    <td bgcolor="lightblue" style="color: white;">작성자</td>
-                    <td align="left" th:text="${board.member.id}"></td>
-                </tr>
-                <tr>
-                    <td bgcolor="lightblue" style="color: white;">내용</td>
-                    <td align="left"><textarea name="bcontent" cols="40" rows="10" th:text="${board.bcontent}"></textarea></td>
-                </tr>
-                <tr>
-                    <td bgcolor="lightblue" style="color: white;">등록일</td>
-                    <td align="left"><span th:text="${#dates.format(board.createDate, 'yyyy-MM-dd')}"></span></td>
-                </tr>
-                <tr>
-                    <td bgcolor="lightblue" style="color: white;">조회수</td>
-                    <td align="left" th:text="${board.cnt}"></td>
-                </tr>
-                <tr>
-                    <td colspan="2" align="center">
-                        <input type="submit" value="글 수정"/>
-                    </td>
-                </tr>
-            </table>
-        </form>
-        <hr>
-        <a th:href="@{/insertBoard}" style="color: black;">글등록</a>&nbsp;&nbsp;&nbsp;
-        <a th:href="@{/deleteBoard(bseq=${board.bseq})}" style="color: black;">글삭제</a>&nbsp;&nbsp;&nbsp;
-        <a th:href="@{/getBoardList}" style="color: black;">글목록</a>
+    <form th:action="@{/updateBoard}" method="post">
+        <input type="hidden" name="bseq" th:value="${board.bseq}" />
+        <table border="1" cellpadding="0" cellspacing="0">
+            <tr>
+                <td bgcolor="#f2f2f2" width="70" style="color: black;">제목</td>
+                <td align="left" bgcolor="#f2f2f2"><input type="text" name="btitle" th:value="${board.btitle}" /></td>
+            </tr>
+            <tr>
+                <td bgcolor="#f9f9f9" style="color: black;">작성자</td>
+                <td align="left" bgcolor="#f9f9f9" th:text="${board.member.id}"></td>
+            </tr>
+            <tr>
+                <td bgcolor="#f2f2f2" style="color: black;">내용</td>
+                <td align="left" bgcolor="#f2f2f2"><textarea name="bcontent" cols="40" rows="10" th:text="${board.bcontent}"></textarea></td>
+            </tr>
+            <tr>
+                <td bgcolor="#f9f9f9" style="color: black;">등록일</td>
+                <td align="left" bgcolor="#f9f9f9"><span th:text="${#dates.format(board.createDate, 'yyyy-MM-dd')}"></span></td>
+            </tr>
+            <tr>
+                <td bgcolor="#f2f2f2" style="color: black;">조회수</td>
+                <td align="left" bgcolor="#f2f2f2" th:text="${board.cnt}"></td>
+            </tr>
+            <tr>
+                <td bgcolor="#f9f9f9" colspan="2" align="center">
+                    <input type="submit" value="글 수정"/>
+                </td>
+            </tr>
+            <tr>
+                <td bgcolor="#f2f2f2" colspan="2" align="center">
+                    <!-- 수정: 글 삭제 링크에 경고 메시지 및 비밀번호 확인 추가 -->
+                    <a th:href="@{/deleteBoard(bseq=${board.bseq})}" style="color: black;">글삭제</a>&nbsp;&nbsp;&nbsp;
+                    <a th:href="@{/getBoardList}" style="color: black;">글목록</a>
+                </td>
+            </tr>
+        </table>
+    </form>    
+
+    <div th:replace="~{fragments/footer}"></div>
 </body>
 </html>

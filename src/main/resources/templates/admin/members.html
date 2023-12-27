@@ -22,14 +22,18 @@
             <th>Name</th>
             <th>Email</th>
             <th>Address</th>
+            <th>detailAddress</th>
+            <th>Phone</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="member : ${members}">
             <td th:text="${member.id}"></td>
             <td th:text="${member.name}"></td>
-            <td th:text="${member.email}"></td>
+            <td th:text="${member.email}"></td>            
             <td th:text="${member.address}"></td>
+            <td th:text="${member.detailAddress}"></td>
+            <td th:text="${member.phone}"></td>
             <td>
             </td>
         </tr>

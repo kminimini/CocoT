@@ -47,10 +47,20 @@ public class Board {
 	@JoinColumn(name = "MEMBER_SEQ", nullable = false, updatable = true)
 	private Member member;
 
-	
-	// 추가: 생성자
     public Board(Long bseq) {
         this.bseq = bseq;
+    }
+    
+    // 비밀글로 인한 엔터티 추가
+    @Column(columnDefinition = "NUMBER(1)")
+    private boolean secret;
+    
+    // 비밀글일 경우 비밀번호 필드
+    private String secretPassword;
+    
+    // 비밀글 여부 확인 메서드
+    public boolean isSecret() {
+        return secret;
     }
 
 }
