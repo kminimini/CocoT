@@ -53,6 +53,13 @@
 	            <div class="popup-column">
 	                <h3>기차역을 선택하세요.</h3>
 	                <ul class="location-list" id="trainStationList"></ul>
+	                <div class="pagination-container">
+					    <a id="firstPageButton" href="#" onclick="fetchStationsByPage(1)">처음</a>
+					    <a id="previousButton" href="#" onclick="fetchStationsByPage(currentPage - 1)">이전</a>
+					    <span id="currentPage"></span>
+					    <a id="nextButton" href="#" onclick="fetchStationsByPage(currentPage + 1)">다음</a>
+					    <a id="lastPageButton" href="#" onclick="fetchStationsByPage(totalPages)">마지막</a>
+					</div>
 	            </div>
 	        </div>
         </div>

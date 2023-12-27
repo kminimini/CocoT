@@ -1,6 +1,7 @@
 package com.coco.service;
 
 import java.io.IOException;
+import java.util.Map;
 
 public interface TrainService {
 
@@ -9,6 +10,9 @@ public interface TrainService {
 	
 	// 시/도별 기차역 목록조회
 	String getTrainStationByCityCode(String cityCode);
+	
+	// 시/도별 기차역 목록 페이징 조회
+    Map<String, Object> getTrainStationByCityCodeWithPage(String cityCode, int pageNo, int numOfRows);
 	
 	// 차량 종류 목록
 	String getVhcleKndList() throws IOException;

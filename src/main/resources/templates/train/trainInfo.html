@@ -32,9 +32,11 @@
         </tbody>
     </table>
 	<div class="pagination-container">
-        <a id="previousButton" th:if="${not isFirstPage}" href="#" th:href="${previousPageUrl}">&laquo; 이전</a>
+	    <a id="firstPageButton" th:if="${not isFirstPage}" href="#" th:href="${firstPageUrl}">&laquo;</a>
+        <a id="previousButton" th:if="${not isFirstPage}" href="#" th:href="${previousPageUrl}">이전</a>
         <span th:text="${currentPage}"></span>
-        <a id="nextButton" th:if="${not isLastPage}" href="#" th:href="${nextPageUrl}">다음 &raquo;</a>
+        <a id="nextButton" th:if="${not isLastPage}" href="#" th:href="${nextPageUrl}">다음</a>
+	    <a id="lastPageButton" th:if="${not isLastPage}" href="#" th:href="${lastPageUrl}">&raquo;</a>
         <a id="viewNextDayButton" th:if="${lastPage}" href="#" th:href="${checkNextDayUrl}">다음날 조회</a>
     </div>
     <a href="/" th:href="@{/test.html}">테스트홈으로 돌아가기</a>

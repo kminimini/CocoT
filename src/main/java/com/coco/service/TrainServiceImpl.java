@@ -7,9 +7,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,6 +17,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class TrainServiceImpl implements TrainService {
@@ -79,6 +81,7 @@ public class TrainServiceImpl implements TrainService {
     public String getTrainStationByCityCode(String cityCode) {
         try {
             String urlStr = ctyAcc + "?serviceKey=" + serviceKey + "&cityCode=" + cityCode + "&_type=json";
+            
             URL url = new URL(urlStr);
 
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -103,6 +106,40 @@ public class TrainServiceImpl implements TrainService {
         }
     }
 
+    // TODO 시/도별 기차역 목록 페이징 조회
+    @Override
+    public Map<String, Object> getTrainStationByCityCodeWithPage(String cityCode, int pageNo, int numOfRows) {
+        try {
+            // Adjust the URL to include pagination parameters
+            String urlStr = ctyAcc + "?serviceKey=" + serviceKey + "&cityCode=" + cityCode + "&numOfRows=" + numOfRows + "&pageNo=" + pageNo + "&_type=json";
+            URL url = new URL(urlStr);
+
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+            reader.close();
+
+            connection.disconnect();
+
+            logger.info("도시 코드에 대한 페이징 응답 수신: {}", response.toString());
+
+            // Parse the JSON response
+            ObjectMapper objectMapper = new ObjectMapper();
+            Map<String, Object> stationInfo = objectMapper.readValue(response.toString(), new TypeReference<Map<String, Object>>() {});
+
+            return stationInfo;
+        } catch (IOException e) {
+            logger.error("HTTP GET 요청을 보내는 동안 오류가 발생: {}", e.getMessage());
+            return null;
+        }
+    }
+    
     /* TODO 차량 종류 목록 */
     @Override
     public String getVhcleKndList() {
@@ -272,5 +309,5 @@ public class TrainServiceImpl implements TrainService {
 	        return 0; 
 	    }
 	}
-
+	
 }
