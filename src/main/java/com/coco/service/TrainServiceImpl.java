@@ -161,30 +161,31 @@ public class TrainServiceImpl implements TrainService {
                             "&numOfRows=" + numOfRows +
                             "&pageNo=" + pageNo +
                             "&_type=json";
-    	        URL url = new URL(urlStr);
 
-    	        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-    	        connection.setRequestMethod("GET");
+            URL url = new URL(urlStr);
 
-    	        BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-    	        StringBuilder response = new StringBuilder();
-    	        String line;
-    	        while ((line = reader.readLine()) != null) {
-    	            response.append(line);
-    	        }
-    	        reader.close();
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
 
-    	        connection.disconnect();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+            reader.close();
 
-    	        logger.info("열차 정보에 대한 응답 수신: {}", response.toString());
+            connection.disconnect();
 
-    	        String formattedResponse = formatDateTimeInResponse(response.toString());
+            logger.info("열차 정보에 대한 응답 수신: {}", response.toString());
 
-    	        return formattedResponse;
-    	    } catch (IOException e) {
-    	        logger.error("HTTP GET 요청을 보내는 동안 오류가 발생했습니다.: {}", e.getMessage());
-    	        return null;
-    	    }
+            String formattedResponse = formatDateTimeInResponse(response.toString());
+
+            return formattedResponse;
+        } catch (IOException e) {
+            logger.error("HTTP GET 요청을 보내는 동안 오류가 발생했습니다.: {}", e.getMessage());
+            return null;
+        }
     }
     
     /* TODO 기차표 정보의 항목 배열 내 날짜, 시간 형식 지정 */
@@ -230,10 +231,10 @@ public class TrainServiceImpl implements TrainService {
         }
     }
 
-    /* TODO 이전, 다음 버튼표시 여부 */
-	@Override
-	public boolean isLastPage(String depPlaceId, String arrPlaceId, String depPlandTime, int pageNo, int numOfRows) {
-		try {
+    // 다음날 조회하기 버튼 (마지막페이지 유무 확인)를 위한 메서드
+    @Override
+    public boolean isLastPage(String depPlaceId, String arrPlaceId, String depPlandTime, int pageNo, int numOfRows) {
+        try {
             // 첫 페이지의 열차 정보를 가져와 총 개수를 구하고,
             String firstPageResponse = getStrtpntAlocFndTrainInfoRaw(depPlaceId, arrPlaceId, depPlandTime, 1, numOfRows);
             JSONObject firstPageJson = new JSONObject(firstPageResponse);
@@ -250,45 +251,61 @@ public class TrainServiceImpl implements TrainService {
             // 임시로 예외처리는 false
             return false;
         }
-	}
+    }
 
-	// 마지막페이지 유무확인 조회용
-	@Override
-	public int getTotalPageCount(String depPlaceId, String arrPlaceId, String depPlandTime, int numOfRows) {
-	    try {
-	        String urlStr = ctyStrt + "?serviceKey=" + serviceKey +
-	                        "&depPlaceId=" + depPlaceId +
-	                        "&arrPlaceId=" + arrPlaceId +
-	                        "&depPlandTime=" + depPlandTime +
-	                        "&numOfRows=" + numOfRows +
-	                        "&pageNo=1" + 
-	                        "&_type=json";
+    // 마지막페이지 유무확인 조회용
+    @Override
+    public int getTotalPageCount(String depPlaceId, String arrPlaceId, String depPlandTime, int numOfRows) {
+        try {
+            String urlStr = ctyStrt + "?serviceKey=" + serviceKey +
+                            "&depPlaceId=" + depPlaceId +
+                            "&arrPlaceId=" + arrPlaceId +
+                            "&depPlandTime=" + depPlandTime +
+                            "&numOfRows=" + numOfRows +
+                            "&pageNo=1" +
+                            "&_type=json";
 
-	        URL url = new URL(urlStr);
-	        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-	        connection.setRequestMethod("GET");
+            URL url = new URL(urlStr);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
 
-	        BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-	        StringBuilder response = new StringBuilder();
-	        String line;
-	        while ((line = reader.readLine()) != null) {
-	            response.append(line);
-	        }
-	        reader.close();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+            reader.close();
 
-	        connection.disconnect();
+            connection.disconnect();
 
-	        JSONObject jsonResponse = new JSONObject(response.toString());
-	        JSONObject totalCountInfo = jsonResponse.getJSONObject("response").getJSONObject("body");
+            JSONObject jsonResponse = new JSONObject(response.toString());
+            JSONObject totalCountInfo = jsonResponse.getJSONObject("response").getJSONObject("body");
 
-	        int totalCount = totalCountInfo.getInt("totalCount");
-	        int numOfPages = (int) Math.ceil((double) totalCount / numOfRows);
+            int totalCount = totalCountInfo.getInt("totalCount");
 
-	        return numOfPages;
-	    } catch (IOException | JSONException e) {
-	        logger.error("Error getting total page count: {}", e.getMessage());
-	        return 0; 
-	    }
-	}
-	
+            // Calculate the total number of pages based on the total count and the number of rows per page.
+            int numOfPages = (int) Math.ceil((double) totalCount / numOfRows);
+
+            return numOfPages;
+        } catch (IOException | JSONException e) {
+            logger.error("Error getting total page count: {}", e.getMessage());
+            return 0;
+        }
+    }
+//	// 다음날 조회 버튼을 표시할지 여부를 결정하는 메서드
+//    @Override
+//    public boolean hasNextDay(int totalPageCount, int numOfRows, int pageNo) {
+//        // 전체 데이터 개수
+//        int totalCount = totalPageCount * numOfRows;
+//
+//        // 전체 페이지 개수
+//        int totalPages = totalPageCount;
+//
+//        // 현재 페이지의 마지막 행 개수
+//        int currentPageRowCount = totalCount - (numOfRows * (pageNo - 1));
+//
+//        // 남은 페이지가 1 이상이고, 현재 페이지의 마지막 행 개수가 1 이상이면 다음날 조회 버튼을 표시
+//        return totalPages > 1 && currentPageRowCount > 1;
+//    }
 }
