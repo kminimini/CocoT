@@ -1,4 +1,5 @@
 /* train.ticket.js */
+/*
 // Global variables to keep track of the current page and size
 var currentPage = 1;
 var pageSize = 10; // You can adjust the page size as needed
@@ -64,3 +65,4 @@ document.getElementById('nextButton').addEventListener('click', function() {
 document.addEventListener('DOMContentLoaded', function() {
     // Your existing JavaScript code, including the loadNextPage function
 });
+*/

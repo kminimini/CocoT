@@ -1,36 +1,67 @@
 @charset "UTF-8";
 /* Table Styling */
 table {
-    border-collapse: collapse;
-    width: 100%;
-    border: 1px solid #ddd;
+	border-collapse: collapse;
+	width: 100%;
+	border: 1px solid #ddd;
 }
+
 th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
+	border: 1px solid #ddd;
+	padding: 8px;
+	text-align: left;
 }
+
 tr:nth-child(even) {
-    background-color: #f2f2f2;
+	background-color: #f2f2f2;
 }
+
 tr:hover {
-    background-color: #ddd;
+	background-color: #ddd;
 }
 /* Header Styling */
 th {
-    background-color: #2b68a7;
-    color: white;
+	background-color: #2b68a7;
+	color: white;
 }
 /* Spacing */
 body {
-    font-family: Arial, sans-serif;
+	font-family: Arial, sans-serif;
 }
+
 h1 {
-    text-align: center;
+	text-align: center;
 }
 /* Responsive Design */
 @media screen and (max-width: 600px) {
-    table, thead, tbody, th, td, tr {
-        display: block;
-    }
+	table, thead, tbody, th, td, tr {
+		display: block;
+	}
+}
+
+.pagination-container {
+	text-align: center;
+	margin-top: 20px; /* 여백 조정 */
+}
+
+.pagination-container a {
+	display: inline-block;
+	padding: 10px 20px;
+	margin: 0 10px; /* 여백 조정 */
+	text-align: center;
+	text-decoration: none;
+	font-weight: bold;
+	color: #fff;
+	background-color: #007bff; /* 버튼 색상 */
+	border-radius: 5px; /* 둥근 모서리 */
+	transition: background-color 0.3s;
+}
+
+.pagination-container a:hover {
+	background-color: #0056b3; /* 마우스를 올리면 더 어두운 버튼 색상 */
+}
+
+.pagination-container a:disabled {
+	background-color: #ccc; /* 버튼 색상 비활성화 */
+	cursor: not-allowed;
 }

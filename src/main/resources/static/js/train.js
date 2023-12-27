@@ -1,11 +1,13 @@
 /* train.js */
 // 도시 번호로 기차역 보기
+/*
 function promptForCityCode() {
 	var cityCode = prompt("Please enter the city code:", "");
 	if (cityCode != null && cityCode != "") {
 		window.location.href = "/train/stations?cityCode=" + cityCode;
 	}
 }
+*/
 
 // 출발 날짜 선택 후 검색 : ex) 2023-11-11 -> 20231111 (하이픈 제외하고 요청)
 document.getElementById('trainInfoForm').addEventListener('submit', function(event) {
@@ -128,7 +130,7 @@ function populateCityCodesListForArrival(cityCodes) {
 	});
 }
 
-// 출발지 : 선택한 도시의 기차역을 불러와 표시하는 기능
+// 출발지 : 선택한 도시를 서버에 전달해서 도시의 기차역을 불러와 표시하는 기능
 function fetchTrainStationsByCityCode(cityCode) {
     // 도시 코드별로 기차역을 가져오기
     var url = "/train/stations?cityCode=" + cityCode;
@@ -153,7 +155,7 @@ function fetchTrainStationsByCityCode(cityCode) {
         });
 }
 
-// 도착지 : 선택한 도시의 기차역을 불러와 표시하는 기능
+// 도착지 : 선택한 도시를 서버에 전달해서 도시의 기차역을 불러와 표시하는 기능
 function fetchTrainStationsByCityCodeForArrival(cityCode) {
 	var url = "/train/stations?cityCode=" + cityCode;
 	
@@ -175,10 +177,8 @@ function fetchTrainStationsByCityCodeForArrival(cityCode) {
 
 // 출발지 : UI에 기차역을 표시하는 기능
 function displayTrainStations(data) {
-    // 중첩된 데이터 구조에서 스테이션 배열 추출하기
     var stations = data.response.body.items.item;
 
-    // 스테이션이 배열인지 확인
     if (!Array.isArray(stations)) {
         console.error("Expected an array of stations, received:", stations);
         return;
@@ -190,15 +190,14 @@ function displayTrainStations(data) {
     stations.forEach(station => {
         var listItem = document.createElement("li");
         listItem.textContent = station.nodename;
-        listItem.onclick = function() {
-			document.getElementById("departureStationId").value = station.nodeid;
-			document.getElementById("departureStationName").value = station.nodename;
-			closeDepartureLocationPopup();
-		};
+        listItem.onclick = function () {
+            document.getElementById("departureStationId").value = station.nodeid;
+            document.getElementById("departureStationName").value = station.nodename;
+            closeDepartureLocationPopup();
+        };
         stationList.appendChild(listItem);
     });
 
-    // 기차역 목록이 포함된 팝업 표시
     var popup = document.getElementById("departureLocationPopup");
     popup.style.display = "block";
 }

@@ -1,3 +1,4 @@
+<!-- trainInfo.html -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -31,8 +32,18 @@
 	        </tr>
         </tbody>
     </table>
-	<a th:href="@{/trainInfo(pageNo=${trainInfo.response.body.pageNo + 1})}">Next</a>
+	<div class="pagination-container">
+	    <a id="firstPageButton" th:if="${not isFirstPage}" href="#" th:href="${firstPageUrl}">&laquo;</a>
+        <a id="previousButton" th:if="${not isFirstPage}" href="#" th:href="${previousPageUrl}">이전</a>
+        <span th:text="${currentPage}"></span>
+        <a id="nextButton" th:if="${not isLastPage}" href="#" th:href="${nextPageUrl}">다음</a>
+	    <a id="lastPageButton" th:if="${not isLastPage}" href="#" th:href="${lastPageUrl}">&raquo;</a>
+        <a id="viewNextDayButton" th:if="${lastPage}" href="#" th:href="${checkNextDayUrl}">다음날 조회</a>
+    </div>
     <a href="/" th:href="@{/test.html}">테스트홈으로 돌아가기</a>
     <script type="text/javascript" th:src="@{/js/train.js}"></script>
+    <script th:if="${noResults}">
+    alert('No results found for the selected criteria.');
+</script>
 </body>
 </html>
