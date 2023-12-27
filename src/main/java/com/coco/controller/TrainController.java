@@ -88,7 +88,7 @@ public class TrainController {
             @RequestParam(name = "arrPlaceId") String arrPlaceId,
             @RequestParam(name = "depPlandTime") String depPlandTime,
             @RequestParam(name = "pageNo", defaultValue = "1") int pageNo,
-            @RequestParam(name = "numOfRows", defaultValue = "12") int numOfRows,
+            @RequestParam(name = "numOfRows", defaultValue = "10") int numOfRows,
             Model model) {
 
         try {
@@ -96,9 +96,13 @@ public class TrainController {
 
             // 마지막페이지 유무확인 조회용
         	int totalPageCount = trainService.getTotalPageCount(depPlaceId, arrPlaceId, depPlandTime, numOfRows);
-
-            int previousPageNo = Math.max(1, pageNo - 1);
-            int nextPageNo = Math.min(totalPageCount, pageNo + 1);
+        	// Check if the search results are empty
+            if (totalPageCount == 0) {
+                model.addAttribute("noResults", true);
+                return "train/trainInfo";
+            }
+        	int previousPageNo = Math.max(1, pageNo - 1);
+        	int nextPageNo = Math.min(totalPageCount, pageNo + 1);
             
             // 다음날 조회하기 버튼 (마지막페이지 유무 확인)
             boolean lastPage = pageNo >= totalPageCount;
@@ -120,6 +124,10 @@ public class TrainController {
             ObjectMapper objectMapper = new ObjectMapper();
             Map<String, Object> trainInfo = objectMapper.readValue(response, new TypeReference<Map<String, Object>>() {});
 
+//            // 남은 페이지가 1 이상인 경우 다음날 조회 버튼을 보여줌
+//            boolean hasNextDay = trainService.hasNextDay(totalPageCount, numOfRows, pageNo);
+//            model.addAttribute("hasNextDay", lastPage && hasNextDay);
+            
             model.addAttribute("trainInfo", trainInfo);
             model.addAttribute("currentPage", pageNo);
             model.addAttribute("previousPageUrl", buildPageUrl(depPlaceId, arrPlaceId, depPlandTime, previousPageNo, numOfRows));
