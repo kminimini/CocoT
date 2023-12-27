@@ -2,6 +2,11 @@ package com.coco.controller;
 
 import java.util.Optional;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
@@ -15,11 +20,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.coco.domain.Member;
 import com.coco.dto.JoinFormDto;
 import com.coco.dto.MailDto;
+import com.coco.service.KakaoService;
 import com.coco.service.MemberService;
 import com.coco.service.SendEmailService;
 
@@ -36,6 +43,15 @@ public class SecurityController {
 
 	@Autowired
 	private SendEmailService sendEmailService;
+	
+	@Autowired
+	private KakaoService kakaoService;
+	
+	@Autowired
+	private RestTemplate restTemplate;
+	
+	@Autowired
+	private HttpSession httpSession;
 
 	/* TODO 로그인 화면 이동 */
 	@GetMapping("/login")
@@ -63,6 +79,8 @@ public class SecurityController {
 	    // 예시: return passwordEncoder.matches(inputPassword, storedPassword);
 		return passwordMatches(inputPassword, storedPassword);
 	}
+		
+		
 
 	/* TODO 회원가입 화면 이동 */
 	@GetMapping("/join")
@@ -118,3 +136,5 @@ public class SecurityController {
 	}
 
 }
+
+

@@ -46,6 +46,8 @@ public interface MemberRepository extends JpaRepository<Member, Long> {	// Strin
       void updateUserPassword(@Param("id") String id, @Param("newPassword") String newPassword);
 
   Member getMemberByEmail(String email);
+
+boolean existsById(String id);
   
 
 	

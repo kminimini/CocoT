@@ -45,5 +45,9 @@ public interface MemberService {
 	boolean changePassword(String currentPassword, String newPassword);
 
 	Member getCurrentMember();
+	
+	// 카카오 로그인(회원가입 여부 확인)
+	public boolean isMemberExists(String memberId);
+	    
 
 }
