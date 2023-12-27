@@ -2,6 +2,8 @@ package com.coco.service;
 
 import java.io.IOException;
 
+import com.coco.domain.TrainInfo;
+
 public interface TrainService {
 
 	// 도시 코드 가져오기
@@ -22,6 +24,7 @@ public interface TrainService {
 	// 마지막페이지 유무확인 조회용
 	int getTotalPageCount(String depPlaceId, String arrPlaceId, String depPlandTime, int numOfRows);
 	
-//	// 다음날 조회 버튼을 표시할지 여부를 결정하는 메서드
-//    boolean hasNextDay(int totalPageCount, int numOfRows, int pageNo);
+	TrainInfo.TrainResponse getTrainInfo(String depPlaceId, String arrPlaceId, String depPlandTime);
+	
+	boolean hasTrainItems(TrainInfo.TrainResponse trainInfo);
 }

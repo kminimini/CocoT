@@ -7,7 +7,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,6 +18,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import com.coco.domain.TrainInfo;
+import com.coco.domain.TrainInfo.ResponseBody;
+import com.coco.domain.TrainInfo.TrainResponse;
 
 @Service
 public class TrainServiceImpl implements TrainService {
@@ -298,19 +304,127 @@ public class TrainServiceImpl implements TrainService {
             return 0;
         }
     }
-//	// 다음날 조회 버튼을 표시할지 여부를 결정하는 메서드
-//    @Override
-//    public boolean hasNextDay(int totalPageCount, int numOfRows, int pageNo) {
-//        // 전체 데이터 개수
-//        int totalCount = totalPageCount * numOfRows;
-//
-//        // 전체 페이지 개수
-//        int totalPages = totalPageCount;
-//
-//        // 현재 페이지의 마지막 행 개수
-//        int currentPageRowCount = totalCount - (numOfRows * (pageNo - 1));
-//
-//        // 남은 페이지가 1 이상이고, 현재 페이지의 마지막 행 개수가 1 이상이면 다음날 조회 버튼을 표시
-//        return totalPages > 1 && currentPageRowCount > 1;
-//    }
+
+	
+    /* TODO 출발지, 도착지, 출발일을 기반으로 기차 정보 조회 */
+    @Override
+    public TrainInfo.TrainResponse getTrainInfo(String depPlaceId, String arrPlaceId, String depPlandTime) {
+        try {
+            // Call the appropriate API or service to get train information
+            String responseJson = callTrainInfoApi(depPlaceId, arrPlaceId, depPlandTime);
+
+            // Parse the JSON response and return the TrainResponse object
+            return parseTrainInfoResponse(responseJson);
+        } catch (Exception e) {
+            logger.error("Error getting train information: {}", e.getMessage());
+            return null;
+        }
+    }
+
+    /* TODO API 호출을 통한 기차 정보 조회 */
+    private String callTrainInfoApi(String depPlaceId, String arrPlaceId, String depPlandTime) throws IOException {
+        String urlStr = ctyStrt + "?serviceKey=" + serviceKey +
+                        "&depPlaceId=" + depPlaceId +
+                        "&arrPlaceId=" + arrPlaceId +
+                        "&depPlandTime=" + depPlandTime +
+                        "&numOfRows=10" +  // You can adjust the number of rows as needed
+                        "&pageNo=1" +
+                        "&_type=json";
+
+        // URL 정리
+        urlStr = urlStr.replaceAll("[^\\x20-\\x7e]", "");
+        URL url = new URL(urlStr);
+
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("GET");
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        StringBuilder response = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            response.append(line);
+        }
+        reader.close();
+
+        connection.disconnect();
+
+        return response.toString();
+    }
+
+    /* TODO JSON 응답을 TrainResponse 객체로 파싱 */
+    private TrainInfo.TrainResponse parseTrainInfoResponse(String responseJson) {
+        try {
+            // Parse the JSON response
+            JSONObject jsonResponse = new JSONObject(responseJson);
+            JSONObject responseHeader = jsonResponse.getJSONObject("response").getJSONObject("header");
+
+            // Check if the response indicates success
+            if ("00".equals(responseHeader.getString("resultCode"))) {
+                // Parse the relevant fields and create a TrainResponse object
+                TrainInfo.TrainResponse trainResponse = new TrainInfo.TrainResponse();
+
+                TrainInfo.ResponseBody responseBody = new TrainInfo.ResponseBody();
+                TrainInfo.Items items = new TrainInfo.Items();
+                List<TrainInfo.TrainItem> trainItems = new ArrayList<>();
+
+                // Parse the items array
+                JSONArray itemsArray = jsonResponse.getJSONObject("response").getJSONObject("body").getJSONObject("items").getJSONArray("item");
+                for (int i = 0; i < itemsArray.length(); i++) {
+                    JSONObject itemJson = itemsArray.getJSONObject(i);
+                    // Extract fields from itemJson and create TrainItem objects
+                    TrainInfo.TrainItem trainItem = new TrainInfo.TrainItem();
+                    trainItem.setTrainno(itemJson.getInt("trainno"));
+                    trainItem.setTraingradename(itemJson.getString("traingradename"));
+                    trainItem.setDepplacename(itemJson.getString("depplacename"));
+                    trainItem.setDepplandtime(itemJson.getLong("depplandtime"));
+                    trainItem.setArrplacename(itemJson.getString("arrplacename"));
+                    trainItem.setArrplandtime(itemJson.getLong("arrplandtime"));
+                    trainItem.setAdultcharge(itemJson.getInt("adultcharge"));
+
+                    // Add the train item to the list
+                    trainItems.add(trainItem);
+                }
+
+                // Set the items list in the response body
+                items.setItem(trainItems);
+                responseBody.setItems(items);
+                trainResponse.setResponse(responseBody);
+
+                return trainResponse;
+            } else {
+                // Log or handle the case where the response indicates failure
+                logger.error("열차 정보 API 응답이 실패를 나타냅니다.: {}", responseHeader.getString("resultMsg"));
+                return null;
+            }
+        } catch (JSONException e) {
+            logger.error("열차 정보 파싱 오류 응답: {}", e.getMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public boolean hasTrainItems(TrainInfo.TrainResponse trainInfo) {
+        if (trainInfo != null && trainInfo.hasTrainItems()) {
+            try {
+                TrainInfo.ResponseBody responseBody = trainInfo.getResponse();
+                TrainInfo.Items items = responseBody != null ? responseBody.getItems() : null;
+
+                boolean result = responseBody != null && responseBody.hasTrainItems() && items != null && items.hasItem();
+
+                // Logging the result for debugging
+                if (result) {
+                    logger.debug("Train items are present.");
+                } else {
+                    logger.debug("Train items are not present.");
+                }
+
+                return result;
+            } catch (ClassCastException e) {
+                // Log the exception for debugging
+                logger.error("Error casting objects in hasTrainItems method", e);
+                return false;
+            }
+        }
+        return false;
+    }
 }

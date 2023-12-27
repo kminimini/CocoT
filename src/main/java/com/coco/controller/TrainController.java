@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.coco.domain.TrainInfo;
+import com.coco.domain.TrainInfo.TrainResponse;
 import com.coco.service.TrainService;
 import com.coco.service.TrainServiceImpl;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -92,15 +94,14 @@ public class TrainController {
             Model model) {
 
         try {
+        	logger.info("열차 정보 요청 수신.");
         	String response = trainService.getStrtpntAlocFndTrainInfoRaw(depPlaceId, arrPlaceId, depPlandTime, pageNo, numOfRows);
+        	// Call the service to get train information
+        	TrainInfo.TrainResponse trainInfos = trainService.getTrainInfo(depPlaceId, arrPlaceId, depPlandTime);
 
             // 마지막페이지 유무확인 조회용
         	int totalPageCount = trainService.getTotalPageCount(depPlaceId, arrPlaceId, depPlandTime, numOfRows);
-        	// Check if the search results are empty
-            if (totalPageCount == 0) {
-                model.addAttribute("noResults", true);
-                return "train/trainInfo";
-            }
+        	
         	int previousPageNo = Math.max(1, pageNo - 1);
         	int nextPageNo = Math.min(totalPageCount, pageNo + 1);
             
@@ -123,10 +124,6 @@ public class TrainController {
             
             ObjectMapper objectMapper = new ObjectMapper();
             Map<String, Object> trainInfo = objectMapper.readValue(response, new TypeReference<Map<String, Object>>() {});
-
-//            // 남은 페이지가 1 이상인 경우 다음날 조회 버튼을 보여줌
-//            boolean hasNextDay = trainService.hasNextDay(totalPageCount, numOfRows, pageNo);
-//            model.addAttribute("hasNextDay", lastPage && hasNextDay);
             
             model.addAttribute("trainInfo", trainInfo);
             model.addAttribute("currentPage", pageNo);
@@ -148,7 +145,13 @@ public class TrainController {
             
             // 첫 페이지로 이동
             model.addAttribute("firstPageUrl", firstPageUrl);
-            
+            // Assuming you're using Spring MVC
+            model.addAttribute("noResults", trainInfo.isEmpty());
+            // Check if there are train tickets in the response
+            if (!trainService.hasTrainItems(trainInfos)) {
+                // If no train tickets, redirect to the error page
+                return "redirect:/train/error";
+            }
             return "train/trainInfo";
         } catch (IOException e) {
         	model.addAttribute("error", "열차 정보 불러오기 오류: " + e.getMessage());
@@ -165,5 +168,11 @@ public class TrainController {
     	        .queryParam("pageNo", pageNo)
     	        .queryParam("numOfRows", numOfRows)
     	        .toUriString();
+    }
+    
+    // 오류 페이지
+    @GetMapping("/error")
+    public String showErrorPage() {
+        return "train/error";
     }
 }
