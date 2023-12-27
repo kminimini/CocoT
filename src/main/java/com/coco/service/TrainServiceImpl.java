@@ -114,6 +114,8 @@ public class TrainServiceImpl implements TrainService {
     @Override
     public Map<String, Object> getTrainStationByCityCodeWithPage(String cityCode, int pageNo, int numOfRows) {
         try {
+        	logger.info("도시 코드 요청 수신: {}, page: {}, numOfRows: {}", cityCode, pageNo, numOfRows);
+
             // Adjust the URL to include pagination parameters
             String urlStr = ctyAcc + "?serviceKey=" + serviceKey + "&cityCode=" + cityCode + "&numOfRows=" + numOfRows + "&pageNo=" + pageNo + "&_type=json";
             URL url = new URL(urlStr);

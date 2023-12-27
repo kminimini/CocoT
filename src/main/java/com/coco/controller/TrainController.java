@@ -48,25 +48,20 @@ public class TrainController {
 	public ResponseEntity<Map<String, Object>> listStationsWithPagination(
 	        @RequestParam("cityCode") String cityCode,
 	        @RequestParam(name = "pageNo", defaultValue = "1") int pageNo,
-	        @RequestParam(name = "numOfRows", defaultValue = "10") int numOfRows,
-	        Model model) {
-
+	        @RequestParam(name = "numOfRows", defaultValue = "10") int numOfRows) {
 	    try {
 	        Map<String, Object> stationInfo = trainService.getTrainStationByCityCodeWithPage(cityCode, pageNo, numOfRows);
 
 	        if (stationInfo != null) {
-	            // If you need to pass the result to the Thymeleaf template, add it to the model
-	            model.addAttribute("stations", stationInfo);
-	            // Return the paginated station information as ResponseEntity
 	            return ResponseEntity.ok(stationInfo);
 	        } else {
-	            // Handle the case where there was an issue fetching station information
-	            model.addAttribute("error", "스테이션 가져오기 오류");
+	            // Log an error if the stationInfo is null
+	            logger.error("Error: trainService returned null for cityCode: {}, pageNo: {}, numOfRows: {}", cityCode, pageNo, numOfRows);
 	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 	        }
 	    } catch (Exception e) {
-	        // Handle other exceptions
-	        model.addAttribute("error", "스테이션 가져오기 오류: " + e.getMessage());
+	        // Log the exception
+	        logger.error("Error processing request for cityCode: {}, pageNo: {}, numOfRows: {}", cityCode, pageNo, numOfRows, e);
 	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 	    }
 	}
@@ -159,5 +154,17 @@ public class TrainController {
     	        .queryParam("pageNo", pageNo)
     	        .queryParam("numOfRows", numOfRows)
     	        .toUriString();
+    }
+    
+ // Helper method to calculate total page count
+    private int calculateTotalPageCount(Map<String, Object> stationInfo, int numOfRows) {
+        int totalCount = (int) stationInfo.get("totalCount");
+        return (int) Math.ceil((double) totalCount / numOfRows);
+    }
+    
+ // Helper method to build page URL
+    private String buildPageUrl(String cityCode, int pageNo, int numOfRows) {
+        // Add your logic to build the page URL
+        return "/stations?cityCode=" + cityCode + "&pageNo=" + pageNo + "&numOfRows=" + numOfRows;
     }
 }
