@@ -45,27 +45,25 @@ public class TrainController {
 	
 	// 시/도별 기차역 목록조회 (with pagination)
 	@GetMapping("/stations")
-	public ResponseEntity<Map<String, Object>> listStationsWithPagination(
+	public ResponseEntity<String> listStationsWithPagination(
 	        @RequestParam("cityCode") String cityCode,
 	        @RequestParam(name = "pageNo", defaultValue = "1") int pageNo,
-	        @RequestParam(name = "numOfRows", defaultValue = "10") int numOfRows,
+	        @RequestParam(name = "numOfRows", defaultValue = "60") int numOfRows,
 	        Model model) {
-
 	    try {
-	        Map<String, Object> stationInfo = trainService.getTrainStationByCityCodeWithPage(cityCode, pageNo, numOfRows);
+	        String stations = trainService.getTrainStationByCityCode(cityCode, pageNo, numOfRows);
 
-	        if (stationInfo != null) {
-	            // If you need to pass the result to the Thymeleaf template, add it to the model
-	            model.addAttribute("stations", stationInfo);
-	            // Return the paginated station information as ResponseEntity
-	            return ResponseEntity.ok(stationInfo);
+	        if (stations != null) {
+	            // 결과를 Thymeleaf 템플릿에 전달해야 하는 경우 모델에 추가
+	            model.addAttribute("stations", stations);
+	            // 페이지가 지정된 스테이션 정보를 응답 엔티티로 반환.
+	            return ResponseEntity.ok(stations);
 	        } else {
-	            // Handle the case where there was an issue fetching station information
+	            // 스테이션 정보를 가져오는 데 문제가 발생한 경우 처리
 	            model.addAttribute("error", "스테이션 가져오기 오류");
 	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 	        }
 	    } catch (Exception e) {
-	        // Handle other exceptions
 	        model.addAttribute("error", "스테이션 가져오기 오류: " + e.getMessage());
 	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 	    }

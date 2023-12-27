@@ -78,64 +78,45 @@ public class TrainServiceImpl implements TrainService {
 
     /* TODO 시/도별 기차역 목록조회 */
     @Override
-    public String getTrainStationByCityCode(String cityCode) {
+    public String getTrainStationByCityCode(String cityCode, int pageNo, int numOfRows) {
         try {
-            String urlStr = ctyAcc + "?serviceKey=" + serviceKey + "&cityCode=" + cityCode + "&_type=json";
-            
+            String urlStr = ctyAcc + "?serviceKey=" + serviceKey + "&cityCode=" + cityCode + "&_type=json" +
+                    "&pageNo=" + pageNo +
+                    "&numOfRows=" + numOfRows;
+
             URL url = new URL(urlStr);
 
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
 
-            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            StringBuilder response = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                response.append(line);
+            // 응답 코드 확인
+            int responseCode = connection.getResponseCode();
+            logger.info("HTTP 응답 코드: {}", responseCode);
+
+            // 응답이 성공(200)인 경우에만 데이터 읽기
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder response = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
+                reader.close();
+
+                connection.disconnect();
+
+                // 응답 데이터 확인
+                logger.info("도시 코드에 대한 응답 수신: {}", response.toString());
+
+                return response.toString();
+            } else {
+                // 응답이 성공하지 않으면 오류 메시지 출력
+                logger.error("HTTP 응답이 성공하지 않았습니다. 응답 코드: {}", responseCode);
+                return null;
             }
-            reader.close();
-
-            connection.disconnect();
-
-            logger.info("도시 코드에 대한 응답 수신: {}", response.toString());
-
-            return response.toString();
         } catch (IOException e) {
-            logger.error("HTTP GET 요청을 보내는 동안 오류가 발생: {}", e.getMessage());
-            return null;
-        }
-    }
-
-    // TODO 시/도별 기차역 목록 페이징 조회
-    @Override
-    public Map<String, Object> getTrainStationByCityCodeWithPage(String cityCode, int pageNo, int numOfRows) {
-        try {
-            // Adjust the URL to include pagination parameters
-            String urlStr = ctyAcc + "?serviceKey=" + serviceKey + "&cityCode=" + cityCode + "&numOfRows=" + numOfRows + "&pageNo=" + pageNo + "&_type=json";
-            URL url = new URL(urlStr);
-
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
-
-            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            StringBuilder response = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                response.append(line);
-            }
-            reader.close();
-
-            connection.disconnect();
-
-            logger.info("도시 코드에 대한 페이징 응답 수신: {}", response.toString());
-
-            // Parse the JSON response
-            ObjectMapper objectMapper = new ObjectMapper();
-            Map<String, Object> stationInfo = objectMapper.readValue(response.toString(), new TypeReference<Map<String, Object>>() {});
-
-            return stationInfo;
-        } catch (IOException e) {
-            logger.error("HTTP GET 요청을 보내는 동안 오류가 발생: {}", e.getMessage());
+            // HTTP 요청 또는 응답 처리 중 오류가 발생한 경우
+            logger.error("HTTP GET 요청을 보내거나 응답을 처리하는 동안 오류가 발생했습니다.: {}", e.getMessage());
             return null;
         }
     }
