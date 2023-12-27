@@ -8,7 +8,6 @@ import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,9 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class TrainServiceImpl implements TrainService {
@@ -47,6 +43,8 @@ public class TrainServiceImpl implements TrainService {
     	try {
             // 서비스 키를 사용하여 URL을 작성합니다.
             String urlStr = ctyCode + "?serviceKey=" + serviceKey + "&_type=json";
+            // URL을 정리하여 의도하지 않은 문자 제거하기
+            urlStr = urlStr.replaceAll("[^\\x20-\\x7e]", "");
             URL url = new URL(urlStr);
 
             // URL에 대한 연결을 엽니다.
@@ -83,7 +81,8 @@ public class TrainServiceImpl implements TrainService {
             String urlStr = ctyAcc + "?serviceKey=" + serviceKey + "&cityCode=" + cityCode + "&_type=json" +
                     "&pageNo=" + pageNo +
                     "&numOfRows=" + numOfRows;
-
+            // URL을 정리하여 의도하지 않은 문자 제거하기
+            urlStr = urlStr.replaceAll("[^\\x20-\\x7e]", "");
             URL url = new URL(urlStr);
 
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -126,6 +125,8 @@ public class TrainServiceImpl implements TrainService {
     public String getVhcleKndList() {
         try {
             String urlStr = vhcle + "?serviceKey=" + serviceKey + "&_type=json";
+            // URL을 정리하여 의도하지 않은 문자 제거하기
+            urlStr = urlStr.replaceAll("[^\\x20-\\x7e]", "");
             URL url = new URL(urlStr);
 
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -162,6 +163,8 @@ public class TrainServiceImpl implements TrainService {
                             "&pageNo=" + pageNo +
                             "&_type=json";
 
+            // URL을 정리하여 의도하지 않은 문자 제거하기
+            urlStr = urlStr.replaceAll("[^\\x20-\\x7e]", "");
             URL url = new URL(urlStr);
 
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -265,6 +268,8 @@ public class TrainServiceImpl implements TrainService {
                             "&pageNo=1" +
                             "&_type=json";
 
+            // URL을 정리하여 의도하지 않은 문자 제거하기
+            urlStr = urlStr.replaceAll("[^\\x20-\\x7e]", "");
             URL url = new URL(urlStr);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
