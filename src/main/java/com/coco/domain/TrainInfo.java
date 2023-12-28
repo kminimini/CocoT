@@ -10,7 +10,7 @@ import lombok.ToString;
 import java.util.List;
 
 import com.coco.domain.TrainInfo.ResponseBody;
-
+/* 열차정보 임시저장소 */
 @Getter
 @Setter
 @ToString
@@ -87,5 +87,13 @@ public class TrainInfo {
         private String arrplacename;
         private long arrplandtime;
         private int adultcharge;
+        private String traveltime;
+        public String getTraveltime() {
+            return traveltime;
+        }
+
+        public void setTraveltime(String traveltime) {
+            this.traveltime = traveltime;
+        }
     }
 }

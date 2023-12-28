@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>예약 하기</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/seatSelection.css}">
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/seatSelection.js}"></script>
+</head>
+<body>
+    <h1>예약 하기</h1>
+    
+    <!-- 예약 정보를 출력하는 부분 -->
+    <div class="reservation-info">
+        <p>열차 번호: <span th:text="${trainNo}"></span></p>
+        <p>열차 정보: <span th:text="${trainGrade}"></span></p>
+        <p>출발지: <span th:text="${depPlace}"></span></p>
+        <p>출발 시간: <span th:text="${depTime}"></span></p>
+        <p>도착지: <span th:text="${arrPlace}"></span></p>
+        <p>도착 시간: <span th:text="${arrTime}"></span></p>
+        <p>요금: <span th:text="${adultCharge}"></span></p>
+    </div>
+	
+	<!-- 결제하기 버튼 -->
+    <form th:action="@{/reservation/payment}" method="post">
+        <input type="hidden" name="trainNo" th:value="${trainNo}" />
+        <input type="hidden" name="trainGrade" th:value="${trainGrade}" />
+        <input type="hidden" name="depPlace" th:value="${depPlace}" />
+        <input type="hidden" name="depTime" th:value="${depTime}" />
+        <input type="hidden" name="arrPlace" th:value="${arrPlace}" />
+        <input type="hidden" name="arrTime" th:value="${arrTime}" />
+        <input type="hidden" name="adultCharge" th:value="${adultCharge}" />
+        <button type="submit">결제하기</button>
+    </form>
+    
+    <a href="/">홈으로 돌아가기</a>
+    <!-- 필요한 경우 JavaScript 파일도 추가하세요. -->
+    <a href="/" th:href="@{/test.html}">테스트홈으로 돌아가기</a>
+</body>
+</html>

@@ -10,7 +10,7 @@
 }
 
 .popup-content {
-    max-width: 800px;
+    max-width: 720px;
     max-height: 700px;
     overflow-y: auto;
     padding: 20px;
@@ -21,6 +21,7 @@
     flex-direction: column;
     position: relative;
 }
+
 .close {
     position: absolute;
     top: 10px;
@@ -36,31 +37,52 @@
     flex: 1;
     overflow-y: hidden;
 }
+
 .popup-column {
     flex: 1;
     padding: 0 10px;
     overflow-y: auto;
+    width: auto;
 }
+
 /* Styles for the location lists */
-.location-list {
+.location-list, .city-list {
     list-style: none;
     padding: 0;
     margin: 10px 0;
+    gap: 10px;
+    overflow-x: hidden;
+    overflow-y: auto; /* Add scrollbar for vertical overflow */
+    max-height: 200px; /* Set max height for the lists */
+    display: grid;
 }
 
-.location-list li {
+.location-list li, .city-list li {
     cursor: pointer;
     padding: 8px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    margin-bottom: 8px;
+    margin: 0;
     transition: background 0.3s;
     overflow: hidden;
+    width: 100px;
+    box-sizing: border-box;
 }
 
-.location-list li:hover {
+.location-list li:hover, .city-list li:hover {
     background: #f0f0f0;
 }
+
+/* Set grid layout to display in 2 columns for location list */
+.location-list {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+/* Set grid layout to display in 1 column for city list */
+.city-list {
+    grid-template-columns: 1fr;
+}
+
 .popup:after {
     content: '';
     position: fixed;

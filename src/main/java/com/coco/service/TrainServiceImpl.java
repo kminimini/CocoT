@@ -20,8 +20,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.coco.domain.TrainInfo;
-import com.coco.domain.TrainInfo.ResponseBody;
-import com.coco.domain.TrainInfo.TrainResponse;
 
 @Service
 public class TrainServiceImpl implements TrainService {
@@ -295,7 +293,7 @@ public class TrainServiceImpl implements TrainService {
 
             int totalCount = totalCountInfo.getInt("totalCount");
 
-            // Calculate the total number of pages based on the total count and the number of rows per page.
+            // 총 페이지 수와 페이지당 행 수를 기준으로 총 페이지 수를 계산
             int numOfPages = (int) Math.ceil((double) totalCount / numOfRows);
 
             return numOfPages;
@@ -310,10 +308,10 @@ public class TrainServiceImpl implements TrainService {
     @Override
     public TrainInfo.TrainResponse getTrainInfo(String depPlaceId, String arrPlaceId, String depPlandTime) {
         try {
-            // Call the appropriate API or service to get train information
+            // 적절한 API 또는 서비스를 호출하여 열차 정보 얻기
             String responseJson = callTrainInfoApi(depPlaceId, arrPlaceId, depPlandTime);
 
-            // Parse the JSON response and return the TrainResponse object
+            // JSON 응답을 구문 분석하고 TrainResponse 객체를 반환
             return parseTrainInfoResponse(responseJson);
         } catch (Exception e) {
             logger.error("Error getting train information: {}", e.getMessage());
@@ -327,7 +325,7 @@ public class TrainServiceImpl implements TrainService {
                         "&depPlaceId=" + depPlaceId +
                         "&arrPlaceId=" + arrPlaceId +
                         "&depPlandTime=" + depPlandTime +
-                        "&numOfRows=10" +  // You can adjust the number of rows as needed
+                        "&numOfRows=10" +
                         "&pageNo=1" +
                         "&_type=json";
 
@@ -354,24 +352,24 @@ public class TrainServiceImpl implements TrainService {
     /* TODO JSON 응답을 TrainResponse 객체로 파싱 */
     private TrainInfo.TrainResponse parseTrainInfoResponse(String responseJson) {
         try {
-            // Parse the JSON response
+            // JSON 응답 구문 분석
             JSONObject jsonResponse = new JSONObject(responseJson);
             JSONObject responseHeader = jsonResponse.getJSONObject("response").getJSONObject("header");
 
-            // Check if the response indicates success
+            // 응답이 성공을 나타내는지 확인
             if ("00".equals(responseHeader.getString("resultCode"))) {
-                // Parse the relevant fields and create a TrainResponse object
+                // 관련 필드를 구문 분석하고 TrainResponse 객체를 생성
                 TrainInfo.TrainResponse trainResponse = new TrainInfo.TrainResponse();
 
                 TrainInfo.ResponseBody responseBody = new TrainInfo.ResponseBody();
                 TrainInfo.Items items = new TrainInfo.Items();
                 List<TrainInfo.TrainItem> trainItems = new ArrayList<>();
 
-                // Parse the items array
+                // 항목 배열 구문 분석
                 JSONArray itemsArray = jsonResponse.getJSONObject("response").getJSONObject("body").getJSONObject("items").getJSONArray("item");
                 for (int i = 0; i < itemsArray.length(); i++) {
                     JSONObject itemJson = itemsArray.getJSONObject(i);
-                    // Extract fields from itemJson and create TrainItem objects
+                    // itemJson에서 필드 추출 및 TrainItem 개체 만들기
                     TrainInfo.TrainItem trainItem = new TrainInfo.TrainItem();
                     trainItem.setTrainno(itemJson.getInt("trainno"));
                     trainItem.setTraingradename(itemJson.getString("traingradename"));
@@ -380,19 +378,18 @@ public class TrainServiceImpl implements TrainService {
                     trainItem.setArrplacename(itemJson.getString("arrplacename"));
                     trainItem.setArrplandtime(itemJson.getLong("arrplandtime"));
                     trainItem.setAdultcharge(itemJson.getInt("adultcharge"));
-
-                    // Add the train item to the list
+                    
+                    // 목록에 기차 항목 추가
                     trainItems.add(trainItem);
                 }
 
-                // Set the items list in the response body
+                // 응답 본문에 항목 목록 설정
                 items.setItem(trainItems);
                 responseBody.setItems(items);
                 trainResponse.setResponse(responseBody);
 
                 return trainResponse;
             } else {
-                // Log or handle the case where the response indicates failure
                 logger.error("열차 정보 API 응답이 실패를 나타냅니다.: {}", responseHeader.getString("resultMsg"));
                 return null;
             }
@@ -402,6 +399,7 @@ public class TrainServiceImpl implements TrainService {
         }
     }
 
+    /* TODO 조회한 열차정보 타입캐스팅 후 저장 */
     @Override
     public boolean hasTrainItems(TrainInfo.TrainResponse trainInfo) {
         if (trainInfo != null && trainInfo.hasTrainItems()) {
@@ -413,15 +411,15 @@ public class TrainServiceImpl implements TrainService {
 
                 // Logging the result for debugging
                 if (result) {
-                    logger.debug("Train items are present.");
+                    logger.debug("기차 아이템이 있습니다.");
                 } else {
-                    logger.debug("Train items are not present.");
+                    logger.debug("기차 아이템이 없습니다..");
                 }
 
                 return result;
             } catch (ClassCastException e) {
                 // Log the exception for debugging
-                logger.error("Error casting objects in hasTrainItems method", e);
+                logger.error("hasTrainItems 메서드에서 객체를 캐스팅하는 동안 오류가 발생!!!", e);
                 return false;
             }
         }
