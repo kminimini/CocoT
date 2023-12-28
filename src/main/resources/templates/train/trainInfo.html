@@ -1,3 +1,4 @@
+<!-- trainInfo.html -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -20,16 +21,31 @@
             </tr>
         </thead>
         <tbody>
-            <tr th:each="train : ${trainInfo['response']['body']['items']['item']}">
-                <td th:text="${train['trainno']}"></td>
-		        <td th:text="${train['traingradename']}"></td>
-		        <td th:text="${train['depplacename']}"></td>
-		        <td th:text="${train['depplandtime']}"></td>
-		        <td th:text="${train['arrplacename']}"></td>
-		        <td th:text="${train['arrplandtime']}"></td>
-		        <td th:text="${train['adultcharge']}"></td>
-	        </tr>
-        </tbody>
+    <!-- Check if trainInfo is a list or a single item -->
+    <th:block th:if="${trainInfo['response']['body']['items']['item'] instanceof T(java.util.List)}">
+        <tr th:each="train : ${trainInfo['response']['body']['items']['item']}">
+            <td th:text="${train.trainno}"></td>
+            <td th:text="${train.traingradename}"></td>
+            <td th:text="${train.depplacename}"></td>
+            <td th:text="${train.depplandtime}"></td>
+            <td th:text="${train.arrplacename}"></td>
+            <td th:text="${train.arrplandtime}"></td>
+            <td th:text="${train.adultcharge}"></td>
+        </tr>
+    </th:block>
+    <th:block th:unless="${trainInfo['response']['body']['items']['item'] instanceof T(java.util.List)}">
+        <!-- Convert single item to a list and iterate -->
+        <tr th:each="train : ${#numbers.sequence(0, 0)}">
+            <td th:text="${trainInfo['response']['body']['items']['item'].trainno}"></td>
+            <td th:text="${trainInfo['response']['body']['items']['item'].traingradename}"></td>
+            <td th:text="${trainInfo['response']['body']['items']['item'].depplacename}"></td>
+            <td th:text="${trainInfo['response']['body']['items']['item'].depplandtime}"></td>
+            <td th:text="${trainInfo['response']['body']['items']['item'].arrplacename}"></td>
+            <td th:text="${trainInfo['response']['body']['items']['item'].arrplandtime}"></td>
+            <td th:text="${trainInfo['response']['body']['items']['item'].adultcharge}"></td>
+        </tr>
+    </th:block>
+</tbody>
     </table>
 	<div class="pagination-container">
 	    <a id="firstPageButton" th:if="${not isFirstPage}" href="#" th:href="${firstPageUrl}">&laquo;</a>

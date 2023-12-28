@@ -47,10 +47,18 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	@Transactional
 	public String entitySave(JoinFormDto joinFormDto) {
-		Member member = Member.builder().id(joinFormDto.getId()).name(joinFormDto.getName())
-				.ename(joinFormDto.getEname()).rrnumber(joinFormDto.getRrnumber()).address(joinFormDto.getAddress())
-				.detailAddress(joinFormDto.getDetailAddress()).email(joinFormDto.getEmail()).name(joinFormDto.getName())
-				.password(joinFormDto.getPassword()).phone(joinFormDto.getPhone()).enabled("true") // enabled 필드의 기본값 설정
+		Member member = Member.builder()
+				.id(joinFormDto.getId())
+				.name(joinFormDto.getName())
+				.ename(joinFormDto.getEname())
+				.rrnumber(joinFormDto.getRrnumber())
+				.address(joinFormDto.getAddress())
+				.detailAddress(joinFormDto.getDetailAddress())
+				.email(joinFormDto.getEmail())
+				.name(joinFormDto.getName())
+				.password(joinFormDto.getPassword())
+				.phone(joinFormDto.getPhone())
+				.enabled("true") // enabled 필드의 기본값 설정
 				.role(Role.ROLE_MEMBER) // role 필드의 기본값 설정
 				.build();
 
@@ -217,5 +225,10 @@ public class MemberServiceImpl implements MemberService {
 	    return memberRepository.findById(username)
 	            .orElseThrow(() -> new UsernameNotFoundException("Member not found for username: " + username));
 	}   
+
+	@Override
+	public boolean isMemberExists(String memberId) {
+		 return memberRepository.existsById(memberId);
+	}
 
 }

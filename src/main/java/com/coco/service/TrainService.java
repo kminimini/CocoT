@@ -1,7 +1,8 @@
 package com.coco.service;
 
 import java.io.IOException;
-import java.util.Map;
+
+import com.coco.domain.TrainInfo;
 
 public interface TrainService {
 
@@ -9,10 +10,7 @@ public interface TrainService {
 	String getCityCodes() throws IOException;
 	
 	// 시/도별 기차역 목록조회
-	String getTrainStationByCityCode(String cityCode);
-	
-	// 시/도별 기차역 목록 페이징 조회
-    Map<String, Object> getTrainStationByCityCodeWithPage(String cityCode, int pageNo, int numOfRows);
+	String getTrainStationByCityCode(String cityCode, int pageNo, int numOfRows);
 	
 	// 차량 종류 목록
 	String getVhcleKndList() throws IOException;
@@ -25,4 +23,8 @@ public interface TrainService {
 	
 	// 마지막페이지 유무확인 조회용
 	int getTotalPageCount(String depPlaceId, String arrPlaceId, String depPlandTime, int numOfRows);
+	
+	TrainInfo.TrainResponse getTrainInfo(String depPlaceId, String arrPlaceId, String depPlandTime);
+	
+	boolean hasTrainItems(TrainInfo.TrainResponse trainInfo);
 }

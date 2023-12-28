@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.coco.domain.TrainInfo;
+import com.coco.domain.TrainInfo.TrainResponse;
 import com.coco.service.TrainService;
 import com.coco.service.TrainServiceImpl;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -45,27 +47,25 @@ public class TrainController {
 	
 	// 시/도별 기차역 목록조회 (with pagination)
 	@GetMapping("/stations")
-	public ResponseEntity<Map<String, Object>> listStationsWithPagination(
+	public ResponseEntity<String> listStationsWithPagination(
 	        @RequestParam("cityCode") String cityCode,
 	        @RequestParam(name = "pageNo", defaultValue = "1") int pageNo,
-	        @RequestParam(name = "numOfRows", defaultValue = "10") int numOfRows,
+	        @RequestParam(name = "numOfRows", defaultValue = "60") int numOfRows,
 	        Model model) {
-
 	    try {
-	        Map<String, Object> stationInfo = trainService.getTrainStationByCityCodeWithPage(cityCode, pageNo, numOfRows);
+	        String stations = trainService.getTrainStationByCityCode(cityCode, pageNo, numOfRows);
 
-	        if (stationInfo != null) {
-	            // If you need to pass the result to the Thymeleaf template, add it to the model
-	            model.addAttribute("stations", stationInfo);
-	            // Return the paginated station information as ResponseEntity
-	            return ResponseEntity.ok(stationInfo);
+	        if (stations != null) {
+	            // 결과를 Thymeleaf 템플릿에 전달해야 하는 경우 모델에 추가
+	            model.addAttribute("stations", stations);
+	            // 페이지가 지정된 스테이션 정보를 응답 엔티티로 반환.
+	            return ResponseEntity.ok(stations);
 	        } else {
-	            // Handle the case where there was an issue fetching station information
+	            // 스테이션 정보를 가져오는 데 문제가 발생한 경우 처리
 	            model.addAttribute("error", "스테이션 가져오기 오류");
 	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 	        }
 	    } catch (Exception e) {
-	        // Handle other exceptions
 	        model.addAttribute("error", "스테이션 가져오기 오류: " + e.getMessage());
 	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 	    }
@@ -90,17 +90,20 @@ public class TrainController {
             @RequestParam(name = "arrPlaceId") String arrPlaceId,
             @RequestParam(name = "depPlandTime") String depPlandTime,
             @RequestParam(name = "pageNo", defaultValue = "1") int pageNo,
-            @RequestParam(name = "numOfRows", defaultValue = "12") int numOfRows,
+            @RequestParam(name = "numOfRows", defaultValue = "10") int numOfRows,
             Model model) {
 
         try {
+        	logger.info("열차 정보 요청 수신.");
         	String response = trainService.getStrtpntAlocFndTrainInfoRaw(depPlaceId, arrPlaceId, depPlandTime, pageNo, numOfRows);
+        	// Call the service to get train information
+        	TrainInfo.TrainResponse trainInfos = trainService.getTrainInfo(depPlaceId, arrPlaceId, depPlandTime);
 
             // 마지막페이지 유무확인 조회용
         	int totalPageCount = trainService.getTotalPageCount(depPlaceId, arrPlaceId, depPlandTime, numOfRows);
-
-            int previousPageNo = Math.max(1, pageNo - 1);
-            int nextPageNo = Math.min(totalPageCount, pageNo + 1);
+        	
+        	int previousPageNo = Math.max(1, pageNo - 1);
+        	int nextPageNo = Math.min(totalPageCount, pageNo + 1);
             
             // 다음날 조회하기 버튼 (마지막페이지 유무 확인)
             boolean lastPage = pageNo >= totalPageCount;
@@ -121,7 +124,7 @@ public class TrainController {
             
             ObjectMapper objectMapper = new ObjectMapper();
             Map<String, Object> trainInfo = objectMapper.readValue(response, new TypeReference<Map<String, Object>>() {});
-
+            
             model.addAttribute("trainInfo", trainInfo);
             model.addAttribute("currentPage", pageNo);
             model.addAttribute("previousPageUrl", buildPageUrl(depPlaceId, arrPlaceId, depPlandTime, previousPageNo, numOfRows));
@@ -142,7 +145,13 @@ public class TrainController {
             
             // 첫 페이지로 이동
             model.addAttribute("firstPageUrl", firstPageUrl);
-            
+            // Assuming you're using Spring MVC
+            model.addAttribute("noResults", trainInfo.isEmpty());
+            // Check if there are train tickets in the response
+            if (!trainService.hasTrainItems(trainInfos)) {
+                // If no train tickets, redirect to the error page
+                return "redirect:/train/error";
+            }
             return "train/trainInfo";
         } catch (IOException e) {
         	model.addAttribute("error", "열차 정보 불러오기 오류: " + e.getMessage());
@@ -159,5 +168,11 @@ public class TrainController {
     	        .queryParam("pageNo", pageNo)
     	        .queryParam("numOfRows", numOfRows)
     	        .toUriString();
+    }
+    
+    // 오류 페이지
+    @GetMapping("/error")
+    public String showErrorPage() {
+        return "train/error";
     }
 }
