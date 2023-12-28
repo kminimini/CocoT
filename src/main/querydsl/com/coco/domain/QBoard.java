@@ -34,6 +34,8 @@ public class QBoard extends EntityPathBase<Board> {
 
     public final QMember member;
 
+    public final ListPath<Reply, QReply> replies = this.<Reply, QReply>createList("replies", Reply.class, QReply.class, PathInits.DIRECT2);
+
     public final BooleanPath secret = createBoolean("secret");
 
     public final StringPath secretPassword = createString("secretPassword");

@@ -61,7 +61,11 @@ public class Member {
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Board> boardList;
 
-
+    // 댓글
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<Reply> replyList;
+    
+    private String username; 
     
     
 }

@@ -49,6 +49,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {	// Strin
 
 boolean existsById(String id);
   
-
+  // 댓글
+  Optional<Member> findByUsername(String username);
 	
 }

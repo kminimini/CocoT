@@ -3,10 +3,12 @@ package com.coco.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.coco.domain.Member;
 import com.coco.dto.JoinFormDto;
+import com.coco.repository.MemberRepository;
 
 @Service
 public interface MemberService {
@@ -46,8 +48,8 @@ public interface MemberService {
 
 	Member getCurrentMember();
 	
-	// 카카오 로그인(회원가입 여부 확인)
-	public boolean isMemberExists(String memberId);
-	    
+	// 댓글
+	Member getMemberByUsername(String username);
+
 
 }
