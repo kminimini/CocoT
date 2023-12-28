@@ -47,6 +47,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {	// Strin
 
   Member getMemberByEmail(String email);
   
-
+  // 댓글
+  Optional<Member> findByUsername(String username);
 	
 }

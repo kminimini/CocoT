@@ -42,9 +42,13 @@ public class QMember extends EntityPathBase<Member> {
 
     public final StringPath phone = createString("phone");
 
+    public final ListPath<Reply, QReply> replyList = this.<Reply, QReply>createList("replyList", Reply.class, QReply.class, PathInits.DIRECT2);
+
     public final EnumPath<Role> role = createEnum("role", Role.class);
 
     public final StringPath rrnumber = createString("rrnumber");
+
+    public final StringPath username = createString("username");
 
     public QMember(String variable) {
         super(Member.class, forVariable(variable));

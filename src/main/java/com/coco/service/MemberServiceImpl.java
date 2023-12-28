@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -208,5 +209,13 @@ public class MemberServiceImpl implements MemberService {
 			}
 		}
 	}
+	
+	// 댓글
+	@Override
+	public Member getMemberByUsername(String username) {
+	    log.info("getMemberByUsername 호출 - username: {}", username);
+	    return memberRepository.findById(username)
+	            .orElseThrow(() -> new UsernameNotFoundException("Member not found for username: " + username));
+	}   
 
 }

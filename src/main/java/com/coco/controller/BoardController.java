@@ -1,5 +1,7 @@
 package com.coco.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +22,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.coco.domain.Board;
 import com.coco.domain.Member;
+import com.coco.domain.Reply;
 import com.coco.domain.Search;
 import com.coco.repository.BoardRepository;
 import com.coco.security.SecurityUser;
 import com.coco.service.BoardService;
+import com.coco.service.ReplyService;
 
 
 
@@ -35,6 +39,9 @@ public class BoardController {
 	
 	@Autowired
     private BoardRepository boardRepo;
+	
+	@Autowired
+    private ReplyService replyService;
 		
 	@RequestMapping("/getBoardList")
 	public String getBoardList(Model model, Search search, @RequestParam(defaultValue = "0") int page,
@@ -193,6 +200,32 @@ public class BoardController {
 	public String showQnAPage() {
 	    
 	    return "qna"; // Thymeleaf 템플릿의 이름
+	}
+	
+	@GetMapping("/getBoardDetail")
+	public String getBoardDetail(@RequestParam Long bseq, Model model, @AuthenticationPrincipal SecurityUser principal) {
+	    // 글 정보 가져오기
+	    Board board = boardService.getBoardById(bseq);
+
+	    // Spring Security를 이용하여 현재 로그인한 사용자 정보 가져오기
+	    SecurityUser securityUser = principal != null ? principal : null;
+
+	    // 만약 글이 비밀글이라면, 그리고 현재 사용자가 작성자나 어드민이 아니라면 접근을 거부합니다.
+	    if (board.isSecret() && (securityUser == null || (!securityUser.getAuthorities().stream().anyMatch(role -> role.getAuthority().equals("ROLE_ADMIN")) && !securityUser.getMember().getId().equals(board.getMember().getId())))) {
+	        // 비밀글이고 현재 사용자가 작성자나 어드민이 아닌 경우
+	        return "accessDenied"; // 접근 거부 페이지로 리다이렉트
+	    }
+
+	    // 조회수 증가 로직
+	    boardService.getBoard(board);
+
+	    model.addAttribute("board", board);
+
+	    // 댓글 목록 조회
+	    List<Reply> replies = replyService.getReplies(bseq);
+	    model.addAttribute("replies", replies);
+
+	    return "getBoard"; // 글 조회 페이지로 이동
 	}
 
 }
