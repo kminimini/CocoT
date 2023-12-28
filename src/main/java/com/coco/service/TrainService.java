@@ -24,7 +24,9 @@ public interface TrainService {
 	// 마지막페이지 유무확인 조회용
 	int getTotalPageCount(String depPlaceId, String arrPlaceId, String depPlandTime, int numOfRows);
 	
+	// JSON 응답을 TrainResponse 객체로 파싱
 	TrainInfo.TrainResponse getTrainInfo(String depPlaceId, String arrPlaceId, String depPlandTime);
 	
+	// 조회한 열차정보 타입캐스팅 후 저장
 	boolean hasTrainItems(TrainInfo.TrainResponse trainInfo);
 }

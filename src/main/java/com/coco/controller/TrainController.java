@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.coco.domain.TrainInfo;
-import com.coco.domain.TrainInfo.TrainResponse;
 import com.coco.service.TrainService;
 import com.coco.service.TrainServiceImpl;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -96,7 +95,8 @@ public class TrainController {
         try {
         	logger.info("열차 정보 요청 수신.");
         	String response = trainService.getStrtpntAlocFndTrainInfoRaw(depPlaceId, arrPlaceId, depPlandTime, pageNo, numOfRows);
-        	// Call the service to get train information
+        	
+        	// 서비스에 열차 정보 얻기
         	TrainInfo.TrainResponse trainInfos = trainService.getTrainInfo(depPlaceId, arrPlaceId, depPlandTime);
 
             // 마지막페이지 유무확인 조회용
@@ -124,7 +124,7 @@ public class TrainController {
             
             ObjectMapper objectMapper = new ObjectMapper();
             Map<String, Object> trainInfo = objectMapper.readValue(response, new TypeReference<Map<String, Object>>() {});
-            
+                        
             model.addAttribute("trainInfo", trainInfo);
             model.addAttribute("currentPage", pageNo);
             model.addAttribute("previousPageUrl", buildPageUrl(depPlaceId, arrPlaceId, depPlandTime, previousPageNo, numOfRows));
@@ -145,13 +145,13 @@ public class TrainController {
             
             // 첫 페이지로 이동
             model.addAttribute("firstPageUrl", firstPageUrl);
-            // Assuming you're using Spring MVC
-            model.addAttribute("noResults", trainInfo.isEmpty());
-            // Check if there are train tickets in the response
+            
+            // 응답에 기차표가 있는지 확인
             if (!trainService.hasTrainItems(trainInfos)) {
-                // If no train tickets, redirect to the error page
+                // 기차표가 없는 경우 오류 페이지로 리디렉션
                 return "redirect:/train/error";
             }
+            
             return "train/trainInfo";
         } catch (IOException e) {
         	model.addAttribute("error", "열차 정보 불러오기 오류: " + e.getMessage());
