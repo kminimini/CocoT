@@ -48,7 +48,12 @@ public interface MemberService {
 
 	Member getCurrentMember();
 	
-	// 댓글
-	Member getMemberByUsername(String username);
+	// 카카오 로그인(회원가입 여부 확인)
+	public boolean isMemberExists(String memberId);
+
+	boolean passwordMatches(String currentPassword, String userCurrentPassword);
+
+	String encodePassword(String newPassword);
+
 
 }

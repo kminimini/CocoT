@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,15 +24,17 @@ import com.coco.security.SecurityUser;
 @Service
 public class MemberServiceImpl implements MemberService {
 
-	@Autowired
-	private MemberRepository memberRepository;
 
 	@Autowired
 	private EntityManager entityManager;
 
+	private final MemberRepository memberRepository;
+	private final PasswordEncoder passwordEncoder;
+	
 	@Autowired
-	public MemberServiceImpl(MemberRepository memberRepository) {
-		this.memberRepository = memberRepository;
+	public MemberServiceImpl(MemberRepository memberRepository, PasswordEncoder passwordEncoder) {
+		 this.memberRepository = memberRepository;
+	        this.passwordEncoder = passwordEncoder;
 	}
 
 	private static final Logger logger = LoggerFactory.getLogger(MemberServiceImpl.class);
@@ -56,7 +58,7 @@ public class MemberServiceImpl implements MemberService {
 				.detailAddress(joinFormDto.getDetailAddress())
 				.email(joinFormDto.getEmail())
 				.name(joinFormDto.getName())
-				.password(joinFormDto.getPassword())
+				.password(passwordEncoder.encode(joinFormDto.getPassword()))
 				.phone(joinFormDto.getPhone())
 				.enabled("true") // enabled 필드의 기본값 설정
 				.role(Role.ROLE_MEMBER) // role 필드의 기본값 설정
@@ -64,6 +66,8 @@ public class MemberServiceImpl implements MemberService {
 
 		return memberRepository.save(member).getMid().toString();
 	}
+	
+	
 
 	/*
 	 * TODO - 회원 저장 이 메서드는 MemberRepository를 사용하여 Member 객체를 데이터베이스에 저장합니다. 이
@@ -97,15 +101,10 @@ public class MemberServiceImpl implements MemberService {
 		return memberRepository.findByEmail(email).orElse(null);
 	}
 
-	private boolean passwordMatches(String inputPassword, String storedPassword) {
-		// 비밀번호 일치 여부 확인 로직을 구현하세요.
-		// 예를 들어, Spring Security의 PasswordEncoder를 사용하는 경우:
-		// return passwordEncoder.matches(inputPassword, storedPassword);
-
-		// 또는 간단한 비교로직을 사용할 수 있습니다. (주의: 실제 운영에서는 보안상의 이유로 PasswordEncoder를 사용하는 것이
-		// 좋습니다.)
-		return inputPassword.equals(storedPassword);
-	}
+	@Override
+    public boolean passwordMatches(String rawPassword, String encodedPassword) {
+        return passwordEncoder.matches(rawPassword, encodedPassword);
+    }
 
 	@Override
 	public List<Member> findId(String email) throws Exception {
@@ -171,19 +170,13 @@ public class MemberServiceImpl implements MemberService {
 		Member currentMember = getCurrentMember();
 		String userEmail = getCurrentMember().getEmail();
 
-		if (isCurrentPasswordValid(currentPassword)) {
-			currentMember.setPassword(newPassword);
-			log.info("Changing password for user: {}", userEmail);
-			memberRepository.save(currentMember); // 데이터베이스에 변경을 저장
+			 // 새로운 비밀번호를 암호화하여 저장
+            currentMember.setPassword(passwordEncoder.encode(newPassword));
+            log.info("Changing password for user: {}", userEmail);
+            memberRepository.save(currentMember);
 
 			return true;
-		} else {
-			// 로그에 에러 메시지 출력
-			log.error("현재 비밀번호가 올바르지 않습니다.");
-			// 또는 다른 방식으로 에러를 처리할 수 있습니다.
 
-			return false;
-		}
 	}
 
 	@Override
@@ -226,5 +219,12 @@ public class MemberServiceImpl implements MemberService {
 	            .orElseThrow(() -> new UsernameNotFoundException("Member not found for username: " + username));
 	}
   
+
+
+	//마이페이지 암호화처리 비밀번호 변경 
+	@Override
+	public String encodePassword(String rawPassword) {
+        return passwordEncoder.encode(rawPassword);
+    }
 
 }

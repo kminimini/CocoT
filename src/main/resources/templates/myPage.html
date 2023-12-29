@@ -94,7 +94,7 @@ function validatePasswordForm() {
         if (confirmChange) {
             $.ajax({
                 type: 'POST',
-                url: '/myPage/validatePassword',
+                url: '/myPage/changePassword',
                 data: {
                     currentPassword: currentPassword,
                     newPassword: newPassword

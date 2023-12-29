@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +27,8 @@ public class MyPageController {
 
     @Autowired
     private MemberService memberService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     private static final Logger log = LoggerFactory.getLogger(MyPageController.class);
     
@@ -44,30 +47,9 @@ public class MyPageController {
         return "myPage";
     }
     
-    // 비번 변경
+      
+ // 비밀번호 유효성 검사 핸들러
     @PostMapping("/myPage/changePassword")
-    public String changePassword(
-            @AuthenticationPrincipal SecurityUser securityUser,
-            @RequestParam String currentPassword,
-            @RequestParam String newPassword,
-            @RequestParam String confirmPassword,
-            Model model) {
-        
-        try {
-            // 비밀번호 변경 로직 추가
-            memberService.changePassword(currentPassword, newPassword);
-            
-            // 비밀번호가 성공적으로 변경된 경우
-            return "redirect:/system/login"; // 혹은 다른 적절한 페이지로 리다이렉트
-        } catch (Exception e) {
-            // 비밀번호 변경에 실패한 경우
-            model.addAttribute("error", "Failed to change password");
-            return "redirect:/myPage";  // 혹은 다른 적절한 페이지로 리다이렉트
-        }
-    }
-    
-    // 비밀번호 유효성 검사 핸들러
-    @PostMapping("/myPage/validatePassword")
     @ResponseBody
     public String validatePassword(
             @AuthenticationPrincipal SecurityUser securityUser,
@@ -82,10 +64,9 @@ public class MyPageController {
     	Member member = memberService.getMember(currentUser.getEmail());
     	String userCurrentPassword = member.getPassword();
         
-    	System.out.println("현재 비밀번호=" + userCurrentPassword);
-
         // 입력한 현재 비밀번호가 실제 비밀번호와 일치하는지 여부 확인
-        if (currentPassword.equals(userCurrentPassword)) {
+    	boolean matches = passwordEncoder.matches(currentPassword, userCurrentPassword);
+        if (matches) {
         	boolean result = memberService.changePassword(currentPassword, newPassword);
         	
         	if (result) {
