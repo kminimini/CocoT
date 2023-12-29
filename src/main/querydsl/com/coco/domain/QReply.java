@@ -24,7 +24,11 @@ public class QReply extends EntityPathBase<Reply> {
 
     public final QBoard board;
 
+    public final SetPath<Reply, QReply> children = this.<Reply, QReply>createSet("children", Reply.class, QReply.class, PathInits.DIRECT2);
+
     public final QMember member;
+
+    public final QReply parentReply;
 
     public final StringPath rcontent = createString("rcontent");
 
@@ -50,6 +54,7 @@ public class QReply extends EntityPathBase<Reply> {
         super(type, metadata, inits);
         this.board = inits.isInitialized("board") ? new QBoard(forProperty("board"), inits.get("board")) : null;
         this.member = inits.isInitialized("member") ? new QMember(forProperty("member")) : null;
+        this.parentReply = inits.isInitialized("parentReply") ? new QReply(forProperty("parentReply"), inits.get("parentReply")) : null;
     }
 
 }

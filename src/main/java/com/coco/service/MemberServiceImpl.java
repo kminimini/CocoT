@@ -226,9 +226,4 @@ public class MemberServiceImpl implements MemberService {
 	            .orElseThrow(() -> new UsernameNotFoundException("Member not found for username: " + username));
 	}   
 
-	@Override
-	public boolean isMemberExists(String memberId) {
-		 return memberRepository.existsById(memberId);
-	}
-
 }

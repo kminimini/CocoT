@@ -66,7 +66,7 @@ public class MyPageController {
         }
     }
     
- // 비밀번호 유효성 검사 핸들러
+    // 비밀번호 유효성 검사 핸들러
     @PostMapping("/myPage/validatePassword")
     @ResponseBody
     public String validatePassword(
