@@ -19,14 +19,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 //import com.coco.domain.kakaoProfile;
 import com.coco.dto.JoinFormDto;
 import com.coco.repository.MemberRepository;
-import com.coco.service.KakaoService;
 import com.coco.service.MemberService;
 
 @Controller
 public class MemberController {
 
-	@Autowired
-	private KakaoService kakaoService;
 	
 	@Autowired
 	private MemberService memberService;

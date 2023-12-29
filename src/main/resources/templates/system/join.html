@@ -29,8 +29,9 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="email">이메일</label> <input id="email" type="email" name="email" class="form-control"
-						placeholder="ex)your@email.com" required>
+					<label for="email">이메일</label>
+					<!-- 기존 코드 유지 또는 Thymeleaf 표현식 수정 -->
+					<input id="email" type="email" name="email" class="form-control" th:value="${kakaoEmail}" required>
 				</div>
 
 				<div class="form-group">
@@ -43,7 +44,7 @@
 				</div>
 				<div class="form-group">
 					<label for="name">이름</label> <input id="name" type="text" name="name" class="form-control" required
-						placeholder="이름을 입력해 주세요.">
+						placeholder="이름을 입력해 주세요."  th:value="${kakaoNickname}">
 				</div>
 				<div class="form-group">
 					<label for="name">영문이름</label> <input id="ename" type="text" name="ename" class="form-control"
@@ -75,7 +76,8 @@
 				</div>
 
 				<div class="btn-container">
-					<button class="btn btn-primary btn-block" type="button" onclick="window.location.href='/agree'">이전</button>
+					<button class="btn btn-primary btn-block" type="button"
+						onclick="window.location.href='/agree'">이전</button>
 					<button class="btn btn-primary btn-block" type="submit" onclick="return joinForm()">확인</button>
 				</div>
 			</form>
