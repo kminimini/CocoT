@@ -51,7 +51,4 @@ public interface MemberService {
 	// 댓글
 	Member getMemberByUsername(String username);
 
-	boolean isMemberExists(String memberId);
-
-
 }
