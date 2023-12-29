@@ -47,8 +47,9 @@
     }
 
     .comment-actions {
-        display: flex;
-        margin-top: 10px;
+        position: absolute;
+        top: 5px;
+        right: 5px;
     }
 
     .comment-actions button {
@@ -183,13 +184,13 @@
         <div class="comment-info" th:text="${'작성자 ID: ' + reply.member.id}"></div>
 
         <!-- 수정, 삭제, 대댓글 버튼 -->
-        <div class="comment-actions">
-            <button th:onclick="'toggleEditForm(\'edit-form-' + ${reply.rseq} + '\')'">수정</button>
-            <form th:action="@{/reply/delete/{rseq}(rseq=${reply.rseq}, boardBseq=${board.bseq})}" method="post">
-                <input type="submit" value="삭제" style="color: red; font-size: 12px; background: none; border: none; cursor: pointer;">
-            </form>
-            <button th:onclick="'toggleSubReplyForm(\'sub-reply-form-' + ${reply.rseq} + '\')'">대댓글 등록</button>
-        </div>
+            <div class="comment-actions">
+                <button th:onclick="'toggleEditForm(\'edit-form-' + ${reply.rseq} + '\')'">수정</button>
+                <form th:action="@{/reply/delete/{rseq}(rseq=${reply.rseq}, boardBseq=${board.bseq})}" method="post">
+                    <input type="submit" value="삭제" style="color: red; font-size: 12px; background: none; border: none; cursor: pointer;">
+                </form>
+                <button th:onclick="'toggleSubReplyForm(\'sub-reply-form-' + ${reply.rseq} + '\')'">대댓글 등록</button>
+            </div>
 
         <!-- 대댓글 목록 표시 -->
 <ul class="sub-replies">
