@@ -80,41 +80,58 @@ public class MyPageController {
         	System.out.println("failure2");
             return "failure";
         }
+        
+        
     }
+    
+    
+    
+    
 
 
     // 회원탈퇴
     @PostMapping("/myPage/deleteAccount")
     public String deleteAccount(
-           @AuthenticationPrincipal(expression = "#this == 'anonymousUser' ? null : member") Member currentMember,
-           RedirectAttributes attributes,
-           HttpServletRequest request,
-           HttpServletResponse response) {
-       try {
-           if (currentMember != null) {
-               // 삭제 로직 실행
-               memberService.deleteMemberById(currentMember.getMid());
+    	       @AuthenticationPrincipal(expression = "#this == 'anonymousUser' ? null : member") Member currentMember,
+    	       @RequestParam String withdrawPassword, // 새로 추가된 부분: 입력된 현재 비밀번호
+    	       @RequestParam String currentPassword, // 새로 추가된 부분: 입력된 현재 비밀번호
+    	       RedirectAttributes attributes,
+    	       HttpServletRequest request,
+    	       HttpServletResponse response) {
+    	    try {
+    	        if (currentMember != null) {
+    	            // 입력된 현재 비밀번호를 암호화
+    	            String hashedWithdrawPassword = passwordEncoder.encode(withdrawPassword);
 
-               // 현재 세션 무효화
-               HttpSession session = request.getSession(false);
-               if (session != null) {
-                   session.invalidate();
-               }
+    	            // 실제 비밀번호와 암호화된 입력된 비밀번호 비교
+    	            if (passwordEncoder.matches(currentPassword, currentMember.getPassword())) {
+    	                // 삭제 로직 실행
+    	                memberService.deleteMemberById(currentMember.getMid());
 
-               // 현재 사용자를 SecurityContext에서 제거
-               SecurityContextHolder.clearContext();
+    	                // 현재 세션 무효화
+    	                HttpSession session = request.getSession(false);
+    	                if (session != null) {
+    	                    session.invalidate();
+    	                }
 
-               // 로그아웃 상태로 리다이렉트
-               return "redirect:/system/login";
-           } else {
-               // 로그인하지 않은 사용자에 대한 처리
-               return "redirect:/system/login";
-           }
-       } catch (Exception e) {
-           // 예외 처리 코드
-           attributes.addFlashAttribute("error", "Error deleting account");
-           return "redirect:/myPage";  // 리다이렉트 수정
-       }
-    }
+    	                // 현재 사용자를 SecurityContext에서 제거
+    	                SecurityContextHolder.clearContext();
 
+    	                // 로그아웃 상태로 리다이렉트
+    	                return "redirect:/myPage";
+    	            } else {
+    	                // 현재 비밀번호가 일치하지 않은 경우 처리
+    	                attributes.addFlashAttribute("error", "Incorrect current password");
+    	                return "redirect:/index";
+    	            }
+    	        } else {
+    	            // 로그인하지 않은 사용자에 대한 처리
+    	            return "redirect:/system/login";
+    	        }
+    	    } catch (Exception e) {
+    	        // 예외 처리 코드
+    	        attributes.addFlashAttribute("error", "Error deleting account");
+    	        return "redirect:/myPage";
+    	    }
+    	}
 }

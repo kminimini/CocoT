@@ -51,5 +51,8 @@ boolean existsById(String id);
   
   // 댓글
   Optional<Member> findByUsername(String username);
+  
+  // 회원탈퇴 암호화
+  String findPasswordById(Long id);
 	
 }

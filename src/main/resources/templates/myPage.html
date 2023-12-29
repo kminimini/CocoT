@@ -146,8 +146,9 @@ function confirmWithdraw() {
         // Validate the current password using AJAX
     	$.ajax({
     	    type: 'POST',
-    	    url: '/myPage/validatePassword',
+    	    url: '/myPage/deleteAccount',
     	    data: {
+				withdrawPassword: withdrawPassword,
     	        currentPassword: withdrawPassword,
     	        newPassword: 'your_new_password_value_here' // 여기에 새 비밀번호 값을 넣어주세요
     	    },
@@ -159,7 +160,7 @@ function confirmWithdraw() {
     	            document.getElementById('withdrawForm').submit();
     	        } else {
     	            // Current password is invalid
-    	            alert('현재 비밀번호가 일치하지 않습니다.');
+    	            alert('탈퇴되었습니다');
     	            document.getElementById('withdrawPassword').focus();
     	        }
     	    },

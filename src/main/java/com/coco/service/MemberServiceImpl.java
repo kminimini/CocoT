@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -227,4 +228,18 @@ public class MemberServiceImpl implements MemberService {
         return passwordEncoder.encode(rawPassword);
     }
 
+
+
+	@Override
+	public boolean isMemberExists(String memberId) {
+		 return memberRepository.existsById(memberId);
+	}
+
+
+		//회원 탈퇴 암호화
+	 @Override
+	    public String getMemberPasswordById(Long mid) {
+	        // Member 엔티티에서 비밀번호를 조회
+	        return memberRepository.findPasswordById(mid);
+	    }
 }
