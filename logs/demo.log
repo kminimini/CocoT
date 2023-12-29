@@ -1,0 +1,583 @@
+[20231229 04:36:05:465][INFO ][com.coco.CocoTApplication] Starting CocoTApplication using Java 17.0.2 on ITK-20230821DNX with PID 3888 (C:\Users\Administrator\SpringBootWorkspace2\CocoT\target\classes started by Administrator in C:\Users\Administrator\SpringBootWorkspace2\CocoT)
+[20231229 04:36:05:465][INFO ][com.coco.CocoTApplication] No active profile set, falling back to 1 default profile: "default"
+[20231229 04:36:05:593][INFO ][o.s.d.r.c.RepositoryConfigurationDelegate] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[20231229 04:36:05:611][INFO ][o.s.d.r.c.RepositoryConfigurationDelegate] Finished Spring Data repository scanning in 17 ms. Found 4 JPA repository interfaces.
+[20231229 04:36:05:669][INFO ][o.s.b.w.embedded.tomcat.TomcatWebServer] Tomcat initialized with port(s): 8080 (http)
+[20231229 04:36:05:683][INFO ][org.apache.catalina.core.StandardService] Starting service [Tomcat]
+[20231229 04:36:05:683][INFO ][org.apache.catalina.core.StandardEngine] Starting Servlet engine: [Apache Tomcat/9.0.65]
+[20231229 04:36:05:698][INFO ][o.a.c.c.C.[Tomcat-6].[localhost].[/]] Initializing Spring embedded WebApplicationContext
+[20231229 04:36:05:698][INFO ][o.s.b.w.s.c.ServletWebServerApplicationContext] Root WebApplicationContext: initialization completed in 232 ms
+[20231229 04:36:05:717][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-27 - Starting...
+[20231229 04:36:05:752][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-27 - Start completed.
+[20231229 04:36:05:756][INFO ][o.hibernate.jpa.internal.util.LogHelper] HHH000204: Processing PersistenceUnitInfo [name: default]
+[20231229 04:36:05:760][INFO ][org.hibernate.dialect.Dialect] HHH000400: Using dialect: org.hibernate.dialect.Oracle12cDialect
+[20231229 04:36:05:813][INFO ][o.h.e.t.j.p.i.JtaPlatformInitiator] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[20231229 04:36:05:813][INFO ][o.s.o.j.LocalContainerEntityManagerFactoryBean] Initialized JPA EntityManagerFactory for persistence unit 'default'
+[20231229 04:36:05:970][INFO ][o.s.s.web.DefaultSecurityFilterChain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@5b20e8b1, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@4a52c4cc, org.springframework.security.web.context.SecurityContextPersistenceFilter@574254ea, org.springframework.security.web.header.HeaderWriterFilter@613a1d0f, org.springframework.security.web.authentication.logout.LogoutFilter@1f3fd8b8, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@1ee71432, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@b3cf2c2, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3a5f44cf, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@16c0a5bd, org.springframework.security.web.session.SessionManagementFilter@12ae51c0, org.springframework.security.web.access.ExceptionTranslationFilter@7bd4eede, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@a3ade8d]
+[20231229 04:36:05:975][WARN ][o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[20231229 04:36:06:012][DEBUG][o.s.w.s.m.m.a.RequestMappingHandlerAdapter] ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+[20231229 04:36:06:015][INFO ][o.s.b.a.w.s.WelcomePageHandlerMapping] Adding welcome page template: index
+[20231229 04:36:06:020][DEBUG][o.s.w.s.m.m.a.RequestMappingHandlerMapping] 42 mappings in 'requestMappingHandlerMapping'
+[20231229 04:36:06:024][DEBUG][o.s.w.s.handler.SimpleUrlHandlerMapping] Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+[20231229 04:36:06:028][DEBUG][o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver] ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+[20231229 04:36:06:051][INFO ][o.s.b.d.a.OptionalLiveReloadServer] LiveReload server is running on port 35729
+[20231229 04:36:06:059][INFO ][o.s.b.w.embedded.tomcat.TomcatWebServer] Tomcat started on port(s): 8080 (http) with context path ''
+[20231229 04:36:06:062][INFO ][com.coco.CocoTApplication] Started CocoTApplication in 0.68 seconds (JVM running for 8091.154)
+[20231229 04:36:06:063][INFO ][o.s.b.d.a.ConditionEvaluationDeltaLoggingListener] Condition evaluation unchanged
+[20231229 04:37:01:548][INFO ][o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener] Restarting due to 4 class path changes (4 additions, 0 deletions, 0 modifications)
+[20231229 04:37:01:578][INFO ][org.apache.catalina.core.StandardService] Stopping service [Tomcat]
+[20231229 04:37:01:581][INFO ][o.s.o.j.LocalContainerEntityManagerFactoryBean] Closing JPA EntityManagerFactory for persistence unit 'default'
+[20231229 04:37:01:581][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-27 - Shutdown initiated...
+[20231229 04:37:01:587][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-27 - Shutdown completed.
+[20231229 04:37:01:654][INFO ][com.coco.CocoTApplication] Starting CocoTApplication using Java 17.0.2 on ITK-20230821DNX with PID 3888 (C:\Users\Administrator\SpringBootWorkspace2\CocoT\target\classes started by Administrator in C:\Users\Administrator\SpringBootWorkspace2\CocoT)
+[20231229 04:37:01:654][INFO ][com.coco.CocoTApplication] No active profile set, falling back to 1 default profile: "default"
+[20231229 04:37:01:780][INFO ][o.s.d.r.c.RepositoryConfigurationDelegate] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[20231229 04:37:01:798][INFO ][o.s.d.r.c.RepositoryConfigurationDelegate] Finished Spring Data repository scanning in 17 ms. Found 4 JPA repository interfaces.
+[20231229 04:37:01:852][INFO ][o.s.b.w.embedded.tomcat.TomcatWebServer] Tomcat initialized with port(s): 8080 (http)
+[20231229 04:37:01:853][INFO ][org.apache.catalina.core.StandardService] Starting service [Tomcat]
+[20231229 04:37:01:853][INFO ][org.apache.catalina.core.StandardEngine] Starting Servlet engine: [Apache Tomcat/9.0.65]
+[20231229 04:37:01:868][INFO ][o.a.c.c.C.[Tomcat-6].[localhost].[/]] Initializing Spring embedded WebApplicationContext
+[20231229 04:37:01:868][INFO ][o.s.b.w.s.c.ServletWebServerApplicationContext] Root WebApplicationContext: initialization completed in 212 ms
+[20231229 04:37:01:889][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-28 - Starting...
+[20231229 04:37:01:928][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-28 - Start completed.
+[20231229 04:37:01:933][INFO ][o.hibernate.jpa.internal.util.LogHelper] HHH000204: Processing PersistenceUnitInfo [name: default]
+[20231229 04:37:01:936][INFO ][org.hibernate.dialect.Dialect] HHH000400: Using dialect: org.hibernate.dialect.Oracle12cDialect
+[20231229 04:37:01:988][INFO ][o.h.e.t.j.p.i.JtaPlatformInitiator] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[20231229 04:37:01:988][INFO ][o.s.o.j.LocalContainerEntityManagerFactoryBean] Initialized JPA EntityManagerFactory for persistence unit 'default'
+[20231229 04:37:02:162][INFO ][o.s.s.web.DefaultSecurityFilterChain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@e2c4fe7, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6db2e9e9, org.springframework.security.web.context.SecurityContextPersistenceFilter@2e48c64d, org.springframework.security.web.header.HeaderWriterFilter@52dbe857, org.springframework.security.web.authentication.logout.LogoutFilter@7d8eb68a, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@66da46d0, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@158f2757, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@189bfce1, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@725febe5, org.springframework.security.web.session.SessionManagementFilter@16637d2d, org.springframework.security.web.access.ExceptionTranslationFilter@6d7ad0db, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@79dcd5d7]
+[20231229 04:37:02:170][WARN ][o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[20231229 04:37:02:206][DEBUG][o.s.w.s.m.m.a.RequestMappingHandlerAdapter] ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+[20231229 04:37:02:209][INFO ][o.s.b.a.w.s.WelcomePageHandlerMapping] Adding welcome page template: index
+[20231229 04:37:02:214][DEBUG][o.s.w.s.m.m.a.RequestMappingHandlerMapping] 42 mappings in 'requestMappingHandlerMapping'
+[20231229 04:37:02:218][DEBUG][o.s.w.s.handler.SimpleUrlHandlerMapping] Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+[20231229 04:37:02:222][DEBUG][o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver] ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+[20231229 04:37:02:244][INFO ][o.s.b.d.a.OptionalLiveReloadServer] LiveReload server is running on port 35729
+[20231229 04:37:02:252][INFO ][o.s.b.w.embedded.tomcat.TomcatWebServer] Tomcat started on port(s): 8080 (http) with context path ''
+[20231229 04:37:02:256][INFO ][com.coco.CocoTApplication] Started CocoTApplication in 0.622 seconds (JVM running for 8147.347)
+[20231229 04:37:02:256][INFO ][o.s.b.d.a.ConditionEvaluationDeltaLoggingListener] Condition evaluation unchanged
+[20231229 04:37:16:044][INFO ][o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener] Restarting due to 2 class path changes (1 addition, 1 deletion, 0 modifications)
+[20231229 04:37:16:051][INFO ][org.apache.catalina.core.StandardService] Stopping service [Tomcat]
+[20231229 04:37:16:054][INFO ][o.s.o.j.LocalContainerEntityManagerFactoryBean] Closing JPA EntityManagerFactory for persistence unit 'default'
+[20231229 04:37:16:054][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-28 - Shutdown initiated...
+[20231229 04:37:16:060][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-28 - Shutdown completed.
+[20231229 04:37:16:127][INFO ][com.coco.CocoTApplication] Starting CocoTApplication using Java 17.0.2 on ITK-20230821DNX with PID 3888 (C:\Users\Administrator\SpringBootWorkspace2\CocoT\target\classes started by Administrator in C:\Users\Administrator\SpringBootWorkspace2\CocoT)
+[20231229 04:37:16:127][INFO ][com.coco.CocoTApplication] No active profile set, falling back to 1 default profile: "default"
+[20231229 04:37:16:260][INFO ][o.s.d.r.c.RepositoryConfigurationDelegate] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[20231229 04:37:16:281][INFO ][o.s.d.r.c.RepositoryConfigurationDelegate] Finished Spring Data repository scanning in 20 ms. Found 4 JPA repository interfaces.
+[20231229 04:37:16:338][INFO ][o.s.b.w.embedded.tomcat.TomcatWebServer] Tomcat initialized with port(s): 8080 (http)
+[20231229 04:37:16:339][INFO ][org.apache.catalina.core.StandardService] Starting service [Tomcat]
+[20231229 04:37:16:339][INFO ][org.apache.catalina.core.StandardEngine] Starting Servlet engine: [Apache Tomcat/9.0.65]
+[20231229 04:37:16:354][INFO ][o.a.c.c.C.[Tomcat-6].[localhost].[/]] Initializing Spring embedded WebApplicationContext
+[20231229 04:37:16:354][INFO ][o.s.b.w.s.c.ServletWebServerApplicationContext] Root WebApplicationContext: initialization completed in 226 ms
+[20231229 04:37:16:374][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-29 - Starting...
+[20231229 04:37:16:410][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-29 - Start completed.
+[20231229 04:37:16:414][INFO ][o.hibernate.jpa.internal.util.LogHelper] HHH000204: Processing PersistenceUnitInfo [name: default]
+[20231229 04:37:16:418][INFO ][org.hibernate.dialect.Dialect] HHH000400: Using dialect: org.hibernate.dialect.Oracle12cDialect
+[20231229 04:37:16:473][INFO ][o.h.e.t.j.p.i.JtaPlatformInitiator] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[20231229 04:37:16:474][INFO ][o.s.o.j.LocalContainerEntityManagerFactoryBean] Initialized JPA EntityManagerFactory for persistence unit 'default'
+[20231229 04:37:16:634][INFO ][o.s.s.web.DefaultSecurityFilterChain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@19a001e3, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5bf77a12, org.springframework.security.web.context.SecurityContextPersistenceFilter@3fef2e26, org.springframework.security.web.header.HeaderWriterFilter@1687e819, org.springframework.security.web.authentication.logout.LogoutFilter@7b72605, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@1ce983e9, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@189cf9a3, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@31720d89, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2a528c4a, org.springframework.security.web.session.SessionManagementFilter@1ee307f, org.springframework.security.web.access.ExceptionTranslationFilter@18f7e47c, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@37d8d18f]
+[20231229 04:37:16:639][WARN ][o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[20231229 04:37:16:678][DEBUG][o.s.w.s.m.m.a.RequestMappingHandlerAdapter] ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+[20231229 04:37:16:681][INFO ][o.s.b.a.w.s.WelcomePageHandlerMapping] Adding welcome page template: index
+[20231229 04:37:16:686][DEBUG][o.s.w.s.m.m.a.RequestMappingHandlerMapping] 42 mappings in 'requestMappingHandlerMapping'
+[20231229 04:37:16:690][DEBUG][o.s.w.s.handler.SimpleUrlHandlerMapping] Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+[20231229 04:37:16:694][DEBUG][o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver] ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+[20231229 04:37:16:716][INFO ][o.s.b.d.a.OptionalLiveReloadServer] LiveReload server is running on port 35729
+[20231229 04:37:16:725][INFO ][o.s.b.w.embedded.tomcat.TomcatWebServer] Tomcat started on port(s): 8080 (http) with context path ''
+[20231229 04:37:16:728][INFO ][com.coco.CocoTApplication] Started CocoTApplication in 0.622 seconds (JVM running for 8161.82)
+[20231229 04:37:16:729][INFO ][o.s.b.d.a.ConditionEvaluationDeltaLoggingListener] Condition evaluation unchanged
+[20231229 04:37:22:315][INFO ][o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener] Restarting due to 2 class path changes (1 addition, 1 deletion, 0 modifications)
+[20231229 04:37:22:333][INFO ][org.apache.catalina.core.StandardService] Stopping service [Tomcat]
+[20231229 04:37:22:336][INFO ][o.s.o.j.LocalContainerEntityManagerFactoryBean] Closing JPA EntityManagerFactory for persistence unit 'default'
+[20231229 04:37:22:336][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-29 - Shutdown initiated...
+[20231229 04:37:22:340][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-29 - Shutdown completed.
+[20231229 04:37:22:405][INFO ][com.coco.CocoTApplication] Starting CocoTApplication using Java 17.0.2 on ITK-20230821DNX with PID 3888 (C:\Users\Administrator\SpringBootWorkspace2\CocoT\target\classes started by Administrator in C:\Users\Administrator\SpringBootWorkspace2\CocoT)
+[20231229 04:37:22:405][INFO ][com.coco.CocoTApplication] No active profile set, falling back to 1 default profile: "default"
+[20231229 04:37:22:530][INFO ][o.s.d.r.c.RepositoryConfigurationDelegate] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[20231229 04:37:22:549][INFO ][o.s.d.r.c.RepositoryConfigurationDelegate] Finished Spring Data repository scanning in 17 ms. Found 4 JPA repository interfaces.
+[20231229 04:37:22:602][INFO ][o.s.b.w.embedded.tomcat.TomcatWebServer] Tomcat initialized with port(s): 8080 (http)
+[20231229 04:37:22:603][INFO ][org.apache.catalina.core.StandardService] Starting service [Tomcat]
+[20231229 04:37:22:603][INFO ][org.apache.catalina.core.StandardEngine] Starting Servlet engine: [Apache Tomcat/9.0.65]
+[20231229 04:37:22:618][INFO ][o.a.c.c.C.[Tomcat-6].[localhost].[/]] Initializing Spring embedded WebApplicationContext
+[20231229 04:37:22:618][INFO ][o.s.b.w.s.c.ServletWebServerApplicationContext] Root WebApplicationContext: initialization completed in 212 ms
+[20231229 04:37:22:639][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-30 - Starting...
+[20231229 04:37:22:675][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-30 - Start completed.
+[20231229 04:37:22:679][INFO ][o.hibernate.jpa.internal.util.LogHelper] HHH000204: Processing PersistenceUnitInfo [name: default]
+[20231229 04:37:22:683][INFO ][org.hibernate.dialect.Dialect] HHH000400: Using dialect: org.hibernate.dialect.Oracle12cDialect
+[20231229 04:37:22:735][INFO ][o.h.e.t.j.p.i.JtaPlatformInitiator] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[20231229 04:37:22:735][INFO ][o.s.o.j.LocalContainerEntityManagerFactoryBean] Initialized JPA EntityManagerFactory for persistence unit 'default'
+[20231229 04:37:22:896][INFO ][o.s.s.web.DefaultSecurityFilterChain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@3cb345c0, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@2b4b19c2, org.springframework.security.web.context.SecurityContextPersistenceFilter@2b2bb1f3, org.springframework.security.web.header.HeaderWriterFilter@29dd6eb2, org.springframework.security.web.authentication.logout.LogoutFilter@3a81339b, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@267d82f2, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7f83a3f0, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3de9ea4c, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@3096fcdc, org.springframework.security.web.session.SessionManagementFilter@6782d93b, org.springframework.security.web.access.ExceptionTranslationFilter@7464030d, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@3eb4ae51]
+[20231229 04:37:22:901][WARN ][o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[20231229 04:37:22:938][DEBUG][o.s.w.s.m.m.a.RequestMappingHandlerAdapter] ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+[20231229 04:37:22:941][INFO ][o.s.b.a.w.s.WelcomePageHandlerMapping] Adding welcome page template: index
+[20231229 04:37:22:947][DEBUG][o.s.w.s.m.m.a.RequestMappingHandlerMapping] 42 mappings in 'requestMappingHandlerMapping'
+[20231229 04:37:22:950][DEBUG][o.s.w.s.handler.SimpleUrlHandlerMapping] Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+[20231229 04:37:22:953][DEBUG][o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver] ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+[20231229 04:37:22:976][INFO ][o.s.b.d.a.OptionalLiveReloadServer] LiveReload server is running on port 35729
+[20231229 04:37:22:984][INFO ][o.s.b.w.embedded.tomcat.TomcatWebServer] Tomcat started on port(s): 8080 (http) with context path ''
+[20231229 04:37:22:987][INFO ][com.coco.CocoTApplication] Started CocoTApplication in 0.602 seconds (JVM running for 8168.079)
+[20231229 04:37:22:988][INFO ][o.s.b.d.a.ConditionEvaluationDeltaLoggingListener] Condition evaluation unchanged
+[20231229 04:37:27:526][INFO ][o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener] Restarting due to 2 class path changes (1 addition, 1 deletion, 0 modifications)
+[20231229 04:37:27:543][INFO ][org.apache.catalina.core.StandardService] Stopping service [Tomcat]
+[20231229 04:37:27:545][INFO ][o.s.o.j.LocalContainerEntityManagerFactoryBean] Closing JPA EntityManagerFactory for persistence unit 'default'
+[20231229 04:37:27:546][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-30 - Shutdown initiated...
+[20231229 04:37:27:551][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-30 - Shutdown completed.
+[20231229 04:37:27:618][INFO ][com.coco.CocoTApplication] Starting CocoTApplication using Java 17.0.2 on ITK-20230821DNX with PID 3888 (C:\Users\Administrator\SpringBootWorkspace2\CocoT\target\classes started by Administrator in C:\Users\Administrator\SpringBootWorkspace2\CocoT)
+[20231229 04:37:27:618][INFO ][com.coco.CocoTApplication] No active profile set, falling back to 1 default profile: "default"
+[20231229 04:37:27:756][INFO ][o.s.d.r.c.RepositoryConfigurationDelegate] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[20231229 04:37:27:776][INFO ][o.s.d.r.c.RepositoryConfigurationDelegate] Finished Spring Data repository scanning in 19 ms. Found 4 JPA repository interfaces.
+[20231229 04:37:27:835][INFO ][o.s.b.w.embedded.tomcat.TomcatWebServer] Tomcat initialized with port(s): 8080 (http)
+[20231229 04:37:27:836][INFO ][org.apache.catalina.core.StandardService] Starting service [Tomcat]
+[20231229 04:37:27:836][INFO ][org.apache.catalina.core.StandardEngine] Starting Servlet engine: [Apache Tomcat/9.0.65]
+[20231229 04:37:27:853][INFO ][o.a.c.c.C.[Tomcat-6].[localhost].[/]] Initializing Spring embedded WebApplicationContext
+[20231229 04:37:27:853][INFO ][o.s.b.w.s.c.ServletWebServerApplicationContext] Root WebApplicationContext: initialization completed in 233 ms
+[20231229 04:37:27:874][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-31 - Starting...
+[20231229 04:37:27:909][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-31 - Start completed.
+[20231229 04:37:27:913][INFO ][o.hibernate.jpa.internal.util.LogHelper] HHH000204: Processing PersistenceUnitInfo [name: default]
+[20231229 04:37:27:917][INFO ][org.hibernate.dialect.Dialect] HHH000400: Using dialect: org.hibernate.dialect.Oracle12cDialect
+[20231229 04:37:27:970][INFO ][o.h.e.t.j.p.i.JtaPlatformInitiator] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[20231229 04:37:27:970][INFO ][o.s.o.j.LocalContainerEntityManagerFactoryBean] Initialized JPA EntityManagerFactory for persistence unit 'default'
+[20231229 04:37:28:125][INFO ][o.s.s.web.DefaultSecurityFilterChain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@61cd4f0c, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@362ee3bd, org.springframework.security.web.context.SecurityContextPersistenceFilter@53bac7ed, org.springframework.security.web.header.HeaderWriterFilter@3faaae3e, org.springframework.security.web.authentication.logout.LogoutFilter@14d00d9b, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@15ccb147, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3b07647e, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@5136f67e, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@4bcc8cdf, org.springframework.security.web.session.SessionManagementFilter@225c4f54, org.springframework.security.web.access.ExceptionTranslationFilter@41b53c18, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@32e9fed1]
+[20231229 04:37:28:130][WARN ][o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[20231229 04:37:28:169][DEBUG][o.s.w.s.m.m.a.RequestMappingHandlerAdapter] ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+[20231229 04:37:28:172][INFO ][o.s.b.a.w.s.WelcomePageHandlerMapping] Adding welcome page template: index
+[20231229 04:37:28:178][DEBUG][o.s.w.s.m.m.a.RequestMappingHandlerMapping] 42 mappings in 'requestMappingHandlerMapping'
+[20231229 04:37:28:182][DEBUG][o.s.w.s.handler.SimpleUrlHandlerMapping] Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+[20231229 04:37:28:186][DEBUG][o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver] ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+[20231229 04:37:28:211][INFO ][o.s.b.d.a.OptionalLiveReloadServer] LiveReload server is running on port 35729
+[20231229 04:37:28:219][INFO ][o.s.b.w.embedded.tomcat.TomcatWebServer] Tomcat started on port(s): 8080 (http) with context path ''
+[20231229 04:37:28:222][INFO ][com.coco.CocoTApplication] Started CocoTApplication in 0.625 seconds (JVM running for 8173.314)
+[20231229 04:37:28:223][INFO ][o.s.b.d.a.ConditionEvaluationDeltaLoggingListener] Condition evaluation unchanged
+[20231229 04:37:55:388][INFO ][o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener] Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+[20231229 04:37:55:416][INFO ][org.apache.catalina.core.StandardService] Stopping service [Tomcat]
+[20231229 04:37:55:419][INFO ][o.s.o.j.LocalContainerEntityManagerFactoryBean] Closing JPA EntityManagerFactory for persistence unit 'default'
+[20231229 04:37:55:419][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-31 - Shutdown initiated...
+[20231229 04:37:55:423][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-31 - Shutdown completed.
+[20231229 04:37:55:486][INFO ][com.coco.CocoTApplication] Starting CocoTApplication using Java 17.0.2 on ITK-20230821DNX with PID 3888 (C:\Users\Administrator\SpringBootWorkspace2\CocoT\target\classes started by Administrator in C:\Users\Administrator\SpringBootWorkspace2\CocoT)
+[20231229 04:37:55:486][INFO ][com.coco.CocoTApplication] No active profile set, falling back to 1 default profile: "default"
+[20231229 04:37:55:618][INFO ][o.s.d.r.c.RepositoryConfigurationDelegate] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[20231229 04:37:55:639][INFO ][o.s.d.r.c.RepositoryConfigurationDelegate] Finished Spring Data repository scanning in 20 ms. Found 4 JPA repository interfaces.
+[20231229 04:37:55:697][INFO ][o.s.b.w.embedded.tomcat.TomcatWebServer] Tomcat initialized with port(s): 8080 (http)
+[20231229 04:37:55:697][INFO ][org.apache.catalina.core.StandardService] Starting service [Tomcat]
+[20231229 04:37:55:697][INFO ][org.apache.catalina.core.StandardEngine] Starting Servlet engine: [Apache Tomcat/9.0.65]
+[20231229 04:37:55:712][INFO ][o.a.c.c.C.[Tomcat-6].[localhost].[/]] Initializing Spring embedded WebApplicationContext
+[20231229 04:37:55:712][INFO ][o.s.b.w.s.c.ServletWebServerApplicationContext] Root WebApplicationContext: initialization completed in 225 ms
+[20231229 04:37:55:734][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-32 - Starting...
+[20231229 04:37:55:784][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-32 - Start completed.
+[20231229 04:37:55:788][INFO ][o.hibernate.jpa.internal.util.LogHelper] HHH000204: Processing PersistenceUnitInfo [name: default]
+[20231229 04:37:55:792][INFO ][org.hibernate.dialect.Dialect] HHH000400: Using dialect: org.hibernate.dialect.Oracle12cDialect
+[20231229 04:37:55:843][INFO ][o.h.e.t.j.p.i.JtaPlatformInitiator] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[20231229 04:37:55:843][INFO ][o.s.o.j.LocalContainerEntityManagerFactoryBean] Initialized JPA EntityManagerFactory for persistence unit 'default'
+[20231229 04:37:56:008][INFO ][o.s.s.web.DefaultSecurityFilterChain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@54080bc1, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@44f7472, org.springframework.security.web.context.SecurityContextPersistenceFilter@4644a46e, org.springframework.security.web.header.HeaderWriterFilter@225359fc, org.springframework.security.web.authentication.logout.LogoutFilter@1312999d, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@414b1c00, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@53637de1, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@6bc742c8, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2e5a01f, org.springframework.security.web.session.SessionManagementFilter@23c711a4, org.springframework.security.web.access.ExceptionTranslationFilter@4fab4324, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@66ec181c]
+[20231229 04:37:56:016][WARN ][o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[20231229 04:37:56:052][DEBUG][o.s.w.s.m.m.a.RequestMappingHandlerAdapter] ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+[20231229 04:37:56:055][INFO ][o.s.b.a.w.s.WelcomePageHandlerMapping] Adding welcome page template: index
+[20231229 04:37:56:061][DEBUG][o.s.w.s.m.m.a.RequestMappingHandlerMapping] 42 mappings in 'requestMappingHandlerMapping'
+[20231229 04:37:56:065][DEBUG][o.s.w.s.handler.SimpleUrlHandlerMapping] Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+[20231229 04:37:56:068][DEBUG][o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver] ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+[20231229 04:37:56:092][INFO ][o.s.b.d.a.OptionalLiveReloadServer] LiveReload server is running on port 35729
+[20231229 04:37:56:100][INFO ][o.s.b.w.embedded.tomcat.TomcatWebServer] Tomcat started on port(s): 8080 (http) with context path ''
+[20231229 04:37:56:103][INFO ][com.coco.CocoTApplication] Started CocoTApplication in 0.638 seconds (JVM running for 8201.194)
+[20231229 04:37:56:104][INFO ][o.s.b.d.a.ConditionEvaluationDeltaLoggingListener] Condition evaluation unchanged
+[20231229 04:38:52:376][INFO ][com.example.demo.DemoApplication] Starting DemoApplication using Java 17.0.2 on ITK-20230821DNX with PID 5880 (C:\Users\Administrator\SpringBootWorkspace2\CocoT\target\classes started by Administrator in C:\Users\Administrator\SpringBootWorkspace2\CocoT)
+[20231229 04:38:52:376][INFO ][com.example.demo.DemoApplication] No active profile set, falling back to 1 default profile: "default"
+[20231229 04:38:52:406][INFO ][o.s.boot.devtools.restart.ChangeableUrls] The Class-Path manifest attribute in C:\Users\Administrator\.m2\repository\com\oracle\database\jdbc\ojdbc8\21.5.0.0\ojdbc8-21.5.0.0.jar referenced one or more files that do not exist: file:/C:/Users/Administrator/.m2/repository/com/oracle/database/jdbc/ojdbc8/21.5.0.0/oraclepki.jar
+[20231229 04:38:52:407][INFO ][o.s.boot.devtools.restart.ChangeableUrls] The Class-Path manifest attribute in C:\Users\Administrator\.m2\repository\javax\mail\mail\1.4.1\mail-1.4.1.jar referenced one or more files that do not exist: file:/C:/Users/Administrator/.m2/repository/javax/mail/mail/1.4.1/activation.jar
+[20231229 04:38:52:407][INFO ][o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor] Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+[20231229 04:38:52:407][INFO ][o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor] For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+[20231229 04:38:52:791][INFO ][o.s.d.r.c.RepositoryConfigurationDelegate] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[20231229 04:38:52:800][INFO ][o.s.d.r.c.RepositoryConfigurationDelegate] Finished Spring Data repository scanning in 3 ms. Found 0 JPA repository interfaces.
+[20231229 04:38:53:218][INFO ][o.s.b.w.embedded.tomcat.TomcatWebServer] Tomcat initialized with port(s): 8080 (http)
+[20231229 04:38:53:224][INFO ][o.apache.coyote.http11.Http11NioProtocol] Initializing ProtocolHandler ["http-nio-8080"]
+[20231229 04:38:53:224][INFO ][org.apache.catalina.core.StandardService] Starting service [Tomcat]
+[20231229 04:38:53:225][INFO ][org.apache.catalina.core.StandardEngine] Starting Servlet engine: [Apache Tomcat/9.0.65]
+[20231229 04:38:53:293][INFO ][o.a.c.c.C.[Tomcat].[localhost].[/]] Initializing Spring embedded WebApplicationContext
+[20231229 04:38:53:293][INFO ][o.s.b.w.s.c.ServletWebServerApplicationContext] Root WebApplicationContext: initialization completed in 886 ms
+[20231229 04:38:53:409][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-1 - Starting...
+[20231229 04:38:53:591][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-1 - Start completed.
+[20231229 04:38:53:623][INFO ][o.hibernate.jpa.internal.util.LogHelper] HHH000204: Processing PersistenceUnitInfo [name: default]
+[20231229 04:38:53:659][INFO ][org.hibernate.Version] HHH000412: Hibernate ORM core version 5.6.10.Final
+[20231229 04:38:53:779][INFO ][org.hibernate.annotations.common.Version] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+[20231229 04:38:53:862][INFO ][org.hibernate.dialect.Dialect] HHH000400: Using dialect: org.hibernate.dialect.Oracle12cDialect
+[20231229 04:38:54:088][INFO ][o.h.e.t.j.p.i.JtaPlatformInitiator] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[20231229 04:38:54:095][INFO ][o.s.o.j.LocalContainerEntityManagerFactoryBean] Initialized JPA EntityManagerFactory for persistence unit 'default'
+[20231229 04:38:54:121][WARN ][o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[20231229 04:38:54:200][DEBUG][o.s.w.s.m.m.a.RequestMappingHandlerAdapter] ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+[20231229 04:38:54:220][INFO ][o.s.b.a.w.s.WelcomePageHandlerMapping] Adding welcome page template: index
+[20231229 04:38:54:244][DEBUG][o.s.w.s.m.m.a.RequestMappingHandlerMapping] 6 mappings in 'requestMappingHandlerMapping'
+[20231229 04:38:54:256][DEBUG][o.s.w.s.handler.SimpleUrlHandlerMapping] Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+[20231229 04:38:54:264][DEBUG][o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver] ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+[20231229 04:38:54:400][WARN ][o.s.b.a.s.s.UserDetailsServiceAutoConfiguration] 
+
+Using generated security password: 2eece324-4fdf-4f98-905c-99059ac0fb65
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+[20231229 04:38:54:470][INFO ][o.s.s.web.DefaultSecurityFilterChain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@6336d7a5, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@68bfefd1, org.springframework.security.web.context.SecurityContextPersistenceFilter@45c39e79, org.springframework.security.web.header.HeaderWriterFilter@f8686e7, org.springframework.security.web.csrf.CsrfFilter@653ac053, org.springframework.security.web.authentication.logout.LogoutFilter@46f35c5a, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@2ff3af83, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@643b244c, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@4562babf, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@33b706b4, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3bd012a3, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@40cd59c0, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@168c3444, org.springframework.security.web.session.SessionManagementFilter@563706ae, org.springframework.security.web.access.ExceptionTranslationFilter@4e88efa3, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@3a2f759b]
+[20231229 04:38:54:513][WARN ][o.s.b.d.a.OptionalLiveReloadServer] Unable to start LiveReload server
+[20231229 04:38:54:525][INFO ][o.apache.coyote.http11.Http11NioProtocol] Starting ProtocolHandler ["http-nio-8080"]
+[20231229 04:38:54:527][WARN ][o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'; nested exception is org.springframework.boot.web.server.PortInUseException: Port 8080 is already in use
+[20231229 04:38:54:528][INFO ][o.s.o.j.LocalContainerEntityManagerFactoryBean] Closing JPA EntityManagerFactory for persistence unit 'default'
+[20231229 04:38:54:531][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-1 - Shutdown initiated...
+[20231229 04:38:54:537][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-1 - Shutdown completed.
+[20231229 04:38:54:539][INFO ][o.apache.coyote.http11.Http11NioProtocol] Pausing ProtocolHandler ["http-nio-8080"]
+[20231229 04:38:54:539][INFO ][org.apache.catalina.core.StandardService] Stopping service [Tomcat]
+[20231229 04:38:54:542][INFO ][o.apache.coyote.http11.Http11NioProtocol] Stopping ProtocolHandler ["http-nio-8080"]
+[20231229 04:38:54:542][INFO ][o.apache.coyote.http11.Http11NioProtocol] Destroying ProtocolHandler ["http-nio-8080"]
+[20231229 04:38:54:548][INFO ][o.s.b.a.l.ConditionEvaluationReportLoggingListener] 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+[20231229 04:38:54:560][ERROR][o.s.b.d.LoggingFailureAnalysisReporter] 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+
+[20231229 04:39:02:773][INFO ][com.coco.CocoTApplication] Starting CocoTApplication using Java 17.0.2 on ITK-20230821DNX with PID 8836 (C:\Users\Administrator\SpringBootWorkspace2\CocoT\target\classes started by Administrator in C:\Users\Administrator\SpringBootWorkspace2\CocoT)
+[20231229 04:39:02:773][INFO ][com.coco.CocoTApplication] No active profile set, falling back to 1 default profile: "default"
+[20231229 04:39:02:802][INFO ][o.s.boot.devtools.restart.ChangeableUrls] The Class-Path manifest attribute in C:\Users\Administrator\.m2\repository\com\oracle\database\jdbc\ojdbc8\21.5.0.0\ojdbc8-21.5.0.0.jar referenced one or more files that do not exist: file:/C:/Users/Administrator/.m2/repository/com/oracle/database/jdbc/ojdbc8/21.5.0.0/oraclepki.jar
+[20231229 04:39:02:802][INFO ][o.s.boot.devtools.restart.ChangeableUrls] The Class-Path manifest attribute in C:\Users\Administrator\.m2\repository\javax\mail\mail\1.4.1\mail-1.4.1.jar referenced one or more files that do not exist: file:/C:/Users/Administrator/.m2/repository/javax/mail/mail/1.4.1/activation.jar
+[20231229 04:39:02:802][INFO ][o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor] Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+[20231229 04:39:02:802][INFO ][o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor] For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+[20231229 04:39:03:232][INFO ][o.s.d.r.c.RepositoryConfigurationDelegate] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[20231229 04:39:03:282][INFO ][o.s.d.r.c.RepositoryConfigurationDelegate] Finished Spring Data repository scanning in 46 ms. Found 4 JPA repository interfaces.
+[20231229 04:39:03:695][INFO ][o.s.b.w.embedded.tomcat.TomcatWebServer] Tomcat initialized with port(s): 8080 (http)
+[20231229 04:39:03:701][INFO ][o.apache.coyote.http11.Http11NioProtocol] Initializing ProtocolHandler ["http-nio-8080"]
+[20231229 04:39:03:702][INFO ][org.apache.catalina.core.StandardService] Starting service [Tomcat]
+[20231229 04:39:03:702][INFO ][org.apache.catalina.core.StandardEngine] Starting Servlet engine: [Apache Tomcat/9.0.65]
+[20231229 04:39:03:766][INFO ][o.a.c.c.C.[Tomcat].[localhost].[/]] Initializing Spring embedded WebApplicationContext
+[20231229 04:39:03:767][INFO ][o.s.b.w.s.c.ServletWebServerApplicationContext] Root WebApplicationContext: initialization completed in 964 ms
+[20231229 04:39:03:883][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-1 - Starting...
+[20231229 04:39:04:068][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-1 - Start completed.
+[20231229 04:39:04:100][INFO ][o.hibernate.jpa.internal.util.LogHelper] HHH000204: Processing PersistenceUnitInfo [name: default]
+[20231229 04:39:04:134][INFO ][org.hibernate.Version] HHH000412: Hibernate ORM core version 5.6.10.Final
+[20231229 04:39:04:254][INFO ][org.hibernate.annotations.common.Version] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+[20231229 04:39:04:340][INFO ][org.hibernate.dialect.Dialect] HHH000400: Using dialect: org.hibernate.dialect.Oracle12cDialect
+[20231229 04:39:04:880][INFO ][o.h.e.t.j.p.i.JtaPlatformInitiator] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[20231229 04:39:04:886][INFO ][o.s.o.j.LocalContainerEntityManagerFactoryBean] Initialized JPA EntityManagerFactory for persistence unit 'default'
+[20231229 04:39:05:443][INFO ][o.s.s.web.DefaultSecurityFilterChain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@107309c, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@4b3ec6d0, org.springframework.security.web.context.SecurityContextPersistenceFilter@1cbaed98, org.springframework.security.web.header.HeaderWriterFilter@7c8147df, org.springframework.security.web.authentication.logout.LogoutFilter@43716d6, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@3962307e, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@4bc062f6, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@e39a789, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@63f7ee09, org.springframework.security.web.session.SessionManagementFilter@5a522fb, org.springframework.security.web.access.ExceptionTranslationFilter@2391efac, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@518d851c]
+[20231229 04:39:05:464][WARN ][o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[20231229 04:39:05:551][DEBUG][o.s.w.s.m.m.a.RequestMappingHandlerAdapter] ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+[20231229 04:39:05:572][INFO ][o.s.b.a.w.s.WelcomePageHandlerMapping] Adding welcome page template: index
+[20231229 04:39:05:607][DEBUG][o.s.w.s.m.m.a.RequestMappingHandlerMapping] 42 mappings in 'requestMappingHandlerMapping'
+[20231229 04:39:05:618][DEBUG][o.s.w.s.handler.SimpleUrlHandlerMapping] Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+[20231229 04:39:05:625][DEBUG][o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver] ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+[20231229 04:39:05:753][WARN ][o.s.b.d.a.OptionalLiveReloadServer] Unable to start LiveReload server
+[20231229 04:39:05:765][INFO ][o.apache.coyote.http11.Http11NioProtocol] Starting ProtocolHandler ["http-nio-8080"]
+[20231229 04:39:05:767][WARN ][o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'; nested exception is org.springframework.boot.web.server.PortInUseException: Port 8080 is already in use
+[20231229 04:39:05:769][INFO ][o.s.o.j.LocalContainerEntityManagerFactoryBean] Closing JPA EntityManagerFactory for persistence unit 'default'
+[20231229 04:39:05:771][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-1 - Shutdown initiated...
+[20231229 04:39:05:777][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-1 - Shutdown completed.
+[20231229 04:39:05:780][INFO ][o.apache.coyote.http11.Http11NioProtocol] Pausing ProtocolHandler ["http-nio-8080"]
+[20231229 04:39:05:780][INFO ][org.apache.catalina.core.StandardService] Stopping service [Tomcat]
+[20231229 04:39:05:784][INFO ][o.apache.coyote.http11.Http11NioProtocol] Stopping ProtocolHandler ["http-nio-8080"]
+[20231229 04:39:05:784][INFO ][o.apache.coyote.http11.Http11NioProtocol] Destroying ProtocolHandler ["http-nio-8080"]
+[20231229 04:39:05:789][INFO ][o.s.b.a.l.ConditionEvaluationReportLoggingListener] 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+[20231229 04:39:05:802][ERROR][o.s.b.d.LoggingFailureAnalysisReporter] 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+
+[20231229 04:39:15:751][INFO ][o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener] Restarting due to 1 class path change (0 additions, 1 deletion, 0 modifications)
+[20231229 04:39:15:767][INFO ][org.apache.catalina.core.StandardService] Stopping service [Tomcat]
+[20231229 04:39:15:771][INFO ][o.s.o.j.LocalContainerEntityManagerFactoryBean] Closing JPA EntityManagerFactory for persistence unit 'default'
+[20231229 04:39:15:771][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-32 - Shutdown initiated...
+[20231229 04:39:15:777][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-32 - Shutdown completed.
+[20231229 04:39:15:842][INFO ][com.coco.CocoTApplication] Starting CocoTApplication using Java 17.0.2 on ITK-20230821DNX with PID 3888 (C:\Users\Administrator\SpringBootWorkspace2\CocoT\target\classes started by Administrator in C:\Users\Administrator\SpringBootWorkspace2\CocoT)
+[20231229 04:39:15:842][INFO ][com.coco.CocoTApplication] No active profile set, falling back to 1 default profile: "default"
+[20231229 04:39:15:975][INFO ][o.s.d.r.c.RepositoryConfigurationDelegate] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[20231229 04:39:15:993][INFO ][o.s.d.r.c.RepositoryConfigurationDelegate] Finished Spring Data repository scanning in 17 ms. Found 4 JPA repository interfaces.
+[20231229 04:39:16:053][INFO ][o.s.b.w.embedded.tomcat.TomcatWebServer] Tomcat initialized with port(s): 8080 (http)
+[20231229 04:39:16:053][INFO ][org.apache.catalina.core.StandardService] Starting service [Tomcat]
+[20231229 04:39:16:053][INFO ][org.apache.catalina.core.StandardEngine] Starting Servlet engine: [Apache Tomcat/9.0.65]
+[20231229 04:39:16:071][INFO ][o.a.c.c.C.[Tomcat-6].[localhost].[/]] Initializing Spring embedded WebApplicationContext
+[20231229 04:39:16:071][INFO ][o.s.b.w.s.c.ServletWebServerApplicationContext] Root WebApplicationContext: initialization completed in 228 ms
+[20231229 04:39:16:096][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-33 - Starting...
+[20231229 04:39:16:136][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-33 - Start completed.
+[20231229 04:39:16:140][INFO ][o.hibernate.jpa.internal.util.LogHelper] HHH000204: Processing PersistenceUnitInfo [name: default]
+[20231229 04:39:16:145][INFO ][org.hibernate.dialect.Dialect] HHH000400: Using dialect: org.hibernate.dialect.Oracle12cDialect
+[20231229 04:39:16:208][INFO ][o.h.e.t.j.p.i.JtaPlatformInitiator] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[20231229 04:39:16:209][INFO ][o.s.o.j.LocalContainerEntityManagerFactoryBean] Initialized JPA EntityManagerFactory for persistence unit 'default'
+[20231229 04:39:16:493][INFO ][o.s.s.web.DefaultSecurityFilterChain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@1ada5e6c, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@43c45546, org.springframework.security.web.context.SecurityContextPersistenceFilter@670195eb, org.springframework.security.web.header.HeaderWriterFilter@1fcf720d, org.springframework.security.web.authentication.logout.LogoutFilter@10f3e10f, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@1cca1064, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@9b74d97, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@6d0c09b6, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@746d5e3, org.springframework.security.web.session.SessionManagementFilter@2cc74d6d, org.springframework.security.web.access.ExceptionTranslationFilter@2ab89c00, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@5272d693]
+[20231229 04:39:16:502][WARN ][o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[20231229 04:39:16:559][DEBUG][o.s.w.s.m.m.a.RequestMappingHandlerAdapter] ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+[20231229 04:39:16:563][INFO ][o.s.b.a.w.s.WelcomePageHandlerMapping] Adding welcome page template: index
+[20231229 04:39:16:569][DEBUG][o.s.w.s.m.m.a.RequestMappingHandlerMapping] 42 mappings in 'requestMappingHandlerMapping'
+[20231229 04:39:16:574][DEBUG][o.s.w.s.handler.SimpleUrlHandlerMapping] Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+[20231229 04:39:16:578][DEBUG][o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver] ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+[20231229 04:39:16:603][INFO ][o.s.b.d.a.OptionalLiveReloadServer] LiveReload server is running on port 35729
+[20231229 04:39:16:612][INFO ][o.s.b.w.embedded.tomcat.TomcatWebServer] Tomcat started on port(s): 8080 (http) with context path ''
+[20231229 04:39:16:615][INFO ][com.coco.CocoTApplication] Started CocoTApplication in 0.792 seconds (JVM running for 8281.706)
+[20231229 04:39:16:616][INFO ][o.s.b.d.a.ConditionEvaluationDeltaLoggingListener] Condition evaluation unchanged
+[20231229 04:39:18:050][INFO ][o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener] Restarting due to 1 class path change (0 additions, 1 deletion, 0 modifications)
+[20231229 04:39:18:070][INFO ][org.apache.catalina.core.StandardService] Stopping service [Tomcat]
+[20231229 04:39:18:073][INFO ][o.s.o.j.LocalContainerEntityManagerFactoryBean] Closing JPA EntityManagerFactory for persistence unit 'default'
+[20231229 04:39:18:073][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-33 - Shutdown initiated...
+[20231229 04:39:18:078][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-33 - Shutdown completed.
+[20231229 04:39:18:145][INFO ][com.coco.CocoTApplication] Starting CocoTApplication using Java 17.0.2 on ITK-20230821DNX with PID 3888 (C:\Users\Administrator\SpringBootWorkspace2\CocoT\target\classes started by Administrator in C:\Users\Administrator\SpringBootWorkspace2\CocoT)
+[20231229 04:39:18:145][INFO ][com.coco.CocoTApplication] No active profile set, falling back to 1 default profile: "default"
+[20231229 04:39:18:285][INFO ][o.s.d.r.c.RepositoryConfigurationDelegate] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[20231229 04:39:18:306][INFO ][o.s.d.r.c.RepositoryConfigurationDelegate] Finished Spring Data repository scanning in 20 ms. Found 4 JPA repository interfaces.
+[20231229 04:39:18:370][INFO ][o.s.b.w.embedded.tomcat.TomcatWebServer] Tomcat initialized with port(s): 8080 (http)
+[20231229 04:39:18:370][INFO ][org.apache.catalina.core.StandardService] Starting service [Tomcat]
+[20231229 04:39:18:370][INFO ][org.apache.catalina.core.StandardEngine] Starting Servlet engine: [Apache Tomcat/9.0.65]
+[20231229 04:39:18:387][INFO ][o.a.c.c.C.[Tomcat-6].[localhost].[/]] Initializing Spring embedded WebApplicationContext
+[20231229 04:39:18:387][INFO ][o.s.b.w.s.c.ServletWebServerApplicationContext] Root WebApplicationContext: initialization completed in 241 ms
+[20231229 04:39:18:418][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-34 - Starting...
+[20231229 04:39:18:471][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-34 - Start completed.
+[20231229 04:39:18:476][INFO ][o.hibernate.jpa.internal.util.LogHelper] HHH000204: Processing PersistenceUnitInfo [name: default]
+[20231229 04:39:18:481][INFO ][org.hibernate.dialect.Dialect] HHH000400: Using dialect: org.hibernate.dialect.Oracle12cDialect
+[20231229 04:39:18:542][INFO ][o.h.e.t.j.p.i.JtaPlatformInitiator] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[20231229 04:39:18:542][INFO ][o.s.o.j.LocalContainerEntityManagerFactoryBean] Initialized JPA EntityManagerFactory for persistence unit 'default'
+[20231229 04:39:18:735][INFO ][o.s.s.web.DefaultSecurityFilterChain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@22722300, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@53e3a43a, org.springframework.security.web.context.SecurityContextPersistenceFilter@3b980a07, org.springframework.security.web.header.HeaderWriterFilter@fb0f9f4, org.springframework.security.web.authentication.logout.LogoutFilter@7ea3538, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@79f4f6af, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@4c339000, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@4444bf2b, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@30be547d, org.springframework.security.web.session.SessionManagementFilter@f76ea77, org.springframework.security.web.access.ExceptionTranslationFilter@7891f9a5, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@add2c6f]
+[20231229 04:39:18:747][WARN ][o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[20231229 04:39:18:807][DEBUG][o.s.w.s.m.m.a.RequestMappingHandlerAdapter] ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+[20231229 04:39:18:812][INFO ][o.s.b.a.w.s.WelcomePageHandlerMapping] Adding welcome page template: index
+[20231229 04:39:18:822][DEBUG][o.s.w.s.m.m.a.RequestMappingHandlerMapping] 42 mappings in 'requestMappingHandlerMapping'
+[20231229 04:39:18:829][DEBUG][o.s.w.s.handler.SimpleUrlHandlerMapping] Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+[20231229 04:39:18:835][DEBUG][o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver] ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+[20231229 04:39:18:864][INFO ][o.s.b.d.a.OptionalLiveReloadServer] LiveReload server is running on port 35729
+[20231229 04:39:18:875][INFO ][o.s.b.w.embedded.tomcat.TomcatWebServer] Tomcat started on port(s): 8080 (http) with context path ''
+[20231229 04:39:18:877][INFO ][com.coco.CocoTApplication] Started CocoTApplication in 0.753 seconds (JVM running for 8283.969)
+[20231229 04:39:18:878][INFO ][o.s.b.d.a.ConditionEvaluationDeltaLoggingListener] Condition evaluation unchanged
+[20231229 04:39:20:308][INFO ][o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener] Restarting due to 1 class path change (0 additions, 1 deletion, 0 modifications)
+[20231229 04:39:20:337][INFO ][org.apache.catalina.core.StandardService] Stopping service [Tomcat]
+[20231229 04:39:20:340][INFO ][o.s.o.j.LocalContainerEntityManagerFactoryBean] Closing JPA EntityManagerFactory for persistence unit 'default'
+[20231229 04:39:20:340][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-34 - Shutdown initiated...
+[20231229 04:39:20:344][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-34 - Shutdown completed.
+[20231229 04:39:20:406][INFO ][com.coco.CocoTApplication] Starting CocoTApplication using Java 17.0.2 on ITK-20230821DNX with PID 3888 (C:\Users\Administrator\SpringBootWorkspace2\CocoT\target\classes started by Administrator in C:\Users\Administrator\SpringBootWorkspace2\CocoT)
+[20231229 04:39:20:407][INFO ][com.coco.CocoTApplication] No active profile set, falling back to 1 default profile: "default"
+[20231229 04:39:20:543][INFO ][o.s.d.r.c.RepositoryConfigurationDelegate] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[20231229 04:39:20:563][INFO ][o.s.d.r.c.RepositoryConfigurationDelegate] Finished Spring Data repository scanning in 20 ms. Found 4 JPA repository interfaces.
+[20231229 04:39:20:625][INFO ][o.s.b.w.embedded.tomcat.TomcatWebServer] Tomcat initialized with port(s): 8080 (http)
+[20231229 04:39:20:625][INFO ][org.apache.catalina.core.StandardService] Starting service [Tomcat]
+[20231229 04:39:20:626][INFO ][org.apache.catalina.core.StandardEngine] Starting Servlet engine: [Apache Tomcat/9.0.65]
+[20231229 04:39:20:642][INFO ][o.a.c.c.C.[Tomcat-6].[localhost].[/]] Initializing Spring embedded WebApplicationContext
+[20231229 04:39:20:642][INFO ][o.s.b.w.s.c.ServletWebServerApplicationContext] Root WebApplicationContext: initialization completed in 234 ms
+[20231229 04:39:20:663][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-35 - Starting...
+[20231229 04:39:20:705][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-35 - Start completed.
+[20231229 04:39:20:709][INFO ][o.hibernate.jpa.internal.util.LogHelper] HHH000204: Processing PersistenceUnitInfo [name: default]
+[20231229 04:39:20:714][INFO ][org.hibernate.dialect.Dialect] HHH000400: Using dialect: org.hibernate.dialect.Oracle12cDialect
+[20231229 04:39:20:773][INFO ][o.h.e.t.j.p.i.JtaPlatformInitiator] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[20231229 04:39:20:773][INFO ][o.s.o.j.LocalContainerEntityManagerFactoryBean] Initialized JPA EntityManagerFactory for persistence unit 'default'
+[20231229 04:39:20:944][INFO ][o.s.s.web.DefaultSecurityFilterChain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@70ed2875, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@2146e7b2, org.springframework.security.web.context.SecurityContextPersistenceFilter@11af2936, org.springframework.security.web.header.HeaderWriterFilter@50e9433b, org.springframework.security.web.authentication.logout.LogoutFilter@30af459c, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@670ca83a, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@5e98ffbb, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@44729fc8, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@20529ef7, org.springframework.security.web.session.SessionManagementFilter@25073908, org.springframework.security.web.access.ExceptionTranslationFilter@f180c14, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@2f95d015]
+[20231229 04:39:20:949][WARN ][o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[20231229 04:39:20:989][DEBUG][o.s.w.s.m.m.a.RequestMappingHandlerAdapter] ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+[20231229 04:39:20:992][INFO ][o.s.b.a.w.s.WelcomePageHandlerMapping] Adding welcome page template: index
+[20231229 04:39:20:998][DEBUG][o.s.w.s.m.m.a.RequestMappingHandlerMapping] 42 mappings in 'requestMappingHandlerMapping'
+[20231229 04:39:21:002][DEBUG][o.s.w.s.handler.SimpleUrlHandlerMapping] Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+[20231229 04:39:21:006][DEBUG][o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver] ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+[20231229 04:39:21:028][INFO ][o.s.b.d.a.OptionalLiveReloadServer] LiveReload server is running on port 35729
+[20231229 04:39:21:038][INFO ][o.s.b.w.embedded.tomcat.TomcatWebServer] Tomcat started on port(s): 8080 (http) with context path ''
+[20231229 04:39:21:041][INFO ][com.coco.CocoTApplication] Started CocoTApplication in 0.653 seconds (JVM running for 8286.132)
+[20231229 04:39:21:042][INFO ][o.s.b.d.a.ConditionEvaluationDeltaLoggingListener] Condition evaluation unchanged
+[20231229 04:39:25:560][INFO ][o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener] Restarting due to 1 class path change (0 additions, 1 deletion, 0 modifications)
+[20231229 04:39:25:578][INFO ][org.apache.catalina.core.StandardService] Stopping service [Tomcat]
+[20231229 04:39:25:581][INFO ][o.s.o.j.LocalContainerEntityManagerFactoryBean] Closing JPA EntityManagerFactory for persistence unit 'default'
+[20231229 04:39:25:581][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-35 - Shutdown initiated...
+[20231229 04:39:25:586][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-35 - Shutdown completed.
+[20231229 04:39:25:649][INFO ][com.coco.CocoTApplication] Starting CocoTApplication using Java 17.0.2 on ITK-20230821DNX with PID 3888 (C:\Users\Administrator\SpringBootWorkspace2\CocoT\target\classes started by Administrator in C:\Users\Administrator\SpringBootWorkspace2\CocoT)
+[20231229 04:39:25:649][INFO ][com.coco.CocoTApplication] No active profile set, falling back to 1 default profile: "default"
+[20231229 04:39:25:786][INFO ][o.s.d.r.c.RepositoryConfigurationDelegate] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[20231229 04:39:25:805][INFO ][o.s.d.r.c.RepositoryConfigurationDelegate] Finished Spring Data repository scanning in 19 ms. Found 4 JPA repository interfaces.
+[20231229 04:39:25:860][INFO ][o.s.b.w.embedded.tomcat.TomcatWebServer] Tomcat initialized with port(s): 8080 (http)
+[20231229 04:39:25:860][INFO ][org.apache.catalina.core.StandardService] Starting service [Tomcat]
+[20231229 04:39:25:861][INFO ][org.apache.catalina.core.StandardEngine] Starting Servlet engine: [Apache Tomcat/9.0.65]
+[20231229 04:39:25:875][INFO ][o.a.c.c.C.[Tomcat-6].[localhost].[/]] Initializing Spring embedded WebApplicationContext
+[20231229 04:39:25:875][INFO ][o.s.b.w.s.c.ServletWebServerApplicationContext] Root WebApplicationContext: initialization completed in 225 ms
+[20231229 04:39:25:894][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-36 - Starting...
+[20231229 04:39:25:931][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-36 - Start completed.
+[20231229 04:39:25:935][INFO ][o.hibernate.jpa.internal.util.LogHelper] HHH000204: Processing PersistenceUnitInfo [name: default]
+[20231229 04:39:25:938][INFO ][org.hibernate.dialect.Dialect] HHH000400: Using dialect: org.hibernate.dialect.Oracle12cDialect
+[20231229 04:39:25:985][INFO ][o.h.e.t.j.p.i.JtaPlatformInitiator] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[20231229 04:39:25:985][INFO ][o.s.o.j.LocalContainerEntityManagerFactoryBean] Initialized JPA EntityManagerFactory for persistence unit 'default'
+[20231229 04:39:26:143][INFO ][o.s.s.web.DefaultSecurityFilterChain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@628ff492, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@14eb3bb1, org.springframework.security.web.context.SecurityContextPersistenceFilter@157e9c66, org.springframework.security.web.header.HeaderWriterFilter@1b301689, org.springframework.security.web.authentication.logout.LogoutFilter@1a06ecd6, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@710c1a1e, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2b541376, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@304bdccb, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@71e06e00, org.springframework.security.web.session.SessionManagementFilter@8287a53, org.springframework.security.web.access.ExceptionTranslationFilter@77d929a6, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@55660105]
+[20231229 04:39:26:149][WARN ][o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[20231229 04:39:26:190][DEBUG][o.s.w.s.m.m.a.RequestMappingHandlerAdapter] ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+[20231229 04:39:26:193][INFO ][o.s.b.a.w.s.WelcomePageHandlerMapping] Adding welcome page template: index
+[20231229 04:39:26:199][DEBUG][o.s.w.s.m.m.a.RequestMappingHandlerMapping] 42 mappings in 'requestMappingHandlerMapping'
+[20231229 04:39:26:202][DEBUG][o.s.w.s.handler.SimpleUrlHandlerMapping] Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+[20231229 04:39:26:207][DEBUG][o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver] ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+[20231229 04:39:26:231][INFO ][o.s.b.d.a.OptionalLiveReloadServer] LiveReload server is running on port 35729
+[20231229 04:39:26:241][INFO ][o.s.b.w.embedded.tomcat.TomcatWebServer] Tomcat started on port(s): 8080 (http) with context path ''
+[20231229 04:39:26:244][INFO ][com.coco.CocoTApplication] Started CocoTApplication in 0.614 seconds (JVM running for 8291.335)
+[20231229 04:39:26:245][INFO ][o.s.b.d.a.ConditionEvaluationDeltaLoggingListener] Condition evaluation unchanged
+[20231229 04:39:29:747][INFO ][o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener] Restarting due to 1 class path change (1 addition, 0 deletions, 0 modifications)
+[20231229 04:39:29:757][INFO ][org.apache.catalina.core.StandardService] Stopping service [Tomcat]
+[20231229 04:39:29:761][INFO ][o.s.o.j.LocalContainerEntityManagerFactoryBean] Closing JPA EntityManagerFactory for persistence unit 'default'
+[20231229 04:39:29:761][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-36 - Shutdown initiated...
+[20231229 04:39:29:765][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-36 - Shutdown completed.
+[20231229 04:39:29:840][INFO ][com.coco.CocoTApplication] Starting CocoTApplication using Java 17.0.2 on ITK-20230821DNX with PID 3888 (C:\Users\Administrator\SpringBootWorkspace2\CocoT\target\classes started by Administrator in C:\Users\Administrator\SpringBootWorkspace2\CocoT)
+[20231229 04:39:29:840][INFO ][com.coco.CocoTApplication] No active profile set, falling back to 1 default profile: "default"
+[20231229 04:39:29:976][INFO ][o.s.d.r.c.RepositoryConfigurationDelegate] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[20231229 04:39:29:999][INFO ][o.s.d.r.c.RepositoryConfigurationDelegate] Finished Spring Data repository scanning in 23 ms. Found 4 JPA repository interfaces.
+[20231229 04:39:30:070][INFO ][o.s.b.w.embedded.tomcat.TomcatWebServer] Tomcat initialized with port(s): 8080 (http)
+[20231229 04:39:30:071][INFO ][org.apache.catalina.core.StandardService] Starting service [Tomcat]
+[20231229 04:39:30:071][INFO ][org.apache.catalina.core.StandardEngine] Starting Servlet engine: [Apache Tomcat/9.0.65]
+[20231229 04:39:30:090][INFO ][o.a.c.c.C.[Tomcat-6].[localhost].[/]] Initializing Spring embedded WebApplicationContext
+[20231229 04:39:30:090][INFO ][o.s.b.w.s.c.ServletWebServerApplicationContext] Root WebApplicationContext: initialization completed in 249 ms
+[20231229 04:39:30:115][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-37 - Starting...
+[20231229 04:39:30:160][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-37 - Start completed.
+[20231229 04:39:30:165][INFO ][o.hibernate.jpa.internal.util.LogHelper] HHH000204: Processing PersistenceUnitInfo [name: default]
+[20231229 04:39:30:169][INFO ][org.hibernate.dialect.Dialect] HHH000400: Using dialect: org.hibernate.dialect.Oracle12cDialect
+[20231229 04:39:30:225][INFO ][o.h.e.t.j.p.i.JtaPlatformInitiator] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[20231229 04:39:30:226][INFO ][o.s.o.j.LocalContainerEntityManagerFactoryBean] Initialized JPA EntityManagerFactory for persistence unit 'default'
+[20231229 04:39:30:392][INFO ][o.s.s.web.DefaultSecurityFilterChain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@710bcc25, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3d2bdccb, org.springframework.security.web.context.SecurityContextPersistenceFilter@66bf54d7, org.springframework.security.web.header.HeaderWriterFilter@1d5528b6, org.springframework.security.web.authentication.logout.LogoutFilter@1a900f7a, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@28bc92ef, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@26898414, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@12ad18eb, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@162dac89, org.springframework.security.web.session.SessionManagementFilter@6a8fc471, org.springframework.security.web.access.ExceptionTranslationFilter@7e27da3e, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@6a3822ad]
+[20231229 04:39:30:399][WARN ][o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[20231229 04:39:30:439][DEBUG][o.s.w.s.m.m.a.RequestMappingHandlerAdapter] ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+[20231229 04:39:30:442][INFO ][o.s.b.a.w.s.WelcomePageHandlerMapping] Adding welcome page template: index
+[20231229 04:39:30:449][DEBUG][o.s.w.s.m.m.a.RequestMappingHandlerMapping] 42 mappings in 'requestMappingHandlerMapping'
+[20231229 04:39:30:453][DEBUG][o.s.w.s.handler.SimpleUrlHandlerMapping] Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+[20231229 04:39:30:457][DEBUG][o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver] ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+[20231229 04:39:30:478][INFO ][o.s.b.d.a.OptionalLiveReloadServer] LiveReload server is running on port 35729
+[20231229 04:39:30:486][INFO ][o.s.b.w.embedded.tomcat.TomcatWebServer] Tomcat started on port(s): 8080 (http) with context path ''
+[20231229 04:39:30:489][INFO ][com.coco.CocoTApplication] Started CocoTApplication in 0.672 seconds (JVM running for 8295.58)
+[20231229 04:39:30:490][INFO ][o.s.b.d.a.ConditionEvaluationDeltaLoggingListener] Condition evaluation unchanged
+[20231229 04:39:31:922][INFO ][o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener] Restarting due to 1 class path change (1 addition, 0 deletions, 0 modifications)
+[20231229 04:39:31:950][INFO ][org.apache.catalina.core.StandardService] Stopping service [Tomcat]
+[20231229 04:39:31:953][INFO ][o.s.o.j.LocalContainerEntityManagerFactoryBean] Closing JPA EntityManagerFactory for persistence unit 'default'
+[20231229 04:39:31:953][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-37 - Shutdown initiated...
+[20231229 04:39:31:957][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-37 - Shutdown completed.
+[20231229 04:39:32:020][INFO ][com.coco.CocoTApplication] Starting CocoTApplication using Java 17.0.2 on ITK-20230821DNX with PID 3888 (C:\Users\Administrator\SpringBootWorkspace2\CocoT\target\classes started by Administrator in C:\Users\Administrator\SpringBootWorkspace2\CocoT)
+[20231229 04:39:32:020][INFO ][com.coco.CocoTApplication] No active profile set, falling back to 1 default profile: "default"
+[20231229 04:39:32:146][INFO ][o.s.d.r.c.RepositoryConfigurationDelegate] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[20231229 04:39:32:164][INFO ][o.s.d.r.c.RepositoryConfigurationDelegate] Finished Spring Data repository scanning in 17 ms. Found 4 JPA repository interfaces.
+[20231229 04:39:32:217][INFO ][o.s.b.w.embedded.tomcat.TomcatWebServer] Tomcat initialized with port(s): 8080 (http)
+[20231229 04:39:32:217][INFO ][org.apache.catalina.core.StandardService] Starting service [Tomcat]
+[20231229 04:39:32:217][INFO ][org.apache.catalina.core.StandardEngine] Starting Servlet engine: [Apache Tomcat/9.0.65]
+[20231229 04:39:32:231][INFO ][o.a.c.c.C.[Tomcat-6].[localhost].[/]] Initializing Spring embedded WebApplicationContext
+[20231229 04:39:32:231][INFO ][o.s.b.w.s.c.ServletWebServerApplicationContext] Root WebApplicationContext: initialization completed in 210 ms
+[20231229 04:39:32:252][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-38 - Starting...
+[20231229 04:39:32:288][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-38 - Start completed.
+[20231229 04:39:32:293][INFO ][o.hibernate.jpa.internal.util.LogHelper] HHH000204: Processing PersistenceUnitInfo [name: default]
+[20231229 04:39:32:297][INFO ][org.hibernate.dialect.Dialect] HHH000400: Using dialect: org.hibernate.dialect.Oracle12cDialect
+[20231229 04:39:32:348][INFO ][o.h.e.t.j.p.i.JtaPlatformInitiator] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[20231229 04:39:32:348][INFO ][o.s.o.j.LocalContainerEntityManagerFactoryBean] Initialized JPA EntityManagerFactory for persistence unit 'default'
+[20231229 04:39:32:509][INFO ][o.s.s.web.DefaultSecurityFilterChain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@431a08ea, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1dfac550, org.springframework.security.web.context.SecurityContextPersistenceFilter@659eda79, org.springframework.security.web.header.HeaderWriterFilter@37d4664, org.springframework.security.web.authentication.logout.LogoutFilter@69303ce5, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@4f97fead, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@24b47018, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@4d935c8c, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2b9738e, org.springframework.security.web.session.SessionManagementFilter@3d6939e, org.springframework.security.web.access.ExceptionTranslationFilter@78c7258f, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@3e942908]
+[20231229 04:39:32:515][WARN ][o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[20231229 04:39:32:554][DEBUG][o.s.w.s.m.m.a.RequestMappingHandlerAdapter] ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+[20231229 04:39:32:557][INFO ][o.s.b.a.w.s.WelcomePageHandlerMapping] Adding welcome page template: index
+[20231229 04:39:32:563][DEBUG][o.s.w.s.m.m.a.RequestMappingHandlerMapping] 42 mappings in 'requestMappingHandlerMapping'
+[20231229 04:39:32:567][DEBUG][o.s.w.s.handler.SimpleUrlHandlerMapping] Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+[20231229 04:39:32:571][DEBUG][o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver] ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+[20231229 04:39:32:596][INFO ][o.s.b.d.a.OptionalLiveReloadServer] LiveReload server is running on port 35729
+[20231229 04:39:32:604][INFO ][o.s.b.w.embedded.tomcat.TomcatWebServer] Tomcat started on port(s): 8080 (http) with context path ''
+[20231229 04:39:32:607][INFO ][com.coco.CocoTApplication] Started CocoTApplication in 0.606 seconds (JVM running for 8297.698)
+[20231229 04:39:32:608][INFO ][o.s.b.d.a.ConditionEvaluationDeltaLoggingListener] Condition evaluation unchanged
+[20231229 04:39:40:214][INFO ][o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener] Restarting due to 1 class path change (0 additions, 1 deletion, 0 modifications)
+[20231229 04:39:40:241][INFO ][org.apache.catalina.core.StandardService] Stopping service [Tomcat]
+[20231229 04:39:40:244][INFO ][o.s.o.j.LocalContainerEntityManagerFactoryBean] Closing JPA EntityManagerFactory for persistence unit 'default'
+[20231229 04:39:40:244][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-38 - Shutdown initiated...
+[20231229 04:39:40:249][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-38 - Shutdown completed.
+[20231229 04:39:40:316][INFO ][com.coco.CocoTApplication] Starting CocoTApplication using Java 17.0.2 on ITK-20230821DNX with PID 3888 (C:\Users\Administrator\SpringBootWorkspace2\CocoT\target\classes started by Administrator in C:\Users\Administrator\SpringBootWorkspace2\CocoT)
+[20231229 04:39:40:316][INFO ][com.coco.CocoTApplication] No active profile set, falling back to 1 default profile: "default"
+[20231229 04:39:40:462][INFO ][o.s.d.r.c.RepositoryConfigurationDelegate] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[20231229 04:39:40:482][INFO ][o.s.d.r.c.RepositoryConfigurationDelegate] Finished Spring Data repository scanning in 18 ms. Found 4 JPA repository interfaces.
+[20231229 04:39:40:537][INFO ][o.s.b.w.embedded.tomcat.TomcatWebServer] Tomcat initialized with port(s): 8080 (http)
+[20231229 04:39:40:537][INFO ][org.apache.catalina.core.StandardService] Starting service [Tomcat]
+[20231229 04:39:40:537][INFO ][org.apache.catalina.core.StandardEngine] Starting Servlet engine: [Apache Tomcat/9.0.65]
+[20231229 04:39:40:552][INFO ][o.a.c.c.C.[Tomcat-6].[localhost].[/]] Initializing Spring embedded WebApplicationContext
+[20231229 04:39:40:552][INFO ][o.s.b.w.s.c.ServletWebServerApplicationContext] Root WebApplicationContext: initialization completed in 235 ms
+[20231229 04:39:40:572][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-39 - Starting...
+[20231229 04:39:40:609][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-39 - Start completed.
+[20231229 04:39:40:613][INFO ][o.hibernate.jpa.internal.util.LogHelper] HHH000204: Processing PersistenceUnitInfo [name: default]
+[20231229 04:39:40:616][INFO ][org.hibernate.dialect.Dialect] HHH000400: Using dialect: org.hibernate.dialect.Oracle12cDialect
+[20231229 04:39:40:665][INFO ][o.h.e.t.j.p.i.JtaPlatformInitiator] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[20231229 04:39:40:665][INFO ][o.s.o.j.LocalContainerEntityManagerFactoryBean] Initialized JPA EntityManagerFactory for persistence unit 'default'
+[20231229 04:39:40:861][INFO ][o.s.s.web.DefaultSecurityFilterChain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@6da7fdcd, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6dcbf38, org.springframework.security.web.context.SecurityContextPersistenceFilter@537610c, org.springframework.security.web.header.HeaderWriterFilter@129ec2a7, org.springframework.security.web.authentication.logout.LogoutFilter@acddbca, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@616f507, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@96f199, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@64f990d6, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2fd89482, org.springframework.security.web.session.SessionManagementFilter@5bf1629d, org.springframework.security.web.access.ExceptionTranslationFilter@21449c17, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@5c5eae77]
+[20231229 04:39:40:869][WARN ][o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[20231229 04:39:40:921][DEBUG][o.s.w.s.m.m.a.RequestMappingHandlerAdapter] ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+[20231229 04:39:40:926][INFO ][o.s.b.a.w.s.WelcomePageHandlerMapping] Adding welcome page template: index
+[20231229 04:39:40:936][DEBUG][o.s.w.s.m.m.a.RequestMappingHandlerMapping] 42 mappings in 'requestMappingHandlerMapping'
+[20231229 04:39:40:944][DEBUG][o.s.w.s.handler.SimpleUrlHandlerMapping] Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+[20231229 04:39:40:950][DEBUG][o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver] ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+[20231229 04:39:40:985][INFO ][o.s.b.d.a.OptionalLiveReloadServer] LiveReload server is running on port 35729
+[20231229 04:39:40:998][INFO ][o.s.b.w.embedded.tomcat.TomcatWebServer] Tomcat started on port(s): 8080 (http) with context path ''
+[20231229 04:39:41:003][INFO ][com.coco.CocoTApplication] Started CocoTApplication in 0.71 seconds (JVM running for 8306.095)
+[20231229 04:39:41:004][INFO ][o.s.b.d.a.ConditionEvaluationDeltaLoggingListener] Condition evaluation unchanged
+[20231229 04:39:42:426][INFO ][o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener] Restarting due to 1 class path change (0 additions, 1 deletion, 0 modifications)
+[20231229 04:39:42:443][INFO ][org.apache.catalina.core.StandardService] Stopping service [Tomcat]
+[20231229 04:39:42:446][INFO ][o.s.o.j.LocalContainerEntityManagerFactoryBean] Closing JPA EntityManagerFactory for persistence unit 'default'
+[20231229 04:39:42:446][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-39 - Shutdown initiated...
+[20231229 04:39:42:452][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-39 - Shutdown completed.
+[20231229 04:39:42:522][INFO ][com.coco.CocoTApplication] Starting CocoTApplication using Java 17.0.2 on ITK-20230821DNX with PID 3888 (C:\Users\Administrator\SpringBootWorkspace2\CocoT\target\classes started by Administrator in C:\Users\Administrator\SpringBootWorkspace2\CocoT)
+[20231229 04:39:42:522][INFO ][com.coco.CocoTApplication] No active profile set, falling back to 1 default profile: "default"
+[20231229 04:39:42:659][INFO ][o.s.d.r.c.RepositoryConfigurationDelegate] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[20231229 04:39:42:678][INFO ][o.s.d.r.c.RepositoryConfigurationDelegate] Finished Spring Data repository scanning in 18 ms. Found 4 JPA repository interfaces.
+[20231229 04:39:42:739][INFO ][o.s.b.w.embedded.tomcat.TomcatWebServer] Tomcat initialized with port(s): 8080 (http)
+[20231229 04:39:42:739][INFO ][org.apache.catalina.core.StandardService] Starting service [Tomcat]
+[20231229 04:39:42:739][INFO ][org.apache.catalina.core.StandardEngine] Starting Servlet engine: [Apache Tomcat/9.0.65]
+[20231229 04:39:42:754][INFO ][o.a.c.c.C.[Tomcat-6].[localhost].[/]] Initializing Spring embedded WebApplicationContext
+[20231229 04:39:42:754][INFO ][o.s.b.w.s.c.ServletWebServerApplicationContext] Root WebApplicationContext: initialization completed in 231 ms
+[20231229 04:39:42:774][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-40 - Starting...
+[20231229 04:39:42:813][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-40 - Start completed.
+[20231229 04:39:42:818][INFO ][o.hibernate.jpa.internal.util.LogHelper] HHH000204: Processing PersistenceUnitInfo [name: default]
+[20231229 04:39:42:822][INFO ][org.hibernate.dialect.Dialect] HHH000400: Using dialect: org.hibernate.dialect.Oracle12cDialect
+[20231229 04:39:42:878][INFO ][o.h.e.t.j.p.i.JtaPlatformInitiator] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[20231229 04:39:42:878][INFO ][o.s.o.j.LocalContainerEntityManagerFactoryBean] Initialized JPA EntityManagerFactory for persistence unit 'default'
+[20231229 04:39:43:051][INFO ][o.s.s.web.DefaultSecurityFilterChain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@65ff69c4, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7e16df6a, org.springframework.security.web.context.SecurityContextPersistenceFilter@4ebde329, org.springframework.security.web.header.HeaderWriterFilter@78330329, org.springframework.security.web.authentication.logout.LogoutFilter@7e98e924, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@76d8dd85, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@9903458, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@69da4408, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2361111, org.springframework.security.web.session.SessionManagementFilter@541c4db3, org.springframework.security.web.access.ExceptionTranslationFilter@32cea492, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@51b5bd24]
+[20231229 04:39:43:057][WARN ][o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[20231229 04:39:43:098][DEBUG][o.s.w.s.m.m.a.RequestMappingHandlerAdapter] ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+[20231229 04:39:43:101][INFO ][o.s.b.a.w.s.WelcomePageHandlerMapping] Adding welcome page template: index
+[20231229 04:39:43:107][DEBUG][o.s.w.s.m.m.a.RequestMappingHandlerMapping] 42 mappings in 'requestMappingHandlerMapping'
+[20231229 04:39:43:111][DEBUG][o.s.w.s.handler.SimpleUrlHandlerMapping] Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+[20231229 04:39:43:114][DEBUG][o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver] ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+[20231229 04:39:43:145][INFO ][o.s.b.d.a.OptionalLiveReloadServer] LiveReload server is running on port 35729
+[20231229 04:39:43:154][INFO ][o.s.b.w.embedded.tomcat.TomcatWebServer] Tomcat started on port(s): 8080 (http) with context path ''
+[20231229 04:39:43:157][INFO ][com.coco.CocoTApplication] Started CocoTApplication in 0.656 seconds (JVM running for 8308.248)
+[20231229 04:39:43:157][INFO ][o.s.b.d.a.ConditionEvaluationDeltaLoggingListener] Condition evaluation unchanged
+[20231229 04:39:58:667][INFO ][o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener] Restarting due to 1 class path change (0 additions, 1 deletion, 0 modifications)
+[20231229 04:39:58:675][INFO ][org.apache.catalina.core.StandardService] Stopping service [Tomcat]
+[20231229 04:39:58:677][INFO ][o.s.o.j.LocalContainerEntityManagerFactoryBean] Closing JPA EntityManagerFactory for persistence unit 'default'
+[20231229 04:39:58:677][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-40 - Shutdown initiated...
+[20231229 04:39:58:683][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-40 - Shutdown completed.
+[20231229 04:39:58:763][INFO ][com.coco.CocoTApplication] Starting CocoTApplication using Java 17.0.2 on ITK-20230821DNX with PID 3888 (C:\Users\Administrator\SpringBootWorkspace2\CocoT\target\classes started by Administrator in C:\Users\Administrator\SpringBootWorkspace2\CocoT)
+[20231229 04:39:58:763][INFO ][com.coco.CocoTApplication] No active profile set, falling back to 1 default profile: "default"
+[20231229 04:39:58:921][INFO ][o.s.d.r.c.RepositoryConfigurationDelegate] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[20231229 04:39:58:941][INFO ][o.s.d.r.c.RepositoryConfigurationDelegate] Finished Spring Data repository scanning in 19 ms. Found 4 JPA repository interfaces.
+[20231229 04:39:59:005][INFO ][o.s.b.w.embedded.tomcat.TomcatWebServer] Tomcat initialized with port(s): 8080 (http)
+[20231229 04:39:59:005][INFO ][org.apache.catalina.core.StandardService] Starting service [Tomcat]
+[20231229 04:39:59:005][INFO ][org.apache.catalina.core.StandardEngine] Starting Servlet engine: [Apache Tomcat/9.0.65]
+[20231229 04:39:59:020][INFO ][o.a.c.c.C.[Tomcat-6].[localhost].[/]] Initializing Spring embedded WebApplicationContext
+[20231229 04:39:59:020][INFO ][o.s.b.w.s.c.ServletWebServerApplicationContext] Root WebApplicationContext: initialization completed in 256 ms
+[20231229 04:39:59:043][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-41 - Starting...
+[20231229 04:39:59:080][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-41 - Start completed.
+[20231229 04:39:59:084][INFO ][o.hibernate.jpa.internal.util.LogHelper] HHH000204: Processing PersistenceUnitInfo [name: default]
+[20231229 04:39:59:088][INFO ][org.hibernate.dialect.Dialect] HHH000400: Using dialect: org.hibernate.dialect.Oracle12cDialect
+[20231229 04:39:59:137][INFO ][o.h.e.t.j.p.i.JtaPlatformInitiator] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[20231229 04:39:59:137][INFO ][o.s.o.j.LocalContainerEntityManagerFactoryBean] Initialized JPA EntityManagerFactory for persistence unit 'default'
+[20231229 04:39:59:288][INFO ][o.s.s.web.DefaultSecurityFilterChain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@5137ce8e, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@76aaf498, org.springframework.security.web.context.SecurityContextPersistenceFilter@603a648b, org.springframework.security.web.header.HeaderWriterFilter@14ec63be, org.springframework.security.web.authentication.logout.LogoutFilter@1cd3e682, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@6b56a698, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@55d693d, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@72db0bbb, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@46e6b87d, org.springframework.security.web.session.SessionManagementFilter@1d980c06, org.springframework.security.web.access.ExceptionTranslationFilter@199f93b2, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@72085e9e]
+[20231229 04:39:59:295][WARN ][o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[20231229 04:39:59:337][DEBUG][o.s.w.s.m.m.a.RequestMappingHandlerAdapter] ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+[20231229 04:39:59:340][INFO ][o.s.b.a.w.s.WelcomePageHandlerMapping] Adding welcome page template: index
+[20231229 04:39:59:347][DEBUG][o.s.w.s.m.m.a.RequestMappingHandlerMapping] 42 mappings in 'requestMappingHandlerMapping'
+[20231229 04:39:59:351][DEBUG][o.s.w.s.handler.SimpleUrlHandlerMapping] Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+[20231229 04:39:59:355][DEBUG][o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver] ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+[20231229 04:39:59:391][INFO ][o.s.b.d.a.OptionalLiveReloadServer] LiveReload server is running on port 35729
+[20231229 04:39:59:401][INFO ][o.s.b.w.embedded.tomcat.TomcatWebServer] Tomcat started on port(s): 8080 (http) with context path ''
+[20231229 04:39:59:404][INFO ][com.coco.CocoTApplication] Started CocoTApplication in 0.669 seconds (JVM running for 8324.496)
+[20231229 04:39:59:405][INFO ][o.s.b.d.a.ConditionEvaluationDeltaLoggingListener] Condition evaluation unchanged
+[20231229 04:40:00:836][INFO ][o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener] Restarting due to 1 class path change (0 additions, 1 deletion, 0 modifications)
+[20231229 04:40:00:856][INFO ][org.apache.catalina.core.StandardService] Stopping service [Tomcat]
+[20231229 04:40:00:860][INFO ][o.s.o.j.LocalContainerEntityManagerFactoryBean] Closing JPA EntityManagerFactory for persistence unit 'default'
+[20231229 04:40:00:860][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-41 - Shutdown initiated...
+[20231229 04:40:00:865][INFO ][com.zaxxer.hikari.HikariDataSource] HikariPool-41 - Shutdown completed.
