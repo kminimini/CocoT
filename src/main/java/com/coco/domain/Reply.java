@@ -8,7 +8,13 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -39,6 +45,12 @@ public class Reply {
     @Transient
     private String username;
 
-    // 생성자 등 코드 수정 생략...
+    @ManyToOne
+    @JoinColumn(name = "PARENT_REPLY_SEQ")  // 추가: 부모 댓글을 참조하기 위한 필드
+    private Reply parentReply;
+    
+    // 자식 댓글 목록
+    @OneToMany(mappedBy = "parentReply")
+    private Set<Reply> children;
 
 }
