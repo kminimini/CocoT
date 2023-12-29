@@ -55,5 +55,7 @@ public interface MemberService {
 
 	String encodePassword(String newPassword);
 
+	Member getMemberByUsername(String username);
+
 
 }
