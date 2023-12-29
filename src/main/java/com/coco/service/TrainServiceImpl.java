@@ -16,8 +16,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.coco.domain.TrainInfo;
 
@@ -25,6 +29,9 @@ import com.coco.domain.TrainInfo;
 public class TrainServiceImpl implements TrainService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(TrainServiceImpl.class);
+	
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
 	
 	@Value("${api.serviceKey}")
 	private String serviceKey;
@@ -424,5 +431,18 @@ public class TrainServiceImpl implements TrainService {
             }
         }
         return false;
+    }
+    
+ // Method to retrieve information about a specific train ticket
+    @SuppressWarnings("deprecation")
+	public TrainInfo getTrainInfoById(Long trainId) {
+        String sql = "SELECT * FROM train WHERE train_id = ?";
+        try {
+            // Query the database and map the result to TrainInfo class
+            return jdbcTemplate.queryForObject(sql, new Object[]{trainId}, new BeanPropertyRowMapper<>(TrainInfo.class));
+        } catch (Exception e) {
+            // Handle exceptions or return null if the ticket is not found
+            return null;
+        }
     }
 }

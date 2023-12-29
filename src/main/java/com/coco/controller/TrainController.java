@@ -1,9 +1,16 @@
 package com.coco.controller;
 
 import java.io.IOException;
+import java.security.SecureRandom;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -11,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.coco.domain.Train;
 import com.coco.domain.TrainInfo;
 import com.coco.service.TrainService;
 import com.coco.service.TrainServiceImpl;
@@ -29,8 +38,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @RequestMapping("/train")
 public class TrainController {
 	private static final Logger logger = LoggerFactory.getLogger(TrainServiceImpl.class);
+	private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
 	@Autowired
 	private TrainService trainService;
+	
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
 	
 	// 도시 코드 가져오기
 	@GetMapping("/cityCodes")
@@ -124,7 +138,10 @@ public class TrainController {
             
             ObjectMapper objectMapper = new ObjectMapper();
             Map<String, Object> trainInfo = objectMapper.readValue(response, new TypeReference<Map<String, Object>>() {});
-                        
+            
+            // 열차 정보를 데이터베이스에 저장
+            saveTrainInfoToDatabase(trainInfo);
+            
             model.addAttribute("trainInfo", trainInfo);
             model.addAttribute("currentPage", pageNo);
             model.addAttribute("previousPageUrl", buildPageUrl(depPlaceId, arrPlaceId, depPlandTime, previousPageNo, numOfRows));
@@ -174,5 +191,81 @@ public class TrainController {
     @GetMapping("/error")
     public String showErrorPage() {
         return "train/error";
+    }
+
+    // 열차 정보를 데이터베이스에 저장하는 메서드
+    private void saveTrainInfoToDatabase(Map<String, Object> trainInfo) {
+    	try {
+    		// Delete all records from the train table
+            String deleteSql = "DELETE FROM train";
+            jdbcTemplate.update(deleteSql);
+            
+            Map<String, Object> response = (Map<String, Object>) trainInfo.get("response");
+            Map<String, Object> body = (Map<String, Object>) response.get("body");
+            Map<String, Object> items = (Map<String, Object>) body.get("items");
+            List<Map<String, Object>> itemList = (List<Map<String, Object>>) items.get("item");
+
+         // 각 필드에 대한 null 체크 추가
+            for (Map<String, Object> item : itemList) {
+                Long trainNo = (item.get("trainno") != null) ? ((Number) item.get("trainno")).longValue() : null;
+
+             // LocalDateTime으로 변경
+                LocalDateTime departureTime = parseDateTime(item.get("depplandtime"));
+                LocalDateTime arrplandTime = parseDateTime(item.get("arrplandtime"));
+             // LocalDateTime을 Long 값으로 변경
+                Long departureTimeEpochMilli = (departureTime != null) ? departureTime.atZone(ZoneId.of("UTC")).toInstant().toEpochMilli() : null;
+                Long arrplandTimeEpochMilli = (arrplandTime != null) ? arrplandTime.atZone(ZoneId.of("UTC")).toInstant().toEpochMilli() : null;
+
+                String depplacename = (String) item.get("depplacename");
+                String arrplacename = (String) item.get("arrplacename");
+                String traingradename = (String) item.get("traingradename");
+                Long adultcharge = (item.get("adultcharge") != null) ? ((Number) item.get("adultcharge")).longValue() : null;
+            
+                // 주문번호 생성
+                String orderId = createOrderNum();
+
+                // 데이터베이스에 저장하기 전에 로그하여 값 확인
+                logger.info("데이터베이스에 저장하기 전 값 - TrainNo: {}, DepartureTime: {}, ArrplandTime: {}, DepPlaceName: {}, ArrPlaceName: {}, TrainGradeName: {}, AdultCharge: {}, OrderId: {}", trainNo, departureTime, arrplandTime, depplacename, arrplacename, traingradename, adultcharge, orderId);
+
+                // SQL 쿼리
+                String sql = "INSERT INTO train (train_no, depplandtime, arrplandtime, depplacename, arrplacename, traingradename, adultcharge, order_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+                // JdbcTemplate을 사용하여 데이터베이스에 삽입
+                jdbcTemplate.update(sql, trainNo, departureTimeEpochMilli, arrplandTimeEpochMilli, depplacename, arrplacename, traingradename, adultcharge, orderId);
+
+                // 성공적으로 저장되었을 때 로그 출력
+                logger.info("데이터베이스에 저장된 열차 정보. 열차 번호: {}, 출발 시간: {}, 도착 시간: {}, 출발 장소: {}, 도착 장소: {}, 열차 등급: {}, 성인 요금: {}, OrderId: {}", trainNo, departureTime, arrplandTime, depplacename, arrplacename, traingradename, adultcharge, orderId);
+            }
+        } catch (Exception e) {
+            // 저장 중 오류가 발생했을 때 로그 출력
+            logger.error("열차 정보를 데이터베이스에 저장하는 데 오류가 발생했습니다.: {}", e.getMessage());
+        }
+    }
+    
+ // 주문번호 만들기 함수
+    public static String createOrderNum() {
+        String characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        StringBuilder orderNumBuilder = new StringBuilder();
+
+        SecureRandom random = new SecureRandom();
+
+        for (int i = 0; i < 16; i++) {
+            int index = random.nextInt(characters.length());
+            orderNumBuilder.append(characters.charAt(index));
+        }
+
+        return orderNumBuilder.toString();
+    }
+
+
+	private LocalDateTime parseDateTime(Object dateTime) {
+        if (dateTime instanceof String) {
+            // 문자열을 LocalDateTime으로 파싱
+            return LocalDateTime.parse((String) dateTime, formatter);
+        } else if (dateTime instanceof Number) {
+            // 이미 숫자인 경우 변환 없이 반환
+            return LocalDateTime.ofInstant(java.time.Instant.ofEpochMilli(((Number) dateTime).longValue()), java.time.ZoneId.of("UTC"));
+        }
+        return null;
     }
 }
