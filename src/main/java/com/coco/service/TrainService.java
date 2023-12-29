@@ -1,7 +1,9 @@
 package com.coco.service;
 
 import java.io.IOException;
+import java.util.Map;
 
+import com.coco.domain.Train;
 import com.coco.domain.TrainInfo;
 
 public interface TrainService {
@@ -29,4 +31,12 @@ public interface TrainService {
 	
 	// 조회한 열차정보 타입캐스팅 후 저장
 	boolean hasTrainItems(TrainInfo.TrainResponse trainInfo);
+
+	//  기차표 목록에서 기차표 선택 
+	void saveReservation(String trainNo, String trainGrade, String depPlace, String depTime, String arrPlace, String arrTime, Long adultCharge) throws Exception;
+
+	// 
+	Map<String, Object> getTrainDetailsByTrainNo(String trainNo);
+
+	Train getTrainDetails(String trainNo);
 }

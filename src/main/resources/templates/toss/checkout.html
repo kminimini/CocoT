@@ -25,8 +25,8 @@
       // 이메일・전화번호와 같이 유추가 가능한 값은 안전하지 않습니다.
       const clientKey = "test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm";
       const customerKey = "qbB2qLHxbAAaW3nPxbb6T";
-      const paymentWidget = PaymentWidget(clientKey, customerKey); // 회원 결제
-      // const paymentWidget = PaymentWidget(clientKey, PaymentWidget.ANONYMOUS) // 비회원 결제
+      //const paymentWidget = PaymentWidget(clientKey, customerKey); // 회원 결제
+      const paymentWidget = PaymentWidget(clientKey, PaymentWidget.ANONYMOUS) // 비회원 결제
 
       const paymentMethodWidget = paymentWidget.renderPaymentMethods(
         "#payment-method",

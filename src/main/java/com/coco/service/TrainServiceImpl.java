@@ -9,7 +9,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,12 +21,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
+import com.coco.domain.Train;
 import com.coco.domain.TrainInfo;
+import com.coco.repository.TrainRepository;
 
 @Service
 public class TrainServiceImpl implements TrainService {
@@ -32,6 +40,9 @@ public class TrainServiceImpl implements TrainService {
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+	
+	@Autowired
+    private TrainRepository trainRepository;
 	
 	@Value("${api.serviceKey}")
 	private String serviceKey;
@@ -305,7 +316,7 @@ public class TrainServiceImpl implements TrainService {
 
             return numOfPages;
         } catch (IOException | JSONException e) {
-            logger.error("Error getting total page count: {}", e.getMessage());
+            logger.error("총 페이지 수를 가져오는 데 오류가 발생했습니다.: {}", e.getMessage());
             return 0;
         }
     }
@@ -416,7 +427,6 @@ public class TrainServiceImpl implements TrainService {
 
                 boolean result = responseBody != null && responseBody.hasTrainItems() && items != null && items.hasItem();
 
-                // Logging the result for debugging
                 if (result) {
                     logger.debug("기차 아이템이 있습니다.");
                 } else {
@@ -425,24 +435,71 @@ public class TrainServiceImpl implements TrainService {
 
                 return result;
             } catch (ClassCastException e) {
-                // Log the exception for debugging
                 logger.error("hasTrainItems 메서드에서 객체를 캐스팅하는 동안 오류가 발생!!!", e);
                 return false;
             }
         }
         return false;
     }
-    
- // Method to retrieve information about a specific train ticket
-    @SuppressWarnings("deprecation")
-	public TrainInfo getTrainInfoById(Long trainId) {
-        String sql = "SELECT * FROM train WHERE train_id = ?";
+
+	
+    /* TODO 기차표 목록에서 기차표 선택 */
+    public void saveReservation(String trainNo, String trainGrade, String depPlace, String depTime, String arrPlace, String arrTime, Long adultCharge) throws Exception {
         try {
-            // Query the database and map the result to TrainInfo class
-            return jdbcTemplate.queryForObject(sql, new Object[]{trainId}, new BeanPropertyRowMapper<>(TrainInfo.class));
+            // Implement logic to save reservation details to Oracle database
+            String sql = "INSERT INTO reservation (train_no, train_grade, dep_place, dep_time, arr_place, arr_time, adult_charge) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+            jdbcTemplate.update(sql, trainNo, trainGrade, depPlace, depTime, arrPlace, arrTime, adultCharge);
         } catch (Exception e) {
-            // Handle exceptions or return null if the ticket is not found
-            return null;
+            // Handle database-related exceptions
+            throw new Exception("Error saving reservation details to the database", e);
         }
+    }
+
+    /* TODO 열차 번호로 열차 세부 정보를 가져오는 방법 추가하기 */
+    public Map<String, Object> getTrainDetailsByTrainNo(String trainNo) {
+        try {
+            // Implement the logic to fetch train details by train number
+            // Replace 'findByTrainNo' with your actual method name
+            Train train = trainRepository.findByTrainNo(trainNo);
+
+            if (train == null) {
+                // Handle the case where no train details are found
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "열차 번호에 대한 열차 정보를 찾을 수 없습니다.: " + trainNo);
+            }
+
+            // Convert Train entity to a Map or DTO as needed
+            Map<String, Object> trainDetails = convertTrainToMap(train);
+
+            return trainDetails;
+        } catch (Exception e) {
+            logger.error("열차 번호에 대한 열차 정보를 검색하는 동안 오류가 발생했습니다.: {}", trainNo, e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "열차 정보 검색 중 오류 발생");
+        }
+    }
+
+    /* TODO 기차 엔티티를 기반으로 전환 로직 */
+    private Map<String, Object> convertTrainToMap(Train train) {
+    	Map<String, Object> trainDetails = new HashMap<>();
+        trainDetails.put("trainNo", train.getTrainNo());
+        trainDetails.put("traingradename", train.getTraingradename());
+        trainDetails.put("depplacename", train.getDepplacename());
+        trainDetails.put("depplandtime", train.getDepplandtime());
+        trainDetails.put("arrplacename", train.getArrplacename());
+        trainDetails.put("arrplandtime", train.getArrplandtime());
+        trainDetails.put("adultcharge", train.getAdultcharge());
+        
+        // Add other properties...
+
+        return trainDetails;
+    }
+        
+    public Train getTrainDetails(String trainNo) {
+        // Assuming trainNo is a String, if not, adjust accordingly
+        Long trainNumber = Long.parseLong(trainNo);
+
+        Optional<Train> optionalTrain = trainRepository.findByTrainNo(trainNumber);
+
+        return optionalTrain.orElse(null);
     }
 }

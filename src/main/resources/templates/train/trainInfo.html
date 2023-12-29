@@ -18,7 +18,7 @@
                 <th>도착</th>
                 <th>도착 시간</th>
                 <th>요금</th>
-                <th>예약 하기</th>
+                <th>선택 하기</th>
             </tr>
         </thead>
         <tbody>
@@ -42,7 +42,7 @@
     <input type="hidden" th:name="arrPlace" th:value="${train.arrplacename}">
     <input type="hidden" th:name="arrTime" th:value="${train.arrplandtime}">
     <input type="hidden" th:name="adultCharge" th:value="${train.adultcharge}">
-    <button type="submit">예약</button>
+    <button type="submit">선택</button>
 </form>
             </td>
         </tr>
@@ -68,7 +68,7 @@
                                       data-arr-place=${trainInfo['response']['body']['items']['item'].arrplacename},
                                       data-arr-time=${trainInfo['response']['body']['items']['item'].arrplandtime},
                                       data-adult-charge=${trainInfo['response']['body']['items']['item'].adultcharge}">
-                        예약
+                        선택
                     </button>
                 </form>
             </td>
