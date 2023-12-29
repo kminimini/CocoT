@@ -46,7 +46,6 @@ public class MyPageController {
         model.addAttribute("currentMember", currentMember);
         return "myPage";
     }
-    
       
  // 비밀번호 유효성 검사 핸들러
     @PostMapping("/myPage/changePassword")
