@@ -7,6 +7,7 @@ import com.coco.repository.MemberRepository;
 import com.coco.repository.ReplyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
 import java.util.List;
@@ -45,14 +46,39 @@ public class ReplyServiceImpl implements ReplyService {
     }
     
     @Override
+    public void addSubReply(Long parentReplyId, Reply subReply) {
+        Optional<Reply> optionalParentReply = replyRepository.findById(parentReplyId);
+
+        if (optionalParentReply.isPresent()) {
+            Reply parentReply = optionalParentReply.get();
+            subReply.setParentReply(parentReply);
+            parentReply.getChildren().add(subReply);
+
+            replyRepository.save(subReply);
+        } else {
+            System.out.println("부모 댓글이 없습니다. parentReplyId: " + parentReplyId);
+        }
+    }
+
+
+    
+    @Override
     public List<Reply> getReplies(Long boardBseq) {
         return replyRepository.findByBoardBseq(boardBseq);
     }
     
     // 댓글 삭제
     @Override
-    public void deleteReply(Long rseq) {
-        replyRepository.deleteById(rseq);
+	public void deleteReply(Long replyId) {
+    	// 댓글 및 대댓글 삭제
+        replyRepository.deleteReplyAndSubReplies(replyId);
+		
+	}
+    
+    @Override
+    public void deleteReplyAndSubReplies(Long replyId) {
+        replyRepository.deleteSubReplies(replyId);
+        replyRepository.deleteById(replyId);
     }
     
     // 댓글 수정

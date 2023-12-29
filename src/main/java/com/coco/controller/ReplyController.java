@@ -1,7 +1,9 @@
 package com.coco.controller;
 
+import com.coco.domain.Board;
 import com.coco.domain.Member;
 import com.coco.domain.Reply;
+import com.coco.service.BoardService;
 import com.coco.service.MemberService;
 import com.coco.service.ReplyService;
 
@@ -31,6 +33,9 @@ public class ReplyController {
 
     @Autowired
     private MemberService memberService;
+    
+    @Autowired
+    private BoardService boardService;
 
     // 댓글 등록
     @PostMapping("/reply/add")
@@ -56,36 +61,82 @@ public class ReplyController {
         }
     }
     
- // 댓글 삭제
+    // 대댓글 등록
+    @PostMapping("/reply/addSubReply")
+    public String addSubReply(@RequestParam Long parentReplyId, Principal principal, @RequestParam String content) {
+        try {
+            String username = principal.getName();
+            Member member = memberService.getMemberByUsername(username);
+
+            if (member == null) {
+                return "redirect:/error";
+            }
+
+            Reply parentReply = replyService.getReplyById(parentReplyId);
+            if (parentReply != null) {
+                Reply subReply = Reply.builder()
+                        .member(member)
+                        .rcontent(content)
+                        .parentReply(parentReply)
+                        .username(member.getUsername())
+                        .build();
+
+                replyService.addSubReply(parentReplyId, subReply);
+                return "redirect:/getBoard?bseq=" + parentReply.getBoard().getBseq();
+            } else {
+                return "redirect:/error";
+            }
+        } catch (UsernameNotFoundException e) {
+            log.error("멤버를 찾을 수 없음: {}", e.getMessage());
+            throw e;
+        } catch (Exception e) {
+            log.error("대댓글 추가 중 예외 발생", e);
+            return "redirect:/error";
+        }
+    }
+
+    
+    // 댓글 삭제
     @PostMapping("/reply/delete/{rseq}")
     public String deleteReply(@PathVariable Long rseq, @RequestParam Long boardBseq, Principal principal) {
         try {
             // 현재 로그인한 사용자 정보 가져오기
-            Authentication authentication = (Authentication) principal;
             String username = principal.getName();
+            Member loggedInUser = memberService.getMemberByUsername(username);
 
             // 댓글 정보 가져오기
             Reply reply = replyService.getReplyById(rseq);
 
-            // 현재 로그인한 사용자의 권한 확인
-            if (authentication instanceof UsernamePasswordAuthenticationToken) {
-                UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) authentication;
-
-                // 댓글의 작성자이거나 어드민이면 삭제 진행
-                if (token.getAuthorities().stream().anyMatch(authority -> authority.getAuthority().equals("ROLE_ADMIN")) || username.equals(reply.getMember().getUsername())) {
-                    replyService.deleteReply(rseq);
-                    return "redirect:/getBoard?bseq=" + boardBseq;
-                }
+            // 현재 로그인한 사용자가 댓글의 작성자이거나 어드민이면 삭제 진행
+            if (loggedInUser != null && (isReplyOwner(loggedInUser, reply) || isAdmin(principal))) {
+                replyService.deleteReply(rseq);
+                return "redirect:/getBoard?bseq=" + boardBseq;
+            } else {
+                // 권한이 없을 경우 예외 처리 또는 다른 로직 수행
+                return "redirect:/accessDenied";
             }
-
-            // 권한이 없을 경우 예외 처리 또는 다른 로직 수행
-            return "redirect:/accessDenied";
         } catch (Exception e) {
             // 예외 처리
             log.error("댓글 삭제 중 예외 발생", e);
             return "redirect:/error";
         }
     }
+
+    // 댓글 작성자 확인 메소드
+    private boolean isReplyOwner(Member loggedInUser, Reply reply) {
+        return loggedInUser.getId().equals(reply.getMember().getId());
+    }
+
+    // 어드민 권한 확인 메소드
+    private boolean isAdmin(Principal principal) {
+        if (principal instanceof UsernamePasswordAuthenticationToken) {
+            UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) principal;
+            return token.getAuthorities().stream().anyMatch(authority -> "ROLE_ADMIN".equals(authority.getAuthority()));
+        }
+        return false;
+    }
+
+
     
     // 댓글 수정
     @GetMapping("/reply/edit/{rseq}")

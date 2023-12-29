@@ -22,20 +22,23 @@
 				<li class="nav-item"><a th:href="@{/getBoardList}" class="nav-link">게시판</a></li>
 				<li class="nav-item"><a th:href="@{/myPage}" class="nav-link">마이페이지</a></li>
 
-				<!-- 로그인과 로그아웃 (오른쪽에 고정) -->
-				<li class="nav-item" id="loginLink" th:unless="${authenticated}">
-					<a class="nav-link" th:href="@{/system/login}">로그인</a>
-				</li>
-				<li class="nav-item" id="logoutLink" th:if="${authenticated}">
-					<a class="nav-link" th:href="@{/system/logout}">로그아웃</a>
-
-				</li>
+<!-- 로그인과 로그아웃 (오른쪽에 고정) -->
+            <li class="nav-item" th:unless="${#authorization.expression('isAuthenticated()')}">
+                <a class="nav-link" th:href="@{/system/login}">로그인</a>
+            </li>
+            <li class="nav-item" th:if="${#authorization.expression('isAuthenticated()')}">
+                <a class="nav-link" th:href="@{/system/logout}">로그아웃</a>
+            </li>
 				<li class="nav-item" id="kakaologoutLink">
 					<a class="nav-link"
 						href="https://kauth.kakao.com/oauth/logout?client_id=cf702ca076fdf2e9b5f3bf6e73806870&logout_redirect_uri=http://localhost:8080/system/logout/kakao">카카오
 						로그아웃</a>
-
 				</li>
+				
+				<!-- 로그인한 경우에만 환영 메시지 표시 -->
+            <li class="nav-item" th:if="${#authorization.expression('isAuthenticated()')}">
+                <span class="nav-link"><span th:text="${#authentication.principal.username}"></span>님</span>
+            </li>
 			</ul>
 		</div>
 	</div>
