@@ -28,10 +28,11 @@ public class JoinFormDto {
 	private Role role;
 	private String enabled;
 	private String phone;
+	private String provider;
 	
 	@Builder
 	public void JoinFormDto(String id, String name, String ename, String rrnumber, String email, String password,
-			String address, String detailAddress, Role role, String enabled, String phone) {
+			String address, String detailAddress, Role role, String enabled, String phone, String provider) {
 		this.id = id;
 		this.name = name;
 		this.ename = ename;
@@ -43,6 +44,7 @@ public class JoinFormDto {
 		this.role = role;
 		this.enabled = enabled;
 		this.phone = phone;
+		this.provider = provider;
 	}
 
 }

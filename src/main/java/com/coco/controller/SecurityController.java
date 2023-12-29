@@ -26,7 +26,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.coco.domain.Member;
 import com.coco.dto.JoinFormDto;
 import com.coco.dto.MailDto;
-import com.coco.service.KakaoService;
 import com.coco.service.MemberService;
 import com.coco.service.SendEmailService;
 
@@ -43,9 +42,6 @@ public class SecurityController {
 
 	@Autowired
 	private SendEmailService sendEmailService;
-	
-	@Autowired
-	private KakaoService kakaoService;
 	
 	@Autowired
 	private RestTemplate restTemplate;
