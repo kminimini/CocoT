@@ -224,6 +224,12 @@ public class MemberServiceImpl implements MemberService {
 	    log.info("getMemberByUsername 호출 - username: {}", username);
 	    return memberRepository.findById(username)
 	            .orElseThrow(() -> new UsernameNotFoundException("Member not found for username: " + username));
+	}
+
+	@Override
+	public boolean isMemberExists(String memberId) {
+		// TODO Auto-generated method stub
+		return false;
 	}   
 
 }

@@ -1,15 +1,16 @@
 package com.coco.controller;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -22,9 +23,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
+import org.springframework.web.util.UriUtils;
 
 import com.coco.domain.Train;
 import com.coco.domain.TrainInfo;
@@ -38,6 +42,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @RequestMapping("/train")
 public class TrainController {
 	private static final Logger logger = LoggerFactory.getLogger(TrainServiceImpl.class);
+	
 	private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
 	@Autowired
@@ -199,6 +204,7 @@ public class TrainController {
     		// Delete all records from the train table
             String deleteSql = "DELETE FROM train";
             jdbcTemplate.update(deleteSql);
+            logger.info("기차표 초기화...");
             
             Map<String, Object> response = (Map<String, Object>) trainInfo.get("response");
             Map<String, Object> body = (Map<String, Object>) response.get("body");
@@ -209,10 +215,10 @@ public class TrainController {
             for (Map<String, Object> item : itemList) {
                 Long trainNo = (item.get("trainno") != null) ? ((Number) item.get("trainno")).longValue() : null;
 
-             // LocalDateTime으로 변경
+                // LocalDateTime으로 변경
                 LocalDateTime departureTime = parseDateTime(item.get("depplandtime"));
                 LocalDateTime arrplandTime = parseDateTime(item.get("arrplandtime"));
-             // LocalDateTime을 Long 값으로 변경
+                // LocalDateTime을 Long 값으로 변경
                 Long departureTimeEpochMilli = (departureTime != null) ? departureTime.atZone(ZoneId.of("UTC")).toInstant().toEpochMilli() : null;
                 Long arrplandTimeEpochMilli = (arrplandTime != null) ? arrplandTime.atZone(ZoneId.of("UTC")).toInstant().toEpochMilli() : null;
 
@@ -242,7 +248,7 @@ public class TrainController {
         }
     }
     
- // 주문번호 만들기 함수
+    // 주문번호 만들기 함수
     public static String createOrderNum() {
         String characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         StringBuilder orderNumBuilder = new StringBuilder();
@@ -268,4 +274,50 @@ public class TrainController {
         }
         return null;
     }
+
+	@GetMapping("/seatSelection")
+	public String showSeatSelectionPage(
+	        @RequestParam("trainNo") String trainNo,
+	        @RequestParam("trainGrade") String trainGrade,
+	        @RequestParam("depPlace") String depPlace,
+	        @RequestParam("depTime") String depTime,
+	        @RequestParam("arrPlace") String arrPlace,
+	        @RequestParam("arrTime") String arrTime,
+	        @RequestParam("adultCharge") String adultCharge,
+	        Model model,
+	        UriComponentsBuilder uriBuilder
+	) {
+	    // Parse the date parameters
+	    LocalDateTime depTimeParsed = LocalDateTime.parse(depTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+	    LocalDateTime arrTimeParsed = LocalDateTime.parse(arrTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+
+	    // Retrieve train details from the database or service
+	    Train trainDetails = trainService.getTrainDetails(trainNo); // Replace with your actual method
+
+	    // Add trainDetails to the model
+	    model.addAttribute("trainDetails", trainDetails);
+
+	    // Add other necessary attributes to the model (if any)
+
+	    // Format the date parameters for building the URL
+	    String formattedDepTime = depTimeParsed.format(DateTimeFormatter.ofPattern("yyyyMMddHH"));
+	    String formattedArrTime = arrTimeParsed.format(DateTimeFormatter.ofPattern("yyyyMMddHH"));
+
+	    // Build the URL for the same request
+	    String currentRequestUri = uriBuilder.path("/reservation/seatSelection")
+	            .queryParam("trainNo", trainNo)
+	            .queryParam("trainGrade", trainGrade)
+	            .queryParam("depPlace", depPlace)
+	            .queryParam("depTime", formattedDepTime)
+	            .queryParam("arrPlace", arrPlace)
+	            .queryParam("arrTime", formattedArrTime)
+	            .queryParam("adultCharge", adultCharge)
+	            .buildAndExpand()
+	            .encode()
+	            .toUriString();
+
+	    model.addAttribute("currentRequestUri", currentRequestUri);
+
+	    return "train/seatSelection";
+	}
 }
