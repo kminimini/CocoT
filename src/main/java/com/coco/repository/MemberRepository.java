@@ -32,8 +32,8 @@ public interface MemberRepository extends JpaRepository<Member, Long> {	// Strin
   Member findByNameAndPhone(String name, String phone);
 
   // 아이디 중복확인
-   @Query("SELECT COUNT(m.mid) FROM Member m WHERE m.id = :id")
-      int findIdCheck(@Param("id") String id);
+   @Query("SELECT COUNT(m.email) FROM Member m WHERE m.email = :email")
+      int findEmailCheck(@Param("email") String email);
   
 
   // 아이디와 이메일로 멤버 찾기(비번)
@@ -51,5 +51,8 @@ boolean existsById(String id);
   
   // 댓글
   Optional<Member> findByUsername(String username);
+  
+  // 회원탈퇴 암호화
+  String findPasswordById(Long id);
 	
 }
