@@ -8,5 +8,5 @@ import com.coco.domain.TrainReservation;
 @Repository
 public interface TrainReservationRepository extends JpaRepository<TrainReservation, Long> {
 
-	TrainReservation findByorderId(String orderId);
+	TrainReservation findByOrderId(String orderId);
 }

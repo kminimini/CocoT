@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -208,6 +207,7 @@ public class TrainController {
         model.addAttribute("arrPlace", arrPlace);
         model.addAttribute("arrTime", arrTime);
         model.addAttribute("adultCharge", adultCharge);
+        model.addAttribute("orderId", orderId);
 
         return "train/trainDetailPage";
     }
