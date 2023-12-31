@@ -1,5 +1,7 @@
 package com.coco.service;
 
 public interface TrainReservationService {
-    String retrieveOrderIdByCustomerKey(String orderId);
+    String retrieveOrderIdByorderId(String orderId);
+
+	String generateOrderId(Long trainNo);
 }
