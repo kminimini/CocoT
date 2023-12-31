@@ -33,6 +33,8 @@ public class QTrainReservation extends EntityPathBase<TrainReservation> {
 
     public final StringPath orderId = createString("orderId");
 
+    public final StringPath paymentKey = createString("paymentKey");
+
     public final StringPath traingradename = createString("traingradename");
 
     public final NumberPath<Long> trainNo = createNumber("trainNo", Long.class);

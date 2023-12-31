@@ -34,6 +34,11 @@ public class WidgetController {
       paymentKey = (String) requestData.get("paymentKey");
       orderId = (String) requestData.get("orderId");
       amount = (String) requestData.get("amount");
+      
+   // Log the received values
+      logger.info("Received paymentKey: {}", paymentKey);
+      logger.info("Received orderId: {}", orderId);
+      logger.info("Received amount: {}", amount);
     } catch (ParseException e) {
       throw new RuntimeException(e);
     };
@@ -44,7 +49,7 @@ public class WidgetController {
     
     // 토스페이먼츠 API는 시크릿 키를 사용자 ID로 사용하고, 비밀번호는 사용하지 않습니다.
     // 비밀번호가 없다는 것을 알리기 위해 시크릿 키 뒤에 콜론을 추가합니다.
-    String apiKey = "test_gsk_docs_OaPz8L5KdmQXkzRz3y47BMw6";
+    String apiKey = "test_ck_26DlbXAaV0767AWPeqx03qY50Q9R";
     Base64.Encoder encoder = Base64.getEncoder();
     byte[] encodedBytes = encoder.encode((apiKey + ":").getBytes("UTF-8"));
     String authorizations = "Basic " + new String(encodedBytes, 0, encodedBytes.length);
