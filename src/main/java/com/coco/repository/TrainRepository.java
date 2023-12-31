@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 
 import com.coco.domain.Train;
 
+/* 열차정보에 대한 처리 */
+
 @Repository
 public interface TrainRepository extends JpaRepository<Train, Long> {
 
