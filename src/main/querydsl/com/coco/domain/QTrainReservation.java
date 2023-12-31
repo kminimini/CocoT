@@ -10,14 +10,14 @@ import com.querydsl.core.types.Path;
 
 
 /**
- * QTrain is a Querydsl query type for Train
+ * QTrainReservation is a Querydsl query type for TrainReservation
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
-public class QTrain extends EntityPathBase<Train> {
+public class QTrainReservation extends EntityPathBase<TrainReservation> {
 
-    private static final long serialVersionUID = 670237031L;
+    private static final long serialVersionUID = 1116394469L;
 
-    public static final QTrain train = new QTrain("train");
+    public static final QTrainReservation trainReservation = new QTrainReservation("trainReservation");
 
     public final NumberPath<Long> adultcharge = createNumber("adultcharge", Long.class);
 
@@ -37,16 +37,16 @@ public class QTrain extends EntityPathBase<Train> {
 
     public final NumberPath<Long> trainNo = createNumber("trainNo", Long.class);
 
-    public QTrain(String variable) {
-        super(Train.class, forVariable(variable));
+    public QTrainReservation(String variable) {
+        super(TrainReservation.class, forVariable(variable));
     }
 
-    public QTrain(Path<? extends Train> path) {
+    public QTrainReservation(Path<? extends TrainReservation> path) {
         super(path.getType(), path.getMetadata());
     }
 
-    public QTrain(PathMetadata metadata) {
-        super(Train.class, metadata);
+    public QTrainReservation(PathMetadata metadata) {
+        super(TrainReservation.class, metadata);
     }
 
 }

@@ -1,4 +1,3 @@
-<!-- checkout.html -->
 <!DOCTYPE html>
 <html lang="ko">
   <head>
@@ -6,6 +5,20 @@
     <script src="https://js.tosspayments.com/v1/payment-widget"></script>
   </head>
   <body>
+  <table>
+        <tr>
+            <td>Train number:</td>
+            <td id="trainNo"></td>
+        </tr>
+        <tr>
+            <td>Train information:</td>
+            <td id="trainGrade"></td>
+        </tr>
+        <tr>
+            <td>Fee:</td>
+            <td id="adultCharge"></td>
+        </tr>
+    </table>
     <!-- 할인 쿠폰 -->
     <div>
       <input type="checkbox" id="coupon-box" />
@@ -18,15 +31,22 @@
     <button id="payment-button">결제하기</button>
     
     <script>
+    var params = new URLSearchParams(window.location.search);
+
+    document.getElementById("trainNo").textContent = params.get("trainNo");
+    document.getElementById("trainGrade").textContent = params.get("trainGrade");
+    // Retrieve and display other parameters
+
+    document.getElementById("adultCharge").textContent = params.get("adultCharge");
       const coupon = document.getElementById("coupon-box");
       const button = document.getElementById("payment-button");
       
       // 구매자의 고유 아이디를 불러와서 customerKey로 설정하세요.
       // 이메일・전화번호와 같이 유추가 가능한 값은 안전하지 않습니다.
       const clientKey = "test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm";
-      const customerKey = "qbB2qLHxbAAaW3nPxbb6T";
-      //const paymentWidget = PaymentWidget(clientKey, customerKey); // 회원 결제
-      const paymentWidget = PaymentWidget(clientKey, PaymentWidget.ANONYMOUS) // 비회원 결제
+      const customerKey = "6tlesZVEUXB77SLCsY7O3";
+      const paymentWidget = PaymentWidget(clientKey, customerKey); // 회원 결제
+      // const paymentWidget = PaymentWidget(clientKey, PaymentWidget.ANONYMOUS) // 비회원 결제
 
       const paymentMethodWidget = paymentWidget.renderPaymentMethods(
         "#payment-method",
