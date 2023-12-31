@@ -7,15 +7,15 @@
   <body>
   <table>
         <tr>
-            <td>Train number:</td>
+            <td>열차번호:</td>
             <td id="trainNo"></td>
         </tr>
         <tr>
-            <td>Train information:</td>
-            <td id="trainGrade"></td>
+            <td>목적지:</td>
+            <td id="arrPlace"></td>
         </tr>
         <tr>
-            <td>Fee:</td>
+            <td>금액:</td>
             <td id="adultCharge"></td>
         </tr>
     </table>
@@ -31,54 +31,56 @@
     <button id="payment-button">결제하기</button>
     
     <script>
-    var params = new URLSearchParams(window.location.search);
+    	var params = new URLSearchParams(window.location.search);
 
-    document.getElementById("trainNo").textContent = params.get("trainNo");
-    document.getElementById("trainGrade").textContent = params.get("trainGrade");
-    // Retrieve and display other parameters
+    	document.getElementById("trainNo").textContent = params.get("trainNo");
+    	document.getElementById("arrPlace").textContent = params.get("arrPlace");
+    	// Retrieve and display other parameters
 
-    document.getElementById("adultCharge").textContent = params.get("adultCharge");
-      const coupon = document.getElementById("coupon-box");
-      const button = document.getElementById("payment-button");
-      const orderId = params.get("orderId");
-      // 구매자의 고유 아이디를 불러와서 customerKey로 설정하세요.
-      // 이메일・전화번호와 같이 유추가 가능한 값은 안전하지 않습니다.
-      const clientKey = "test_ck_26DlbXAaV0767AWPeqx03qY50Q9R";
-      const paymentWidget = PaymentWidget(clientKey, orderId); // 회원 결제
-      // const paymentWidget = PaymentWidget(clientKey, PaymentWidget.ANONYMOUS) // 비회원 결제
+    	document.getElementById("adultCharge").textContent = params.get("adultCharge");
+      	const coupon = document.getElementById("coupon-box");
+      	const button = document.getElementById("payment-button");
+      	const orderId = params.get("orderId");
+      	const amount = params.get("adultCharge")
+      	const orderName = params.get("arrPlace")
+      	// 구매자의 고유 아이디를 불러와서 customerKey로 설정하세요.
+      	// 이메일・전화번호와 같이 유추가 가능한 값은 안전하지 않습니다.
+      	const clientKey = "test_ck_26DlbXAaV0767AWPeqx03qY50Q9R";
+      	const paymentWidget = PaymentWidget(clientKey, orderId); // 회원 결제
+      	// const paymentWidget = PaymentWidget(clientKey, PaymentWidget.ANONYMOUS) // 비회원 결제
 
-      const paymentMethodWidget = paymentWidget.renderPaymentMethods(
-        "#payment-method",
-        { value: 50000 },
-        { variantKey: "DEFAULT" }
-      );
+      	const paymentMethodWidget = paymentWidget.renderPaymentMethods(
+        	"#payment-method",
+        	{ value: amount },
+        	{ variantKey: "DEFAULT" }
+      	);
 
-      paymentWidget.renderAgreement(
-        "#agreement", 
-        { variantKey: "AGREEMENT" }
-      );
+      	paymentWidget.renderAgreement(
+        	"#agreement", 
+        	{ variantKey: "AGREEMENT" }
+      	);
 
-      coupon.addEventListener("change", function () {
-        if (coupon.checked) {
-          paymentMethodWidget.updateAmount(amount - 5000);
-        } else {
-          paymentMethodWidget.updateAmount(amount);
-        }
-      });
+      	coupon.addEventListener("change", function () {
+        	if (coupon.checked) {
+          	paymentMethodWidget.updateAmount(amount - 5000);
+        	} else {
+          	paymentMethodWidget.updateAmount(amount);
+        	}
+      	});
 
-      button.addEventListener("click", function () {
-        // 결제를 요청하기 전에 orderId, amount를 서버에 저장하세요. 
-        // 결제 과정에서 악의적으로 결제 금액이 바뀌는 것을 확인하는 용도입니다.  
-        paymentWidget.requestPayment({
-          orderId: orderId,
-          orderName: "토스 티셔츠 외 2건",
-          successUrl: window.location.origin + "/success",
-          failUrl: window.location.origin + "/fail",
-          customerEmail: "customer123@gmail.com",
-          customerName: "김토스",
-          customerMobilePhone: "01012341234",
-        });
-      });
+      	button.addEventListener("click", function () {
+        	// 결제를 요청하기 전에 orderId, amount를 서버에 저장하세요. 
+        	// 결제 과정에서 악의적으로 결제 금액이 바뀌는 것을 확인하는 용도입니다.  
+        	paymentWidget.requestPayment({
+          	orderId: orderId,
+          	orderName: orderName + "행",
+          	successUrl: window.location.origin + "/success",
+          	failUrl: window.location.origin + "/fail",
+          	customerEmail: "customer123@gmail.com",
+          	customerName: "김토스",
+          	customerMobilePhone: "01012341234",
+        	});
+      	});
     </script>
   </body>
 </html>

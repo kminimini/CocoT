@@ -7,7 +7,7 @@ import javax.persistence.*;
 import lombok.*;
 
 /*
- * 항공편 정보 En
+ * 열차 정보 En
  */
 
 @Setter

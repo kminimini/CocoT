@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 import lombok.*;
 
+/* 선택 기차표 결제용 임시저장 */
 @Setter
 @Getter
 @ToString

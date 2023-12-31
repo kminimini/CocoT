@@ -19,13 +19,11 @@ public class TossController {
 
 	@GetMapping("/checkout.html")
 	public String showCheckoutPage(@RequestParam String orderId, Model model) {
-		// URL에서 주문 ID가 올바르게 수신되었는지 확인합니다.
 	    System.out.println("Received orderId: " + orderId);
 	    
-	    // 고객키를 기준으로 데이터베이스에서 orderId를 검색
+	    // 데이터베이스에서 orderId를 검색
 	    String retrievedOrderId = trainReservationService.retrieveOrderIdByorderId(orderId);
 
-	    // 주문 ID를 뷰에 전달
 	    model.addAttribute("orderId", retrievedOrderId);
 
 	    return "toss/checkout";
