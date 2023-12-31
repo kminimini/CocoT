@@ -1,13 +1,16 @@
 package com.coco.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.coco.domain.PaymentInfo;
 import com.coco.service.TrainReservationService;
 
 @Controller
@@ -30,10 +33,13 @@ public class TossController {
 	}
 	
 	// 성공 페이지에 대한 핸들러 추가
-    @GetMapping("/success")
-    public String paymentSuccess() {
-        return "toss/success";
-    }
+	@GetMapping("/success")
+	public String paymentSuccess(@RequestParam String paymentKey, @RequestParam String orderId, @RequestParam long amount, Model model) {
+	    model.addAttribute("paymentKey", paymentKey);
+	    model.addAttribute("orderId", orderId);
+	    model.addAttribute("amount", amount);
+	    return "toss/success";
+	}
 
     // 실패 페이지에 대한 처리기 추가
     @GetMapping("/fail")
@@ -43,10 +49,14 @@ public class TossController {
     
     @PostMapping("/confirm-payment")
     public String confirmPayment(@RequestParam String orderId, @RequestParam String paymentKey, @RequestParam long amount) {
-    	// 여기에서 결제 확인 로직을 수행.
-        // 결제 정보를 기반으로 데이터베이스의 TrainReservation 엔티티를 업데이트.
-        // 그에 따라 성공 또는 실패 페이지로 리디렉션.
+        System.out.println("confirmPayment메서드 실행중.......");
+        PaymentInfo paymentInfo = new PaymentInfo();
+        paymentInfo.setOrderId(orderId);
+        paymentInfo.setPaymentKey(paymentKey);
+        paymentInfo.setAmount(amount);
+        trainReservationService.savePaymentInfo(paymentInfo);
 
-        return "redirect:/payment/success";
+        // Continue with the rest of the payment initiation code
+        return "redirect:/toss/success?orderId=" + orderId + "&paymentKey=" + paymentKey + "&amount=" + amount;
     }
 }

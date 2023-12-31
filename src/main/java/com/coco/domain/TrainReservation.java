@@ -38,4 +38,6 @@ public class TrainReservation {
     
     @Column(name = "amount")
     private Long adultcharge;		// 요금
+    
+    private String paymentKey;
 }
