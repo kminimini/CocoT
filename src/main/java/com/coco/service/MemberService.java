@@ -25,7 +25,7 @@ public interface MemberService {
 	String findEmailByNameAndPhone(String name, String phoneNumber) throws Exception;
 
 	// 아이디 중복체크
-	int findidCheck(String id);
+	int findEmailCheck(String email);
 
 	// 아이디와 이메일로 멤버 찾기
 	Member getMemberByIdAndEmail(String id, String email);
@@ -59,6 +59,9 @@ public interface MemberService {
 	String encodePassword(String newPassword);
 
 	String getMemberPasswordById(Long mid);
+
+	// 회원탈퇴 비밀번호 비교 
+	String getPasswordById(Long mid);
 
 
 }

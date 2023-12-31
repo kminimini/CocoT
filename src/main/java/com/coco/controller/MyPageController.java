@@ -68,6 +68,7 @@ public class MyPageController {
         if (matches) {
         	boolean result = memberService.changePassword(currentPassword, newPassword);
         	
+        	
         	if (result) {
         		System.out.println("success");
         		return "success";
@@ -85,53 +86,86 @@ public class MyPageController {
     }
     
     
-    
-    
-
-
     // 회원탈퇴
     @PostMapping("/myPage/deleteAccount")
     public String deleteAccount(
-    	       @AuthenticationPrincipal(expression = "#this == 'anonymousUser' ? null : member") Member currentMember,
-    	       @RequestParam String withdrawPassword, // 새로 추가된 부분: 입력된 현재 비밀번호
-    	       @RequestParam String currentPassword, // 새로 추가된 부분: 입력된 현재 비밀번호
-    	       RedirectAttributes attributes,
-    	       HttpServletRequest request,
-    	       HttpServletResponse response) {
-    	    try {
-    	        if (currentMember != null) {
-    	            // 입력된 현재 비밀번호를 암호화
-    	            String hashedWithdrawPassword = passwordEncoder.encode(withdrawPassword);
+            @AuthenticationPrincipal(expression = "#this == 'anonymousUser' ? null : member") Member currentMember,
+            @RequestParam String withdrawPassword,
+            RedirectAttributes attributes,
+            HttpServletRequest request,
+            HttpServletResponse response) {
 
-    	            // 실제 비밀번호와 암호화된 입력된 비밀번호 비교
-    	            if (passwordEncoder.matches(currentPassword, currentMember.getPassword())) {
-    	                // 삭제 로직 실행
-    	                memberService.deleteMemberById(currentMember.getMid());
+        try {
+            if (currentMember != null) {
+                // 데이터베이스에 저장된 비밀번호를 가져오는 로직이 필요
+                String storedPassword = memberService.getPasswordById(currentMember.getMid());
 
-    	                // 현재 세션 무효화
-    	                HttpSession session = request.getSession(false);
-    	                if (session != null) {
-    	                    session.invalidate();
-    	                }
+                if (passwordEncoder.matches(withdrawPassword, storedPassword)) {
+                    // 비밀번호가 일치하면 회원 탈퇴
+                    memberService.deleteMemberById(currentMember.getMid());
+                    
+                    System.out.println("withdrawPassword... : " + withdrawPassword);
+                    System.out.println("currentMember... : " + currentMember);
 
-    	                // 현재 사용자를 SecurityContext에서 제거
-    	                SecurityContextHolder.clearContext();
+                    HttpSession session = request.getSession(false);
+                    if (session != null) {
+                        session.invalidate();
+                    }
+                    
+                   System.out.println("withdrawPassword : " + withdrawPassword);
+                   System.out.println("currentMember : " + currentMember);
 
-    	                // 로그아웃 상태로 리다이렉트
-    	                return "redirect:/myPage";
-    	            } else {
-    	                // 현재 비밀번호가 일치하지 않은 경우 처리
-    	                attributes.addFlashAttribute("error", "Incorrect current password");
-    	                return "redirect:/index";
-    	            }
-    	        } else {
-    	            // 로그인하지 않은 사용자에 대한 처리
-    	            return "redirect:/system/login";
-    	        }
-    	    } catch (Exception e) {
-    	        // 예외 처리 코드
-    	        attributes.addFlashAttribute("error", "Error deleting account");
-    	        return "redirect:/myPage";
-    	    }
-    	}
+                    SecurityContextHolder.clearContext();
+                    return "redirect:/system/login"; // 탈퇴 성공 시 로그인 페이지로 이동
+                } else {
+                    attributes.addFlashAttribute("error", "Incorrect password");
+                    return "redirect:/myPage"; // 비밀번호가 틀린 경우
+                }
+            } else {
+                return "redirect:/system/login"; // 로그인하지 않은 사용자
+            }
+        } catch (Exception e) {
+            attributes.addFlashAttribute("error", "Error deleting account");
+            return "redirect:/myPage"; // 서버 오류
+        }
+    }
+
+
+
+//    // 회원탈퇴
+//    @PostMapping("/myPage/deleteAccount")
+//    public String deleteAccount(
+//        @AuthenticationPrincipal(expression = "#this == 'anonymousUser' ? null : member") Member currentMember,
+//        @RequestParam String withdrawPassword,
+//        @RequestParam String currentPassword,
+//        RedirectAttributes attributes,
+//        HttpServletRequest request,
+//        HttpServletResponse response) {
+//
+//        try {
+//            if (currentMember != null) {
+//                String hashedWithdrawPassword = passwordEncoder.encode(withdrawPassword);
+//
+//                if (passwordEncoder.matches(currentPassword, currentMember.getPassword())) {
+//                    memberService.deleteMemberById(currentMember.getMid());
+//
+//                    HttpSession session = request.getSession(false);
+//                    if (session != null) {
+//                        session.invalidate();
+//                    }
+//
+//                    SecurityContextHolder.clearContext();
+//                    return "redirect:/system/login"; // 탈퇴 성공 시 로그인 페이지로 이동
+//                } else {
+//                    attributes.addFlashAttribute("error", "Incorrect current password");
+//                    return "redirect:/myPage"; // 비밀번호가 틀린 경우
+//                }
+//            } else {
+//                return "redirect:/system/login"; // 로그인하지 않은 사용자
+//            }
+//        } catch (Exception e) {
+//            attributes.addFlashAttribute("error", "Error deleting account");
+//            return "redirect:/myPage"; // 서버 오류
+//        }
+//    }
 }

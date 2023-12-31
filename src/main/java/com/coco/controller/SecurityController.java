@@ -85,10 +85,10 @@ public class SecurityController {
 	}
 	
 	 // AJAX를 통한 아이디 중복 확인
-	@PostMapping("/checkIdAvailability")
+	@PostMapping("/checkEmailAvailability")
 	@ResponseBody
-	public String checkIdAvailability(@RequestParam String id) {
-	    int count = memberService.findidCheck(id);
+	public String checkEmailAvailability(@RequestParam String email) {
+	    int count = memberService.findEmailCheck(email);
 	    return (count > 0) ? "no_use" : "useable";
 	}
 	

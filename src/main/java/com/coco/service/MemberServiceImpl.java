@@ -125,8 +125,8 @@ public class MemberServiceImpl implements MemberService {
 
 	// 아이디 중복확인
 	@Override
-	public int findidCheck(String id) {
-		return memberRepository.findIdCheck(id);
+	public int findEmailCheck(String email) {
+		return memberRepository.findEmailCheck(email);
 	}
 
 	// 회원 목록 불러오기
@@ -242,4 +242,11 @@ public class MemberServiceImpl implements MemberService {
 	        // Member 엔티티에서 비밀번호를 조회
 	        return memberRepository.findPasswordById(mid);
 	    }
+
+	 // 회원탈퇴 비밀번호 비교 
+	 @Override
+	 public String getPasswordById(Long mid) {
+	     Optional<Member> memberOptional = memberRepository.findById(mid);
+	     return memberOptional.map(Member::getPassword).orElse(null);
+	 }
 }
