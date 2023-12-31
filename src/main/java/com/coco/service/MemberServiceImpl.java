@@ -231,12 +231,7 @@ public class MemberServiceImpl implements MemberService {
         return passwordEncoder.encode(rawPassword);
     }
 
-	@Override
-	public boolean isMemberExists(String memberId) {
-		 return memberRepository.existsById(memberId);
-	}
-
-
+	
 		//회원 탈퇴 암호화
 	 @Override
 	    public String getMemberPasswordById(Long mid) {
