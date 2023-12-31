@@ -1,8 +1,10 @@
 package com.coco.service;
 
 import java.io.IOException;
+import java.util.Map;
 
 import com.coco.domain.TrainInfo;
+import com.coco.domain.TrainReservation;
 
 public interface TrainService {
 
@@ -29,4 +31,17 @@ public interface TrainService {
 	
 	// 조회한 열차정보 타입캐스팅 후 저장
 	boolean hasTrainItems(TrainInfo.TrainResponse trainInfo);
+
+	// 기차표 목록에서 기차표 선택 
+	void saveReservation(String trainNo, String trainGrade, String depPlace, String depTime, String arrPlace, String arrTime, Long adultCharge) throws Exception;
+
+	// 페이지 이동 동작을 위한 URL 준비
+	String buildPageUrl(String depPlaceId, String arrPlaceId, String depPlandTime, int pageNo, int numOfRows);
+
+	// 열차 정보를 데이터베이스에 저장
+	void saveTrainInfoToDatabase(Map<String, Object> trainInfo);
+
+	// 주문번호 만들기
+	String createOrderNum();
+
 }

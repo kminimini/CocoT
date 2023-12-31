@@ -1,0 +1,90 @@
+<!-- trainDetailPage.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>예약 하기</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/seatSelection.css}">
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/seatSelection.js}"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <h1>예약 하기</h1>
+    
+    <table>
+    <tr>
+        <td>주문 번호:</td>
+            <td th:text="${orderId}"></td>
+        </tr>
+        <tr>
+            <td>열차 번호:</td>
+            <td th:text="${trainNo}"></td>
+        </tr>
+        <tr>
+            <td>열차 정보:</td>
+            <td th:text="${trainGrade}"></td>
+        </tr>
+        <tr>
+            <td>출발:</td>
+            <td th:text="${depPlace}"></td>
+        </tr>
+        <tr>
+            <td>출발 시간:</td>
+            <td th:text="${depTime}"></td>
+        </tr>
+        <tr>
+            <td>도착:</td>
+            <td th:text="${arrPlace}"></td>
+        </tr>
+        <tr>
+            <td>도착 시간:</td>
+            <td th:text="${arrTime}"></td>
+        </tr>
+        <tr>
+            <td>요금:</td>
+            <td th:text="${adultCharge}"></td>
+        </tr>
+    </table>
+	<!-- 결제 데이터에 숨겨진 입력 필드 추가 -->
+	<input type="hidden" id="trainNo" th:value="${trainNo}" />
+	<input type="hidden" id="trainGrade" th:value="${trainGrade}" />
+	<input type="hidden" id="depPlace" th:value="${depPlace}" />
+	<input type="hidden" id="depTime" th:value="${depTime}" />
+	<input type="hidden" id="arrPlace" th:value="${arrPlace}" />
+	<input type="hidden" id="arrTime" th:value="${arrTime}" />
+	<input type="hidden" id="adultCharge" th:value="${adultCharge}" />
+	<input type="hidden" id="orderId" th:value="${orderId}" />
+	<!-- 결제하기 버튼 -->
+    <button id="paymentButton" class="btn primary" onclick="redirectToPayment()">결제하기(toss)</button>
+    
+    <a href="/">홈으로 돌아가기</a>
+    <a href="/" th:href="@{/test.html}">테스트홈으로 돌아가기</a>
+    <script type="text/javascript">
+    function redirectToPayment() {
+        console.log("Redirecting to payment");
+
+        // Retrieve values from hidden input fields
+        var trainNo = document.getElementById("trainNo").value;
+        var trainGrade = document.getElementById("trainGrade").value;
+        var depPlace = document.getElementById("depPlace").value;
+        var depTime = document.getElementById("depTime").value;
+        var arrPlace = document.getElementById("arrPlace").value;
+        var arrTime = document.getElementById("arrTime").value;
+        var adultCharge = document.getElementById("adultCharge").value;
+        var orderId = document.getElementById("orderId").value;
+
+        // Pass parameters to the payment window
+        var paymentUrl = '/toss/checkout.html?trainNo=' + trainNo + '&trainGrade=' + trainGrade +
+            '&depPlace=' + depPlace + '&depTime=' + depTime +
+            '&arrPlace=' + arrPlace + '&arrTime=' + arrTime +
+            '&adultCharge=' + adultCharge + '&orderId=' + orderId;
+
+        window.open(paymentUrl, 'PaymentWindow', 'width=900,height=800');
+    }
+    </script>
+</body>
+</html>

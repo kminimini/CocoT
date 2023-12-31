@@ -6,19 +6,14 @@ import javax.persistence.*;
 
 import lombok.*;
 
-/*
- * 열차 정보 En
- */
-
+/* 선택 기차표 결제용 임시저장 */
 @Setter
 @Getter
 @ToString
-@Builder
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "train")
-public class Train {
+public class TrainReservation {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,5 +38,4 @@ public class Train {
     
     @Column(name = "amount")
     private Long adultcharge;		// 요금
-        
 }

@@ -63,5 +63,4 @@ public interface MemberService {
 	// 회원탈퇴 비밀번호 비교 
 	String getPasswordById(Long mid);
 
-
 }

@@ -5,11 +5,19 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.SecureRandom;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
+import javax.transaction.Transactional;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,17 +26,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.coco.domain.TrainInfo;
+import com.coco.domain.TrainReservation;
+import com.coco.repository.TrainReservationRepository;
 
 @Service
 public class TrainServiceImpl implements TrainService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(TrainServiceImpl.class);
+	
+	private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+	
+	@Autowired
+	private TrainReservationRepository reservationRepository;
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -202,50 +216,7 @@ public class TrainServiceImpl implements TrainService {
         }
     }
     
-    /* TODO 기차표 정보의 항목 배열 내 날짜, 시간 형식 지정 */
-    private String formatDateTimeInResponse(String response) {
-        try {
-            JSONObject jsonResponse = new JSONObject(response);
-            JSONObject header = jsonResponse.getJSONObject("response").getJSONObject("header");
-
-            // 응답이 성공했는지 확인
-            if ("00".equals(header.getString("resultCode"))) {
-                JSONArray items = jsonResponse.getJSONObject("response").getJSONObject("body").getJSONObject("items").getJSONArray("item");
-
-                // 각 항목의 날짜 및 시간 서식 지정
-                for (int i = 0; i < items.length(); i++) {
-                    JSONObject item = items.getJSONObject(i);
-                    String depPlandTime = item.optString("depplandtime");
-                    String arrPlandTime = item.optString("arrplandtime");
-
-                    item.put("depplandtime", formatDateTimeString(depPlandTime));
-                    item.put("arrplandtime", formatDateTimeString(arrPlandTime));
-                }
-
-                // 업데이트된 JSON 문자열을 반환
-                return jsonResponse.toString();
-            } else {
-                return response;
-            }
-        } catch (JSONException e) {
-            return response;
-        }
-    }
-    
-    /* TODO yyyyMMddHHmmss -> yyyy-MM-dd HH:mm */
-    private String formatDateTimeString(String dateTimeStr) {
-        try {
-            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyyMMddHHmmss");
-            SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-
-            Date date = inputFormat.parse(dateTimeStr);
-            return outputFormat.format(date);
-        } catch (ParseException e) {
-            return dateTimeStr;
-        }
-    }
-
-    // 다음날 조회하기 버튼 (마지막페이지 유무 확인)를 위한 메서드
+    /* TODO 다음날 조회하기 버튼 (마지막페이지 유무 확인)를 위한 메서드 */
     @Override
     public boolean isLastPage(String depPlaceId, String arrPlaceId, String depPlandTime, int pageNo, int numOfRows) {
         try {
@@ -267,50 +238,6 @@ public class TrainServiceImpl implements TrainService {
         }
     }
 
-    // 마지막페이지 유무확인 조회용
-    @Override
-    public int getTotalPageCount(String depPlaceId, String arrPlaceId, String depPlandTime, int numOfRows) {
-        try {
-            String urlStr = ctyStrt + "?serviceKey=" + serviceKey +
-                            "&depPlaceId=" + depPlaceId +
-                            "&arrPlaceId=" + arrPlaceId +
-                            "&depPlandTime=" + depPlandTime +
-                            "&numOfRows=" + numOfRows +
-                            "&pageNo=1" +
-                            "&_type=json";
-
-            // URL을 정리하여 의도하지 않은 문자 제거하기
-            urlStr = urlStr.replaceAll("[^\\x20-\\x7e]", "");
-            URL url = new URL(urlStr);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
-
-            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            StringBuilder response = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                response.append(line);
-            }
-            reader.close();
-
-            connection.disconnect();
-
-            JSONObject jsonResponse = new JSONObject(response.toString());
-            JSONObject totalCountInfo = jsonResponse.getJSONObject("response").getJSONObject("body");
-
-            int totalCount = totalCountInfo.getInt("totalCount");
-
-            // 총 페이지 수와 페이지당 행 수를 기준으로 총 페이지 수를 계산
-            int numOfPages = (int) Math.ceil((double) totalCount / numOfRows);
-
-            return numOfPages;
-        } catch (IOException | JSONException e) {
-            logger.error("Error getting total page count: {}", e.getMessage());
-            return 0;
-        }
-    }
-
-	
     /* TODO 출발지, 도착지, 출발일을 기반으로 기차 정보 조회 */
     @Override
     public TrainInfo.TrainResponse getTrainInfo(String depPlaceId, String arrPlaceId, String depPlandTime) {
@@ -416,7 +343,6 @@ public class TrainServiceImpl implements TrainService {
 
                 boolean result = responseBody != null && responseBody.hasTrainItems() && items != null && items.hasItem();
 
-                // Logging the result for debugging
                 if (result) {
                     logger.debug("기차 아이템이 있습니다.");
                 } else {
@@ -425,24 +351,202 @@ public class TrainServiceImpl implements TrainService {
 
                 return result;
             } catch (ClassCastException e) {
-                // Log the exception for debugging
                 logger.error("hasTrainItems 메서드에서 객체를 캐스팅하는 동안 오류가 발생!!!", e);
                 return false;
             }
         }
         return false;
     }
-    
- // Method to retrieve information about a specific train ticket
-    @SuppressWarnings("deprecation")
-	public TrainInfo getTrainInfoById(Long trainId) {
-        String sql = "SELECT * FROM train WHERE train_id = ?";
+
+    /* TODO 기차표 목록에서 기차표 선택 */
+    public void saveReservation(String trainNo, String trainGrade, String depPlace, String depTime, String arrPlace, String arrTime, Long adultCharge) throws Exception {
         try {
-            // Query the database and map the result to TrainInfo class
-            return jdbcTemplate.queryForObject(sql, new Object[]{trainId}, new BeanPropertyRowMapper<>(TrainInfo.class));
+            // Implement logic to save reservation details to Oracle database
+            String sql = "INSERT INTO reservation (train_no, train_grade, dep_place, dep_time, arr_place, arr_time, adult_charge) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+            jdbcTemplate.update(sql, trainNo, trainGrade, depPlace, depTime, arrPlace, arrTime, adultCharge);
         } catch (Exception e) {
-            // Handle exceptions or return null if the ticket is not found
-            return null;
+            // Handle database-related exceptions
+            throw new Exception("Error saving reservation details to the database", e);
         }
+    }
+      
+    /* TODO 페이지 이동 동작을 위한 URL 준비 */
+    @Override
+    public String buildPageUrl(String depPlaceId, String arrPlaceId, String depPlandTime, int pageNo, int numOfRows) {
+    	return UriComponentsBuilder.fromPath("/train/trainInfo")
+    	        .queryParam("depPlaceId", depPlaceId)
+    	        .queryParam("arrPlaceId", arrPlaceId)
+    	        .queryParam("depPlandTime", depPlandTime)
+    	        .queryParam("pageNo", pageNo)
+    	        .queryParam("numOfRows", numOfRows)
+    	        .toUriString();
+    }
+
+	/* TODO 열차 정보를 데이터베이스에 저장 */
+    @Override
+	public void saveTrainInfoToDatabase(Map<String, Object> trainInfo) {
+    	try {
+    		// Delete all records from the train table
+            String deleteSql = "DELETE FROM train";
+            jdbcTemplate.update(deleteSql);
+            logger.info("기차표 초기화...");
+            
+            Map<String, Object> response = (Map<String, Object>) trainInfo.get("response");
+            Map<String, Object> body = (Map<String, Object>) response.get("body");
+            Map<String, Object> items = (Map<String, Object>) body.get("items");
+            List<Map<String, Object>> itemList = (List<Map<String, Object>>) items.get("item");
+
+         // 각 필드에 대한 null 체크 추가
+            for (Map<String, Object> item : itemList) {
+                Long trainNo = (item.get("trainno") != null) ? ((Number) item.get("trainno")).longValue() : null;
+
+                // LocalDateTime으로 변경
+                LocalDateTime departureTime = parseDateTime(item.get("depplandtime"));
+                LocalDateTime arrplandTime = parseDateTime(item.get("arrplandtime"));
+
+                String depplacename = (String) item.get("depplacename");
+                String arrplacename = (String) item.get("arrplacename");
+                String traingradename = (String) item.get("traingradename");
+                Long adultcharge = (item.get("adultcharge") != null) ? ((Number) item.get("adultcharge")).longValue() : null;
+            
+                // 주문번호 생성
+                String orderId = createOrderNum();
+
+                // 데이터베이스에 저장하기 전에 로그하여 값 확인
+                logger.info("데이터베이스에 저장하기 전 값 - TrainNo: {}, DepartureTime: {}, ArrplandTime: {}, DepPlaceName: {}, ArrPlaceName: {}, TrainGradeName: {}, AdultCharge: {}, OrderId: {}", trainNo, departureTime.format(formatter), arrplandTime.format(formatter), depplacename, arrplacename, traingradename, adultcharge, orderId);
+
+                // SQL 쿼리
+                String sql = "INSERT INTO train (train_no, depplandtime, arrplandtime, depplacename, arrplacename, traingradename, amount, order_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+             // JdbcTemplate을 사용하여 데이터베이스에 삽입
+                jdbcTemplate.update(sql, trainNo, departureTime, arrplandTime, depplacename, arrplacename, traingradename, adultcharge, orderId);
+                // 성공적으로 저장되었을 때 로그 출력
+                logger.info("데이터베이스에 저장된 열차 정보. 열차 번호: {}, 출발 시간: {}, 도착 시간: {}, 출발 장소: {}, 도착 장소: {}, 열차 등급: {}, 성인 요금: {}, OrderId: {}", trainNo, departureTime.format(formatter), arrplandTime.format(formatter), depplacename, arrplacename, traingradename, adultcharge, orderId);
+            }
+        } catch (Exception e) {
+            // 저장 중 오류가 발생했을 때 로그 출력
+            logger.error("열차 정보를 데이터베이스에 저장하는 데 오류가 발생했습니다.: {}", e.getMessage());
+        }
+    }
+    
+    // 기차표 정보의 항목 배열 내 날짜, 시간 형식 지정 
+    private String formatDateTimeInResponse(String response) {
+    	try {
+    		JSONObject jsonResponse = new JSONObject(response);
+    		JSONObject header = jsonResponse.getJSONObject("response").getJSONObject("header");
+    		
+    		// 응답이 성공했는지 확인
+    		if ("00".equals(header.getString("resultCode"))) {
+    			JSONArray items = jsonResponse.getJSONObject("response").getJSONObject("body").getJSONObject("items").getJSONArray("item");
+    			
+    			// 각 항목의 날짜 및 시간 서식 지정
+    			for (int i = 0; i < items.length(); i++) {
+    				JSONObject item = items.getJSONObject(i);
+    				String depPlandTime = item.optString("depplandtime");
+    				String arrPlandTime = item.optString("arrplandtime");
+    				
+    				item.put("depplandtime", formatDateTimeString(depPlandTime));
+    				item.put("arrplandtime", formatDateTimeString(arrPlandTime));
+    			}
+    			
+    			// 업데이트된 JSON 문자열을 반환
+    			return jsonResponse.toString();
+    		} else {
+    			return response;
+    		}
+    	} catch (JSONException e) {
+    		return response;
+    	}
+    }
+    
+    // yyyyMMddHHmmss -> yyyy-MM-dd HH:mm
+    private String formatDateTimeString(String dateTimeStr) {
+    	try {
+    		SimpleDateFormat inputFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+    		SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    		
+    		Date date = inputFormat.parse(dateTimeStr);
+    		return outputFormat.format(date);
+    	} catch (ParseException e) {
+    		return dateTimeStr;
+    	}
+    }
+    
+    // 마지막페이지 유무확인 조회용
+    @Override
+    public int getTotalPageCount(String depPlaceId, String arrPlaceId, String depPlandTime, int numOfRows) {
+        try {
+            String urlStr = ctyStrt + "?serviceKey=" + serviceKey +
+                            "&depPlaceId=" + depPlaceId +
+                            "&arrPlaceId=" + arrPlaceId +
+                            "&depPlandTime=" + depPlandTime +
+                            "&numOfRows=" + numOfRows +
+                            "&pageNo=1" +
+                            "&_type=json";
+
+            // URL을 정리하여 의도하지 않은 문자 제거하기
+            urlStr = urlStr.replaceAll("[^\\x20-\\x7e]", "");
+            URL url = new URL(urlStr);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+            reader.close();
+
+            connection.disconnect();
+
+            JSONObject jsonResponse = new JSONObject(response.toString());
+            JSONObject totalCountInfo = jsonResponse.getJSONObject("response").getJSONObject("body");
+
+            int totalCount = totalCountInfo.getInt("totalCount");
+
+            // 총 페이지 수와 페이지당 행 수를 기준으로 총 페이지 수를 계산
+            int numOfPages = (int) Math.ceil((double) totalCount / numOfRows);
+
+            return numOfPages;
+        } catch (IOException | JSONException e) {
+            logger.error("총 페이지 수를 가져오는 데 오류가 발생했습니다.: {}", e.getMessage());
+            return 0;
+        }
+    }
+
+    // 주문번호 만들기
+    @Override
+    public String createOrderNum() {
+        UUID uuid = UUID.randomUUID();
+        String orderNum = uuid.toString().substring(0, 21);
+        return orderNum;
+    }
+
+    // 날짜 형식 변경
+    private LocalDateTime parseDateTime(Object dateTime) {
+        if (dateTime instanceof String) {
+            String dateString = (String) dateTime;
+            
+            try {
+                // 첫 번째 형식으로 날짜를 구문 분석
+                DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("yy/MM/dd HH:mm:ss");
+                return LocalDateTime.parse(dateString, formatter1);
+            } catch (DateTimeParseException e1) {
+                try {
+                    // 첫 번째 형식이 실패하면 두 번째 형식
+                    DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                    return LocalDateTime.parse(dateString, formatter2);
+                } catch (DateTimeParseException e2) {
+                	// 둘다 실패하면 null
+                    return null;
+                }
+            }
+        } else if (dateTime instanceof Number) {
+            // 이미 밀리초 단위로 로컬 날짜/시간으로 변환합니다.
+            return LocalDateTime.ofInstant(java.time.Instant.ofEpochMilli(((Number) dateTime).longValue()), java.time.ZoneId.of("UTC"));
+        }
+        return null;
     }
 }

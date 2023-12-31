@@ -44,7 +44,7 @@ public class WidgetController {
     
     // 토스페이먼츠 API는 시크릿 키를 사용자 ID로 사용하고, 비밀번호는 사용하지 않습니다.
     // 비밀번호가 없다는 것을 알리기 위해 시크릿 키 뒤에 콜론을 추가합니다.
-    String apiKey = "test_sk_AQ92ymxN34RKby5Zdjw4rajRKXvd";
+    String apiKey = "test_gsk_docs_OaPz8L5KdmQXkzRz3y47BMw6";
     Base64.Encoder encoder = Base64.getEncoder();
     byte[] encodedBytes = encoder.encode((apiKey + ":").getBytes("UTF-8"));
     String authorizations = "Basic " + new String(encodedBytes, 0, encodedBytes.length);

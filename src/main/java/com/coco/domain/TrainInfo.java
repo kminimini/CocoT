@@ -1,7 +1,6 @@
 package com.coco.domain;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,7 +8,6 @@ import lombok.ToString;
 
 import java.util.List;
 
-import com.coco.domain.TrainInfo.ResponseBody;
 /* 열차정보 임시저장소 */
 @Getter
 @Setter

@@ -219,16 +219,17 @@ public class MemberServiceImpl implements MemberService {
 	    return memberRepository.findById(username)
 	            .orElseThrow(() -> new UsernameNotFoundException("Member not found for username: " + username));
 	}
+
+	@Override
+	public boolean isMemberExists(String memberId) {
+		 return memberRepository.existsById(memberId);
+	}
   
-
-
 	//마이페이지 암호화처리 비밀번호 변경 
 	@Override
 	public String encodePassword(String rawPassword) {
         return passwordEncoder.encode(rawPassword);
     }
-
-
 
 	@Override
 	public boolean isMemberExists(String memberId) {
