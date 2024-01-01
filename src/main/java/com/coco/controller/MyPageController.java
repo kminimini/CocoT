@@ -84,88 +84,34 @@ public class MyPageController {
         
         
     }
-    
-    
+
     // 회원탈퇴
     @PostMapping("/myPage/deleteAccount")
+    @ResponseBody
     public String deleteAccount(
-            @AuthenticationPrincipal(expression = "#this == 'anonymousUser' ? null : member") Member currentMember,
-            @RequestParam String withdrawPassword,
-            RedirectAttributes attributes,
-            HttpServletRequest request,
-            HttpServletResponse response) {
+            @AuthenticationPrincipal SecurityUser securityUser,
+            @RequestParam String withdrawPassword) {
+        
+        Member currentUser = securityUser.getMember();
+        Member member = memberService.getMember(currentUser.getEmail());
+        String userCurrentPassword = member.getPassword();
 
-        try {
-            if (currentMember != null) {
-                // 데이터베이스에 저장된 비밀번호를 가져오는 로직이 필요
-                String storedPassword = memberService.getPasswordById(currentMember.getMid());
-
-                if (passwordEncoder.matches(withdrawPassword, storedPassword)) {
-                    // 비밀번호가 일치하면 회원 탈퇴
-                    memberService.deleteMemberById(currentMember.getMid());
-                    
-                    System.out.println("withdrawPassword... : " + withdrawPassword);
-                    System.out.println("currentMember... : " + currentMember);
-
-                    HttpSession session = request.getSession(false);
-                    if (session != null) {
-                        session.invalidate();
-                    }
-                    
-                   System.out.println("withdrawPassword : " + withdrawPassword);
-                   System.out.println("currentMember : " + currentMember);
-
-                    SecurityContextHolder.clearContext();
-                    return "redirect:/system/login"; // 탈퇴 성공 시 로그인 페이지로 이동
-                } else {
-                    attributes.addFlashAttribute("error", "Incorrect password");
-                    return "redirect:/myPage"; // 비밀번호가 틀린 경우
-                }
-            } else {
-                return "redirect:/system/login"; // 로그인하지 않은 사용자
+        boolean matches = passwordEncoder.matches(withdrawPassword, userCurrentPassword);
+        
+        if (matches) {
+            try {
+                memberService.deleteMemberById(currentUser.getMid());
+                System.out.println("탈퇴 성공");
+                return "success";
+            } catch (Exception e) {
+                System.out.println("탈퇴 실패: " + e.getMessage());
+                return "failure";
             }
-        } catch (Exception e) {
-            attributes.addFlashAttribute("error", "Error deleting account");
-            return "redirect:/myPage"; // 서버 오류
+        } else {
+            System.out.println("현재 비밀번호 불일치");
+            return "failure";
         }
     }
 
 
-
-//    // 회원탈퇴
-//    @PostMapping("/myPage/deleteAccount")
-//    public String deleteAccount(
-//        @AuthenticationPrincipal(expression = "#this == 'anonymousUser' ? null : member") Member currentMember,
-//        @RequestParam String withdrawPassword,
-//        @RequestParam String currentPassword,
-//        RedirectAttributes attributes,
-//        HttpServletRequest request,
-//        HttpServletResponse response) {
-//
-//        try {
-//            if (currentMember != null) {
-//                String hashedWithdrawPassword = passwordEncoder.encode(withdrawPassword);
-//
-//                if (passwordEncoder.matches(currentPassword, currentMember.getPassword())) {
-//                    memberService.deleteMemberById(currentMember.getMid());
-//
-//                    HttpSession session = request.getSession(false);
-//                    if (session != null) {
-//                        session.invalidate();
-//                    }
-//
-//                    SecurityContextHolder.clearContext();
-//                    return "redirect:/system/login"; // 탈퇴 성공 시 로그인 페이지로 이동
-//                } else {
-//                    attributes.addFlashAttribute("error", "Incorrect current password");
-//                    return "redirect:/myPage"; // 비밀번호가 틀린 경우
-//                }
-//            } else {
-//                return "redirect:/system/login"; // 로그인하지 않은 사용자
-//            }
-//        } catch (Exception e) {
-//            attributes.addFlashAttribute("error", "Error deleting account");
-//            return "redirect:/myPage"; // 서버 오류
-//        }
-//    }
 }

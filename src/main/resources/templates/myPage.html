@@ -124,44 +124,45 @@ input[type="button"]:hover, button:hover {
 	}
 
 	function toggleWithdrawPassword() {
-		var withdrawPasswordForm = document
-				.getElementById('withdrawPasswordForm');
-		withdrawPasswordForm.style.display = withdrawPasswordForm.style.display === 'none' ? 'block'
-				: 'none';
-	}
-
+        var withdrawPasswordForm = document.getElementById('withdrawPasswordForm');
+        withdrawPasswordForm.style.display = 'block';
+    }
+    
 	function confirmWithdraw() {
-		var withdrawPassword = document.getElementById('withdrawPassword').value;
+        var withdrawPassword = document.getElementById('withdrawPassword').value;
+        var currentPassword = 'your_current_password_value_here'; // 이 부분에 현재 비밀번호 값을 추가
 
-		var confirmWithdraw = confirm('정말 탈퇴하시겠습니까?');
+        var confirmWithdraw = confirm('정말 탈퇴하시겠습니까?');
 
-		if (confirmWithdraw) {
-			$.ajax({
-				type : 'POST',
-				url : '/myPage/deleteAccount',
-				data : {
-					withdrawPassword : withdrawPassword,
-				},
-				success : function(response) {
-					console.log("서버 응답:", response);
+        if (confirmWithdraw) {
+            $.ajax({
+                type: 'POST',
+                url: '/myPage/deleteAccount',
+                data: {
+                    withdrawPassword: withdrawPassword,
+                    currentPassword: currentPassword, // 이 부분을 추가
+                },
+                success: function (response) {
+                    console.log("서버 응답:", response);
 
-					if (response == 'success') {
-						// 탈퇴 성공 시, 로그인 페이지로 이동
-						window.location.href = "/system/login";
-					} else {
-						// 현재 비밀번호가 유효하지 않은 경우
-						alert('비밀번호가 틀렸습니다');
-						document.getElementById('withdrawPassword').focus();
-					}
-				},
-				error : function(xhr, status, error) {
-					console.error('AJAX 오류:', status, error);
-					alert('서버 오류가 발생했습니다.');
-				}
-			});
-		}
-	}
-			
+                    if (response == 'success') {
+                        // 탈퇴 성공 시, 로그인 페이지로 이동
+                        window.location.href = "/system/login";
+                    } else {
+                        // 현재 비밀번호가 유효하지 않은 경우
+                        alert('비밀번호가 틀렸습니다');
+                        document.getElementById('withdrawPassword').focus();
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('AJAX 오류:', status, error);
+                    alert('서버 오류가 발생했습니다.');
+                }
+            });
+        } else {
+            alert('탈퇴가 취소되었습니다.');
+        }
+    }
 </script>
 
 
@@ -200,20 +201,19 @@ input[type="button"]:hover, button:hover {
 		</form>
 		<br> <br>
 		<!-- 회원 탈퇴 폼 추가 -->
-		<button type="button" onclick="toggleWithdrawPassword()">회원
-			탈퇴</button>
+<button type="button" onclick="toggleWithdrawPassword()">회원 탈퇴</button>
 
-		<form id="withdrawPasswordForm" action="/myPage/deleteAccount"
-			method="post" style="display: none;">
-			<input type="hidden" name="memberId" th:value="${currentMember.id}" />
+<form id="withdrawPasswordForm" action="/myPage/deleteAccount" method="post" style="display: none;">
+    <input type="hidden" name="memberId" th:value="${currentMember.id}" />
 
-			<!-- 추가: 현재 비밀번호 입력 필드 -->
-			<label for="withdrawPassword">현재 비밀번호 확인:</label> <input
-				type="password" id="withdrawPassword" name="withdrawPassword"
-				required>
+    <!-- 추가: 현재 비밀번호 입력 필드 -->
+    <label for="withdrawPassword">현재 비밀번호 확인:</label>
+    <input type="password" id="withdrawPassword" name="withdrawPassword" required>
 
-			<button type="button" onclick="confirmWithdraw()">회원 탈퇴</button>
-		</form>
+    <!-- 수정: submit 버튼에 confirmWithdraw 함수 호출 추가 -->
+    <button type="button" onclick="confirmWithdraw()">회원 탈퇴</button>
+</form>
+
 	</div>
 	<div th:replace="~{fragments/footer}"></div>
 </body>
