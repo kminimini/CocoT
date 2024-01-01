@@ -2,16 +2,32 @@
 
 body {
   font-family: Arial, sans-serif;
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+      padding-bottom: 100px; /* �Ǵ� �ٸ� ������ ���� */
+  
+}
+
+main {
+  flex: 1;
+   flex-grow: 1;
 }
 
 footer {
+  position: relative;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
   border-top: 50px solid white;
   background-color: #f8f9fa;
   padding: 1rem 0;
-  margin: 1rem 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: auto; /* �߰��� �κ� */
 }
 
 .footer-message,
@@ -22,34 +38,27 @@ footer {
   text-align: left;
   margin: 0.6rem;
   display: flex;
-  flex-direction: column; /* ���ㅽ�몃�� �몃�濡� ���댄��湲� ���� �몃� 諛⑺�μ�쇰� �ㅼ�� */
+  flex-direction: column;
 }
 
 .footer-message {
   font-weight: bold;
   margin-bottom: 0.3rem;
-  display: flex; /* ���ㅽ�몃�� 媛�濡�濡� ���댄��湲� ���� 媛�濡� 諛⑺�μ�쇰� �ㅼ�� */
-  flex-wrap: wrap; /* �щ�� 以�濡� ����湲� ���� �ㅼ�� */
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .footer-message span {
-  flex: 1; /* �щ�� �대� ����湲� ���� 怨듦��� ���쇳��寃� 遺��� */
+  flex: 1;
 }
 
-.footer-contact {
-  align-items: center; /* ��吏� 以��� ���� */
-}
-
-.footer-contact img {
-  display: inline-block;
-  margin-left: 0.5rem;
-}
-
+.footer-contact,
 .footer-copyright {
-  align-items: center; /* ��吏� 以��� ���� */
+  align-items: center;
 }
 
+.footer-contact img,
 .footer-copyright img {
   display: inline-block;
-  margin-right: 0.5rem; /* ���ㅽ�몄�� �대�몄� �ъ�� 媛�寃� 議곗�� */
+  margin: 0 0.5rem;
 }
