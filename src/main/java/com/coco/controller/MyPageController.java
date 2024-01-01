@@ -90,17 +90,29 @@ public class MyPageController {
     @ResponseBody
     public String deleteAccount(
             @AuthenticationPrincipal SecurityUser securityUser,
-            @RequestParam String withdrawPassword) {
-        
+            @RequestParam String withdrawPassword,
+            HttpServletRequest request) {
+
         Member currentUser = securityUser.getMember();
         Member member = memberService.getMember(currentUser.getEmail());
         String userCurrentPassword = member.getPassword();
 
         boolean matches = passwordEncoder.matches(withdrawPassword, userCurrentPassword);
-        
+
         if (matches) {
             try {
+                // 회원 삭제
                 memberService.deleteMemberById(currentUser.getMid());
+
+                // 세션 무효화
+                HttpSession session = request.getSession(false);
+                if (session != null) {
+                    session.invalidate();
+                }
+
+                // SecurityContext 비우기
+                SecurityContextHolder.clearContext();
+
                 System.out.println("탈퇴 성공");
                 return "success";
             } catch (Exception e) {

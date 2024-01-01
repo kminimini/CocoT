@@ -147,7 +147,7 @@ input[type="button"]:hover, button:hover {
 
                     if (response == 'success') {
                         // 탈퇴 성공 시, 로그인 페이지로 이동
-                        window.location.href = "/system/login";
+                    	location.reload(true);
                     } else {
                         // 현재 비밀번호가 유효하지 않은 경우
                         alert('비밀번호가 틀렸습니다');
