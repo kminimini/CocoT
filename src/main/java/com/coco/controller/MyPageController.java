@@ -130,42 +130,4 @@ public class MyPageController {
         }
     }
 
-
-
-//    // 회원탈퇴
-//    @PostMapping("/myPage/deleteAccount")
-//    public String deleteAccount(
-//        @AuthenticationPrincipal(expression = "#this == 'anonymousUser' ? null : member") Member currentMember,
-//        @RequestParam String withdrawPassword,
-//        @RequestParam String currentPassword,
-//        RedirectAttributes attributes,
-//        HttpServletRequest request,
-//        HttpServletResponse response) {
-//
-//        try {
-//            if (currentMember != null) {
-//                String hashedWithdrawPassword = passwordEncoder.encode(withdrawPassword);
-//
-//                if (passwordEncoder.matches(currentPassword, currentMember.getPassword())) {
-//                    memberService.deleteMemberById(currentMember.getMid());
-//
-//                    HttpSession session = request.getSession(false);
-//                    if (session != null) {
-//                        session.invalidate();
-//                    }
-//
-//                    SecurityContextHolder.clearContext();
-//                    return "redirect:/system/login"; // 탈퇴 성공 시 로그인 페이지로 이동
-//                } else {
-//                    attributes.addFlashAttribute("error", "Incorrect current password");
-//                    return "redirect:/myPage"; // 비밀번호가 틀린 경우
-//                }
-//            } else {
-//                return "redirect:/system/login"; // 로그인하지 않은 사용자
-//            }
-//        } catch (Exception e) {
-//            attributes.addFlashAttribute("error", "Error deleting account");
-//            return "redirect:/myPage"; // 서버 오류
-//        }
-//    }
 }
