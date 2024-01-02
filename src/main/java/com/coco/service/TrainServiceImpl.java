@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.security.SecureRandom;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -16,8 +15,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-
-import javax.transaction.Transactional;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,7 +28,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.coco.domain.TrainInfo;
-import com.coco.domain.TrainReservation;
 import com.coco.repository.TrainReservationRepository;
 
 @Service

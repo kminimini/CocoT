@@ -1,14 +1,14 @@
 package com.example.demo.controller;
-  
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -21,7 +21,7 @@ public class WidgetController {
   
   private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-  @RequestMapping(value = "/confirm")
+  @PostMapping("/confirm")
   public ResponseEntity<JSONObject> confirmPayment(@RequestBody String jsonBody) throws Exception {
     
     JSONParser parser = new JSONParser();
@@ -34,14 +34,10 @@ public class WidgetController {
       paymentKey = (String) requestData.get("paymentKey");
       orderId = (String) requestData.get("orderId");
       amount = (String) requestData.get("amount");
-      
-   // Log the received values
-      logger.info("Received paymentKey: {}", paymentKey);
-      logger.info("Received orderId: {}", orderId);
-      logger.info("Received amount: {}", amount);
     } catch (ParseException e) {
       throw new RuntimeException(e);
     };
+    
     JSONObject obj = new JSONObject();
     obj.put("orderId", orderId);
     obj.put("amount", amount);
@@ -49,7 +45,7 @@ public class WidgetController {
     
     // 토스페이먼츠 API는 시크릿 키를 사용자 ID로 사용하고, 비밀번호는 사용하지 않습니다.
     // 비밀번호가 없다는 것을 알리기 위해 시크릿 키 뒤에 콜론을 추가합니다.
-    String apiKey = "test_ck_26DlbXAaV0767AWPeqx03qY50Q9R";
+    String apiKey = "test_gsk_docs_OaPz8L5KdmQXkzRz3y47BMw6";
     Base64.Encoder encoder = Base64.getEncoder();
     byte[] encodedBytes = encoder.encode((apiKey + ":").getBytes("UTF-8"));
     String authorizations = "Basic " + new String(encodedBytes, 0, encodedBytes.length);
