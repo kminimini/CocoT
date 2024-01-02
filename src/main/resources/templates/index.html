@@ -1,11 +1,15 @@
 <!-- index.html -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
+<head>
+<meta charset="UTF-8">
+<title>CocoT</title>
+</head>
 <head>
     <meta charset="UTF-8">
     <title>기차 예매</title>
 	<link rel="stylesheet" type="text/css" href="css/train.css">
+	<script type="text/javascript" src="js/train.js"></script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -32,82 +36,68 @@
 			style="width: 1200px; height: 450px;">
 	</div>
 	<div class="container mt-5">
+    <h1>기차 예매</h1>
+    <form id="trainInfoForm" action="/train/trainInfo" method="get" class="mt-4">
 
-		<h1>기차 예매</h1>
-		<form th:action="@{/fs/searchFlight}" method="post"
-			th:object="${flightSearchForm}">
-			<div class="form-row">
-				<div class="form-group col-md-2">
-					<label for="departure">출발지:</label> <input type="text"
-						id="departure" name="departure" class="form-control"
-						data-toggle="modal" data-target="#departureModal" required>
-				</div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="departureStationName">출발지</label>
+                <div class="input-group">
+                    <input type="text" id="departureStationName" class="form-control" placeholder="출발지 선택" readonly>
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-outline-primary" onclick="openDepartureLocationPopup()">검색</button>
+                    </div>
+                    <input type="hidden" id="departureStationId" name="depPlaceId">
+                </div>
+            </div>
 
-				<div class="form-group col-md-2">
-					<label for="destination">도착지:</label> <input type="text"
-						id="destination" name="destination" class="form-control"
-						data-toggle="modal" data-target="#destinationModal" required>
-				</div>
+            <div class="form-group col-md-6">
+                <label for="arrivalStationName">도착지</label>
+                <div class="input-group">
+                    <input type="text" id="arrivalStationName" class="form-control" placeholder="도착지 선택" readonly>
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-outline-primary" onclick="openArrivalLocationPopup()">검색</button>
+                    </div>
+                    <input type="hidden" id="arrivalStationId" name="arrPlaceId">
+                </div>
+            </div>
+        </div>
 
-				<div class="form-group col-md-2">
-					<label for="departureDate">출발일:</label> <input type="date"
-						id="departureDate" name="departureDate" class="form-control"
-						required>
-				</div>
+        <div class="form-group">
+            <label for="depPlandTime">출발 날짜</label>
+            <input type="date" id="depPlandTime" name="depPlandTime" class="form-control">
+        </div>
 
-				<div class="form-group col-md-2">
-					<label for="returnDate">도착일:</label> <input type="date"
-						id="returnDate" name="returnDate" class="form-control" required>
-				</div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">기차표 검색</button>
+        </div>
 
-				<div class="form-group col-md-2">
-					<label for="passengerCount">승객 수:</label> <input type="number"
-						id="passengerCount" name="passengerCount" class="form-control"
-						min="1" required>
-				</div>
-				<div class="form-group col-md-2">
-					<label for="airline">항공사:</label> <input type="text" id="airline"
-						name="airline" class="form-control">
-				</div>
+    </form>
+</div>
+	<!-- Departure location popup -->
+    <div id="departureLocationPopup" class="popup">
+        <div class="popup-content">
+            <span class="close" onclick="closeDepartureLocationPopup()">&times;</span>
+            <h2></h2>
 
-				<div class="form-group col-md-2">
-					<label></label>
-					<button type="submit" class="btn btn-primary btn-block">검색하기</button>
-				</div>
-
-			</div>
-		</form>
-
-	</div>
-
-	<!-- 출발지 검색 모달 -->
-	<div class="modal" id="departureModal" tabindex="-1" role="dialog">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">출발지 검색</h5>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<!-- 출발지 검색 내용 추가 -->
-					<!-- 예: 검색 폼, 검색 결과 테이블 등 -->
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						data-dismiss="modal">닫기</button>
-					<button type="button" class="btn btn-primary">선택</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-- 도착지 모달 -->
-	<div class="modal" id="destinationModal" tabindex="-1" role="dialog">
-		<!-- 모달 내용 추가 -->
-	</div>
+	        <!-- City and Train Station Selection -->
+	        <div class="location-selection">
+	            <!-- City selection -->
+	            <div class="citypopup-column">
+	                <h5>도시</h5>
+	                <ul class="city-list" id="cityCodeList"></ul>
+	            </div>
+	
+	            <!-- Train station selection -->
+	            <div class="stationpopup-column">
+	                <h5>기차역을 선택하세요.</h5>
+	                <ul class="location-list" id="trainStationList" data-current-page="1"></ul>
+    				<div class="pagination-container"></div>
+	            </div>
+	        </div>
+        </div>
+    </div>
+	
 	<div class="container">
 		<!-- 공지사항 -->
 		<div class="notice">
@@ -124,7 +114,7 @@
 						<td align="left"><a th:href="@{/getNotice(nseq=${notice.nseq})}"
 							th:text="${notice.ntitle}"></a></td>
 						<td><span
-							th:text="${#dates.format(notice.createDate, 'yyyy-MM-dd')}"></span></td>
+							th:text="${#dates.format(notice.createDate, 'yyyy.MM.dd')}"></span></td>
 					</tr>
 				</tbody>
 			</table>

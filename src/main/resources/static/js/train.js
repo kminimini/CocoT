@@ -10,33 +10,35 @@ function promptForCityCode() {
 */
 
 // 출발 날짜 선택 후 검색 : ex) 2023-11-11 -> 20231111 (하이픈 제외하고 요청)
-document.getElementById('trainInfoForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // 기본 양식 제출 방지
-	try {
-	    var depPlaceId = getCityCodeFromInput('departureStationId', 'departureStationName');
-	    var arrPlaceId = getCityCodeFromInput('arrivalStationId', 'arrivalStationName');
-	    var depPlandTime = document.getElementById('depPlandTime').value;
-	
-		// 원래 날짜와 시간 기록
-		console.log("Original 출발 날짜 및 시간 : ", depPlandTime);
+document.addEventListener('DOMContentLoaded', function () {
+	document.getElementById('trainInfoForm').addEventListener('submit', function(event) {
+	    event.preventDefault(); // 기본 양식 제출 방지
+		try {
+		    var depPlaceId = getCityCodeFromInput('departureStationId', 'departureStationName');
+		    var arrPlaceId = getCityCodeFromInput('arrivalStationId', 'arrivalStationName');
+		    var depPlandTime = document.getElementById('depPlandTime').value;
 		
-	    // 날짜에서 하이픈 제거
-	    depPlandTime = depPlandTime.replace(/-/g, '');
-	
-		// 수정된 날짜와 시간 기록
-	    console.log("Modified 출발 날짜 및 시간: ", depPlandTime);
-	    
-	    // 요청 URL 생성
-	    var requestUrl = '/train/trainInfo?depPlaceId=' + depPlaceId + '&arrPlaceId=' + arrPlaceId + '&depPlandTime=' + depPlandTime;
-	
-	    // 생성된 URL로 리디렉션
-	    window.location.href = requestUrl;
-	} catch (error) {
-	        // 오류를 우아하게 처리하기
-	        console.error("양식 제출 중 오류 발생:", error);
-	        // 오류 페이지로 리디렉션
-	        window.location.href = '/error.html';
-	}
+			// 원래 날짜와 시간 기록
+			console.log("Original 출발 날짜 및 시간 : ", depPlandTime);
+			
+		    // 날짜에서 하이픈 제거
+		    depPlandTime = depPlandTime.replace(/-/g, '');
+		
+			// 수정된 날짜와 시간 기록
+		    console.log("Modified 출발 날짜 및 시간: ", depPlandTime);
+		    
+		    // 요청 URL 생성
+		    var requestUrl = '/train/trainInfo?depPlaceId=' + depPlaceId + '&arrPlaceId=' + arrPlaceId + '&depPlandTime=' + depPlandTime;
+		
+		    // 생성된 URL로 리디렉션
+		    window.location.href = requestUrl;
+		} catch (error) {
+		        // 오류를 우아하게 처리하기
+		        console.error("양식 제출 중 오류 발생:", error);
+		        // 오류 페이지로 리디렉션
+		        window.location.href = '/error.html';
+		}
+	});
 });
 
 // 출발지 팝업을 열 때 함수를 호출

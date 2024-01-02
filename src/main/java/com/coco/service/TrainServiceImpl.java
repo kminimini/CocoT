@@ -34,7 +34,6 @@ public class TrainServiceImpl implements TrainService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(TrainServiceImpl.class);
 	
-	// 날짜형식 강제
 	private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 	
 	@Autowired
