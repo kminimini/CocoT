@@ -9,4 +9,5 @@ public interface TrainReservationService {
     
     // 결제요청한 데이터를 저장한다.
     void savePaymentInfo(PaymentInfo paymentInfo);
+
 }
