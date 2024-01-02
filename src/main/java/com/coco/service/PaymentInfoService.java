@@ -33,4 +33,9 @@ public class PaymentInfoService {
             // Handle error, payment info not found
         }
     }
+
+	public void savePaymentInfo(PaymentInfo paymentInfo) {
+		paymentInfoRepository.save(paymentInfo);
+		
+	}
 }
