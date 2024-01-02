@@ -1,5 +1,7 @@
 package com.coco.test;
 
+import java.util.Date;
+
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,19 +9,20 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.coco.domain.Member;
+import com.coco.domain.Notice;
 import com.coco.domain.Role;
 import com.coco.repository.MemberRepository;
+import com.coco.repository.NoticeRepository;
 
 @SpringBootTest
 public class CustomerRepositoryTest {
 
 	@Autowired
 	private MemberRepository memberRepo;
-	
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
-	
+
 	@Disabled
     @Test
     public void testManyToOneInsert() {
@@ -38,10 +41,9 @@ public class CustomerRepositoryTest {
 				 .build();
 		  
 		 memberRepo.save(member1);
-		 
-		 
-		 
-        
+
+	
+
 //        Member member2 = Member.builder()
 //                .name("관리자")
 //                .id("admin")
@@ -57,6 +59,6 @@ public class CustomerRepositoryTest {
 //                .build();
 //
 //        memberRepo.save(member2);
-      
-    }
+
+	}
 }

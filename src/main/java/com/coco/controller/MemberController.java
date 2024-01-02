@@ -1,6 +1,7 @@
 package com.coco.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -16,10 +17,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.coco.domain.Notice;
 //import com.coco.domain.kakaoProfile;
 import com.coco.dto.JoinFormDto;
 import com.coco.repository.MemberRepository;
 import com.coco.service.MemberService;
+import com.coco.service.NoticeService;
 
 @Controller
 public class MemberController {
@@ -30,6 +33,9 @@ public class MemberController {
 
 	@Autowired
 	private MemberRepository memberRepository;
+	
+	@Autowired
+	private NoticeService noticeService;
 
 	private JoinFormDto joinFormDto;
 
@@ -49,6 +55,8 @@ public class MemberController {
 			model.addAttribute("username", authentication.getName());
 		}
 
+		List<Notice> noticeList = noticeService.getNoticeList(null); // 예시: NoticeService를 통해 공지사항 데이터를 가져옴
+		model.addAttribute("noticeList", noticeList);
 		// 다른 로직을 추가할 수 있음
 
 		return "index";

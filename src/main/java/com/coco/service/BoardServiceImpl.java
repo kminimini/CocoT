@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.coco.domain.Board;
 import com.coco.domain.Member;
+import com.coco.domain.Notice;
 import com.coco.domain.QBoard;
 import com.coco.domain.Search;
 import com.coco.repository.BoardRepository;
