@@ -24,4 +24,6 @@ public class PaymentInfo {
 
     @Column(name = "amount")
     private Long amount;
+    
+    private boolean paymentConfirmed;
 }

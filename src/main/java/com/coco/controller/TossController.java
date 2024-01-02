@@ -19,7 +19,10 @@ import org.slf4j.LoggerFactory;
 
 import com.coco.domain.PaymentInfo;
 import com.coco.repository.PaymentInfoRepository;
+import com.coco.service.PaymentInfoService;
 import com.coco.service.TrainReservationService;
+
+import lombok.RequiredArgsConstructor;
 
 import java.io.*;
 import java.math.BigDecimal;
@@ -29,16 +32,17 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Map;
 
+@RequiredArgsConstructor
 @Controller
 @RequestMapping("/toss")
 public class TossController {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	@Autowired
-	private TrainReservationService trainReservationService;
+	private final TrainReservationService trainReservationService;
 
-	@Autowired
-    private PaymentInfoRepository paymentInfoRepository;
+    private final PaymentInfoRepository paymentInfoRepository;
+	
+	private final PaymentInfoService paymentInfoService;
 	
 	@GetMapping("/checkout.html")
 	public String showCheckoutPage(@RequestParam String orderId, Model model) {
@@ -53,26 +57,29 @@ public class TossController {
 	}
 	
 	// 성공 페이지에 대한 핸들러 추가
-	@RequestMapping(value = "/success")
-    public String successPage(@RequestParam("paymentType") String paymentType,
-                              @RequestParam("orderId") String orderId,
-                              @RequestParam("amount") Long amount,
-                              Model model) {
+	@GetMapping("/success")
+    public String handleSuccess(
+            @RequestParam String paymentType,
+            @RequestParam String orderId,
+            @RequestParam String paymentKey,
+            @RequestParam Long amount,
+            Model model) {
 
-        logger.info("Payment success - Order ID: {}, Payment Key: {}, Amount: {}", orderId, amount);
+        // Save payment details to database
+		trainReservationService.savePaymentInfo(orderId, amount, paymentKey);
 
-        // Save payment details to PaymentInfo entity
-        PaymentInfo paymentInfo = new PaymentInfo();
-        paymentInfo.setOrderId(orderId);
-        paymentInfo.setAmount(amount);
+        // Confirm payment with Toss
+        String tossConfirmationResult = trainReservationService.confirmTossPayment(orderId, paymentKey, amount);
 
-        trainReservationService.savePaymentInfo(paymentInfo); // Assuming you have a save method in your service
-
-        // Add attributes to the model if needed
-        model.addAttribute("orderId", orderId);
-        model.addAttribute("amount", amount);
-
-        return "toss/success"; // Assuming your success page is named "success.html"
+        if ("success".equals(tossConfirmationResult)) {
+            // Implement success business logic or redirect to a success page
+            model.addAttribute("orderId", orderId);
+            model.addAttribute("amount", amount);
+            return "toss/success"; // Assuming you have a success.html template
+        } else {
+            // Implement failure business logic or redirect to a failure page
+            return "toss/fail"; // Assuming you have a fail.html template
+        }
     }
 	
     // 실패 페이지에 대한 처리기 추가
@@ -81,4 +88,16 @@ public class TossController {
         return "toss/fail";
     }
 
+    // 결제요청 정보를 PaymentInfo에 저장
+    @PostMapping("/store-payment-info")
+    public ResponseEntity<String> storePaymentInfo(@RequestParam String orderId, @RequestParam Long amount) {
+        PaymentInfo paymentInfo = new PaymentInfo();
+        paymentInfo.setOrderId(orderId);
+        paymentInfo.setAmount(amount);
+
+        // Save the paymentInfo to the database using your service
+        trainReservationService.savePaymentInfo(paymentInfo);
+
+        return ResponseEntity.ok("PaymentInfo stored successfully");
+    }
 }
