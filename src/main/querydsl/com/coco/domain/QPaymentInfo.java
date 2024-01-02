@@ -40,4 +40,3 @@ public class QPaymentInfo extends EntityPathBase<PaymentInfo> {
     }
 
 }
-
