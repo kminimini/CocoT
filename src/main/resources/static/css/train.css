@@ -95,3 +95,138 @@
     z-index: -1;
     border-radius: 12px;
 }
+
+/* 인뎃스 화면 css */
+@media (max-width: 768px) {
+            /* 작은 화면일 때의 스타일 */
+            /* 햄버거 버튼을 오른쪽 끝에 배치 */
+            .navbar-toggler {
+                order: 1;
+            }
+
+            /* 메뉴가 햄버거로 대체되므로 메뉴는 숨김 */
+            .navbar-nav {
+                display: none;
+            }
+
+            /* 햄버거 메뉴가 보여질 때의 스타일 */
+            .navbar-toggler:hover+.navbar-nav {
+                display: block;
+            }
+        }
+
+        @media (min-width: 769px) {
+            /* 큰 화면일 때의 스타일 */
+            /* 메뉴가 보여지고 햄버거 버튼은 숨겨짐 */
+            .navbar-toggler {
+                display: none;
+            }
+
+            /* 로그인과 회원가입을 오른쪽에 배치 */
+            .navbar-nav.mr-auto {
+                order: 2;
+            }
+
+            /* 가운데 정렬을 위해 mx-auto 추가 */
+            .navbar-nav {
+                mx-auto: auto;
+            }
+        }
+
+        #modal {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        #modal h2 {
+            margin: 0;
+        }
+
+        #modal button {
+            display: inline-block;
+            width: 100px;
+            margin-left: calc(100% - 100px - 10px);
+        }
+
+        #modal .modal_content {
+            width: 300px;
+            margin: 100px auto;
+            padding: 20px 10px;
+            background: #fff;
+            border: 2px solid #666;
+        }
+
+        #modal .modal_layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: -1;
+        }
+
+        #img-container {
+            min-width: 100%;
+            height: 100px;
+            background-size: cover;
+            /* 이미지를 화면에 맞게 조절 */
+            background-position: center;
+            /* 이미지를 가운데 정렬 */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: -1;
+        }
+
+        .container.mt-5 {
+            background-color: white;
+            padding: 50px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            top: -100px;
+            /* 위로 50px 올림 */
+            z-index: 1;
+            /* 앞으로 이동 */
+            margin-bottom: 50px;
+            /* 원하는 간격으로 조절하세요 */
+        }
+
+        /* 공지사항과 자주 묻는 질문 섹션 가로 배치 및 스타일 조정 */
+        .notice-table {
+            width: 500px;
+            /* .notice 안에서 테이블이 전체 너비를 사용하도록 수정 */
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        .notice-table th,
+        .notice-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+
+        .notice-table th:nth-child(3),
+        .notice-table td:nth-child(3) {
+            width: 400px;
+            /* 제목 칼럼의 너비를 조절 */
+        }
+
+        .notice-table th:nth-child(2),
+        .notice-table td:nth-child(2) {
+            width: 150px;
+            /* 등록일 칼럼의 너비를 조절 */
+        }
+
+        .notice-table th {
+            background-color: #f2f2f2;
+        }
+
+        .notice-table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
