@@ -1,0 +1,32 @@
+@charset "UTF-8";
+/* styles.css */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    text-align: center;
+    padding: 50px;
+}
+
+h2 {
+    color: #007bff;
+}
+
+p {
+    color: #555;
+    margin-bottom: 20px;
+}
+
+#confirmButton {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#confirmButton:hover {
+    background-color: #0056b3;
+}
