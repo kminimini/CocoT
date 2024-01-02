@@ -183,11 +183,11 @@
 
 .container.mt-5 {
 	background-color: white;
-	padding: 70px;
+	padding: 50px;
 	border-radius: 10px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 	position: relative;
-	top: -100px;
+	top: -120px;
 	z-index: 1;
 	margin-bottom: 50px;
 	max-width: 50%; /* 최대 80%의 화면 너비까지만 사용 (원하는 크기로 조절) */
