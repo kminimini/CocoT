@@ -57,33 +57,7 @@ public class PaymentController {
         return ResponseEntity.ok("PaymentInfo stored successfully");
     }
     
-    @GetMapping("/success")
-    public ResponseEntity<?> handleSuccessRedirect(
-            @RequestParam String paymentType,
-            @RequestParam String orderId,
-            @RequestParam String paymentKey,
-            @RequestParam Long amount) {
-
-        // Retrieve temporary payment information
-        Optional<PaymentInfo> optionalPaymentInfo = paymentInfoService.findByOrderId(orderId);
-        if (optionalPaymentInfo.isEmpty()) {
-            // Handle error, temporary payment information not found
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Temporary payment information not found");
-        }
-
-        PaymentInfo storedPaymentInfo = optionalPaymentInfo.get();
-
-        // Validate if the received information matches the stored information
-        if (!storedPaymentInfo.getAmount().equals(amount)) {
-            // Handle error, amounts do not match
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Amounts do not match");
-        }
-
-        // Perform additional validation as needed (e.g., coupon, loyalty points)
-
-        // If all validations pass, proceed with payment confirmation
-        return confirmPayment(paymentKey, orderId, amount);
-    }
+    
     @PostMapping("/confirm")
     public ResponseEntity<String> confirmPayment(@RequestBody String jsonBody) {
         JSONParser parser = new JSONParser();
@@ -131,50 +105,8 @@ public class PaymentController {
             return ResponseEntity.badRequest().body("PaymentInfo not found for orderId: " + orderId);
         }
     }
-    private ResponseEntity<?> confirmPayment(String paymentKey, String orderId, Long amount) {
-        try {
-            String tossApiUrl = "https://api.tosspayments.com/v1/payments/confirm";
-
-            HttpHeaders headers = new HttpHeaders();
-
-            // Base64 encode the API key for Basic authentication
-            String encodedApiKey = Base64.getEncoder().encodeToString((secretApiKey + ":").getBytes("UTF-8"));
-            headers.set("Authorization", "Basic " + encodedApiKey);
-
-            headers.set("Content-Type", "application/json");
-
-            Map<String, Object> requestBody = new HashMap<>();
-            requestBody.put("paymentKey", paymentKey);
-            requestBody.put("orderId", orderId);
-            requestBody.put("amount", amount);
-
-            HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
-
-            RestTemplate restTemplate = new RestTemplate();
-            ResponseEntity<String> responseEntity = restTemplate.exchange(
-                    tossApiUrl,
-                    HttpMethod.POST,
-                    requestEntity,
-                    String.class
-            );
-
-            // Handle the response as needed
-            if (responseEntity.getStatusCode().is2xxSuccessful()) {
-            	// Payment confirmed successfully
-                // You can add logic here to prepare the success widget information
-                String successWidgetInfo = prepareSuccessWidgetInfo(paymentKey, orderId, amount);
-                
-                // Return the success widget information
-                return ResponseEntity.ok(successWidgetInfo);
-            } else {
-                // Handle payment confirmation failure
-                return ResponseEntity.status(responseEntity.getStatusCode()).body(responseEntity.getBody());
-            }
-        } catch (Exception e) {
-            // Handle exception
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("결제 확인 중 오류 발생");
-        }
-    }
+    
+    
     
     private String prepareSuccessWidgetInfo(String paymentKey, String orderId, Long amount) {
         // Add logic here to prepare the success widget information
