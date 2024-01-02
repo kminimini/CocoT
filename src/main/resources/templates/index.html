@@ -121,7 +121,7 @@
 			<table class="notice-table" th:href="@{/notice}">
 				<tbody>
 					<tr th:each="notice, iterStat : ${noticeList}" th:height="50px">
-						<td align="left"><a th:href="@{/Notice(nseq=${notice.nseq})}"
+						<td align="left"><a th:href="@{/getNotice(nseq=${notice.nseq})}"
 							th:text="${notice.ntitle}"></a></td>
 						<td><span
 							th:text="${#dates.format(notice.createDate, 'yyyy-MM-dd')}"></span></td>
@@ -146,7 +146,7 @@
 						<tr th:each="qna, iterStat : ${qnaList}" th:height="50px">
 							<td align="left">
 								<!-- 수정: 각 Qna의 제목을 표시 --> <a
-								th:href="@{/QnaList(qseq=${qna.qseq})}" th:text="${qna.qtitle}"></a>
+								th:href="@{/qna(qseq=${qna.qseq})}" th:text="${qna.qtitle}"></a>
 							</td>
 						</tr>
 					</tbody>
