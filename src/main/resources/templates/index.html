@@ -1,278 +1,263 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta charset="UTF-8">
-<title>기차 예매</title>
+    <meta charset="UTF-8">
+    <title>기차 예매</title>
 
-<!-- Bootstrap CSS -->
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-	crossorigin="anonymous">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-<!-- jQuery and Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-	crossorigin="anonymous"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.8/dist/umd/popper.min.js"
-	integrity="sha384-Vo3skhE0eeDaex7+9UjFq80+E5+Bb4LXXLjut73toP0jIcrzj2UENFI0+4mYELtD"
-	crossorigin="anonymous"></script>
+    <!-- jQuery and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.8/dist/umd/popper.min.js"
+        integrity="sha384-Vo3skhE0eeDaex7+9UjFq80+E5+Bb4LXXLjut73toP0jIcrzj2UENFI0+4mYELtD"
+        crossorigin="anonymous"></script>
 
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.1/js/bootstrap.min.js"
-	integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-	crossorigin="anonymous"></script>
-<link rel="stylesheet" href="/images/mainPage.css">
-<style>
-@media ( max-width : 768px) {
-	/* 작은 화면일 때의 스타일 */
-	/* 햄버거 버튼을 오른쪽 끝에 배치 */
-	.navbar-toggler {
-		order: 1;
-	}
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.1/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/images/mainPage.css">
+    <style>
+        @media (max-width: 768px) {
+            /* 작은 화면일 때의 스타일 */
+            /* 햄버거 버튼을 오른쪽 끝에 배치 */
+            .navbar-toggler {
+                order: 1;
+            }
 
-	/* 메뉴가 햄버거로 대체되므로 메뉴는 숨김 */
-	.navbar-nav {
-		display: none;
-	}
+            /* 메뉴가 햄버거로 대체되므로 메뉴는 숨김 */
+            .navbar-nav {
+                display: none;
+            }
 
-	/* 햄버거 메뉴가 보여질 때의 스타일 */
-	.navbar-toggler:hover+.navbar-nav {
-		display: block;
-	}
-}
+            /* 햄버거 메뉴가 보여질 때의 스타일 */
+            .navbar-toggler:hover+.navbar-nav {
+                display: block;
+            }
+        }
 
-@media ( min-width : 769px) {
-	/* 큰 화면일 때의 스타일 */
-	/* 메뉴가 보여지고 햄버거 버튼은 숨겨짐 */
-	.navbar-toggler {
-		display: none;
-	}
+        @media (min-width: 769px) {
+            /* 큰 화면일 때의 스타일 */
+            /* 메뉴가 보여지고 햄버거 버튼은 숨겨짐 */
+            .navbar-toggler {
+                display: none;
+            }
 
-	/* 로그인과 회원가입을 오른쪽에 배치 */
-	.navbar-nav.mr-auto {
-		order: 2;
-	}
+            /* 로그인과 회원가입을 오른쪽에 배치 */
+            .navbar-nav.mr-auto {
+                order: 2;
+            }
 
-	/* 가운데 정렬을 위해 mx-auto 추가 */
-	.navbar-nav {
-		mx-auto: auto;
-	}
-}
+            /* 가운데 정렬을 위해 mx-auto 추가 */
+            .navbar-nav {
+                mx-auto: auto;
+            }
+        }
 
-#modal {
-	position: relative;
-	width: 100%;
-	height: 100%;
-	z-index: 1;
-}
+        #modal {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
 
-#modal h2 {
-	margin: 0;
-}
+        #modal h2 {
+            margin: 0;
+        }
 
-#modal button {
-	display: inline-block;
-	width: 100px;
-	margin-left: calc(100% - 100px - 10px);
-}
+        #modal button {
+            display: inline-block;
+            width: 100px;
+            margin-left: calc(100% - 100px - 10px);
+        }
 
-#modal .modal_content {
-	width: 300px;
-	margin: 100px auto;
-	padding: 20px 10px;
-	background: #fff;
-	border: 2px solid #666;
-}
+        #modal .modal_content {
+            width: 300px;
+            margin: 100px auto;
+            padding: 20px 10px;
+            background: #fff;
+            border: 2px solid #666;
+        }
 
-#modal .modal_layer {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background: rgba(0, 0, 0, 0.5);
-	z-index: -1;
-}
+        #modal .modal_layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: -1;
+        }
 
-#img-container {
-	min-width: 100%;
-	height: 100px;
-	background-size: cover; /* 이미지를 화면에ㅁ 맞게 조절 */
-	background-position: center; /* 이미지를 가운데 정렬 */
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	z-index: -1;
-}
+        #img-container {
+            min-width: 100%;
+            height: 100px;
+            background-size: cover;
+            /* 이미지를 화면에 맞게 조절 */
+            background-position: center;
+            /* 이미지를 가운데 정렬 */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: -1;
+        }
 
-.container.mt-5 {
-	background-color: white;
-	padding: 50px;
-	border-radius: 10px;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-	position: relative;
-	top: -100px; /* 위로 50px 올림 */
-	z-index: 1; /* 앞으로 이동 */
-	margin-bottom: 50px; /* 원하는 간격으로 조절하세요 */
-}
+        .container.mt-5 {
+            background-color: white;
+            padding: 50px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            top: -100px;
+            /* 위로 50px 올림 */
+            z-index: 1;
+            /* 앞으로 이동 */
+            margin-bottom: 50px;
+            /* 원하는 간격으로 조절하세요 */
+        }
 
-* 공지사항과 자주 묻는 질문 섹션 가로 배치 및 스타일 조정 * /
-.container {
-	display: flex;
-	justify-content: space-between;
-	flex-wrap: wrap; /* 작은 화면에서 아이템이 넘칠 경우 다음 라인으로 이동하도록 설정 */
-	align-items: flex-start; /* 섹션을 수직 정렬하고 가장 위에 정렬하도록 설정 */
-}
+        /* 공지사항과 자주 묻는 질문 섹션 가로 배치 및 스타일 조정 */
+        .notice-table {
+            width: 500px;
+            /* .notice 안에서 테이블이 전체 너비를 사용하도록 수정 */
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
 
-.notice {
-	width: 35%;
-	border: 1px solid #ccc;
-	padding: 10px;
-	margin: 10px; /* 간격 조정 */
-	box-sizing: border-box; /* padding이 width에 포함되도록 box-sizing 설정 */
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	margin-left: 150px;
-}
+        .notice-table th,
+        .notice-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
 
-.ask {
-	width: 35%;
-	border: 1px solid #ccc;
-	padding: 10px;
-	margin: 10px; /* 간격 조정 */
-	box-sizing: border-box; /* padding이 width에 포함되도록 box-sizing 설정 */
-	margin-left: auto; /* .ask를 오른쪽으로 이동시키기 */
-	margin-top: -250px;
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	margin-right: 150px;
-}
 
-.link {
-	text-decoration: none;
-	color: blue;
-	margin-left: auto;
-	margin-top: -30px; /* 간격 조절 */
-}
-</style>
+        .notice-table th:nth-child(3),
+        .notice-table td:nth-child(3) {
+            width: 400px;
+            /* 제목 칼럼의 너비를 조절 */
+        }
+
+        .notice-table th:nth-child(2),
+        .notice-table td:nth-child(2) {
+            width: 150px;
+            /* 등록일 칼럼의 너비를 조절 */
+        }
+
+        .notice-table th {
+            background-color: #f2f2f2;
+        }
+
+        .notice-table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
 </head>
+
 <body>
-	<div th:replace="~{fragments/header}"></div>
+    <div th:replace="~{fragments/header}"></div>
 
-	<!-- 메인 내용 -->
-	<div id="img-container">
-		<img src="/images/mainPage2.jpeg" alt="메인 페이지 이미지" class="img-fluid" style="width: 1200px; height: 450px;">
-	</div>
-	<div class="container mt-5">
+    <!-- 메인 내용 -->
+    <div id="img-container">
+        <img src="/images/mainPage2.jpeg" alt="메인 페이지 이미지" class="img-fluid" style="width: 1200px; height: 450px;">
+    </div>
+    <div class="container mt-5">
 
-		<h1>기차 예매</h1>
-		<form th:action="@{/fs/searchFlight}" method="post"
-			th:object="${flightSearchForm}">
-			<div class="form-row">
-				<div class="form-group col-md-2">
-					<label for="departure">출발지:</label> <input type="text"
-						id="departure" name="departure" class="form-control"
-						data-toggle="modal" data-target="#departureModal" required>
-				</div>
+        <h1>기차 예매</h1>
+        <form th:action="@{/fs/searchFlight}" method="post" th:object="${flightSearchForm}">
+            <div class="form-row">
+                <div class="form-group col-md-2">
+                    <label for="departure">출발지:</label> <input type="text" id="departure" name="departure"
+                        class="form-control" data-toggle="modal" data-target="#departureModal" required>
+                </div>
 
-				<div class="form-group col-md-2">
-					<label for="destination">도착지:</label> <input type="text"
-						id="destination" name="destination" class="form-control"
-						data-toggle="modal" data-target="#destinationModal" required>
-				</div>
+                <div class="form-group col-md-2">
+                    <label for="destination">도착지:</label> <input type="text" id="destination" name="destination"
+                        class="form-control" data-toggle="modal" data-target="#destinationModal" required>
+                </div>
 
-				<div class="form-group col-md-2">
-					<label for="departureDate">출발일:</label> <input type="date"
-						id="departureDate" name="departureDate" class="form-control"
-						required>
-				</div>
+                <div class="form-group col-md-2">
+                    <label for="departureDate">출발일:</label> <input type="date" id="departureDate"
+                        name="departureDate" class="form-control" required>
+                </div>
 
-				<div class="form-group col-md-2">
-					<label for="returnDate">도착일:</label> <input type="date"
-						id="returnDate" name="returnDate" class="form-control" required>
-				</div>
+                <div class="form-group col-md-2">
+                    <label for="returnDate">도착일:</label> <input type="date" id="returnDate" name="returnDate"
+                        class="form-control" required>
+                </div>
 
-				<div class="form-group col-md-2">
-					<label for="passengerCount">승객 수:</label> <input type="number"
-						id="passengerCount" name="passengerCount" class="form-control"
-						min="1" required>
-				</div>
-				<div class="form-group col-md-2">
-					<label for="airline">항공사:</label> <input type="text" id="airline"
-						name="airline" class="form-controller">
-				</div>
+                <div class="form-group col-md-2">
+                    <label for="passengerCount">승객 수:</label> <input type="number" id="passengerCount"
+                        name="passengerCount" class="form-control" min="1" required>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="airline">항공사:</label> <input type="text" id="airline" name="airline"
+                        class="form-control">
+                </div>
 
-				<div class="form-group col-md-2">
-					<label></label>
-					<button type="submit" class="btn btn-primary btn-block">검색하기</button>
-				</div>
+                <div class="form-group col-md-2">
+                    <label></label>
+                    <button type="submit" class="btn btn-primary btn-block">검색하기</button>
+                </div>
 
-			</div>
-		</form>
+            </div>
+        </form>
 
-	</div>
+    </div>
 
-	<!-- 출발지 검색 모달 -->
-	<div class="modal" id="departureModal" tabindex="-1" role="dialog">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">출발지 검색</h5>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<!-- 출발지 검색 내용 추가 -->
-					<!-- 예: 검색 폼, 검색 결과 테이블 등 -->
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						data-dismiss="modal">닫기</button>
-					<button type="button" class="btn btn-primary">선택</button>
-				</div>
-			</div>
-		</div>
-	</div>
+    <!-- 출발지 검색 모달 -->
+    <div class="modal" id="departureModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">출발지 검색</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- 출발지 검색 내용 추가 -->
+                    <!-- 예: 검색 폼, 검색 결과 테이블 등 -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                    <button type="button" class="btn btn-primary">선택</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-	<!-- 도착지 모달 -->
-	<div class="modal" id="destinationModal" tabindex="-1" role="dialog">
-		<!-- 모달 내용 추가 -->
-	</div>
-	<div class="notice">
-		<h4>공지사항</h4>
-		<a th:href="@{/system/login}" class="link">+</a>
-		<hr>
-		<ul>
-			<li>홈페이지 구축 매뉴얼이 업데이트 되었습니다</li>
-			<hr>
-			<!-- 여기에 가로선 추가 -->
-			<li>cocoTrain 서비스 오픈</li>
-			<hr>
-			<!-- 여기에 가로선 추가 -->
-			<li>cocoTrain 기본 매뉴얼 안내</li>
-		</ul>
-	</div>
+    <!-- 도착지 모달 -->
+    <div class="modal" id="destinationModal" tabindex="-1" role="dialog">
+        <!-- 모달 내용 추가 -->
+    </div>
+    <div class="notice">
+        <table class="notice-table">
+            <h4>공지사항</h4>
+            <thead>
+                <tr>
+                    <th>제목</th>
+                    <th>등록일</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="notice, iterStat : ${noticeList}" th:height="50px">
+                    <td align="left">
+                        <a th:href="@{/Notice(nseq=${notice.nseq})}" th:text="${notice.ntitle}"></a>
+                    </td>
+                    <td><span th:text="${#dates.format(notice.createDate, 'yyyy-MM-dd')}"></span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:replace="~{fragments/footer}"></div>
 
-	<div class="ask">
-		<h4>자주 묻는 질문</h4>
-		<a th:href="@{qna}" class="link">+</a>
-		<hr>
-		<ul>
-			<li>국내선에서 국제선으로 환승 시 수하물 연결 수속 가능한가요?</li>
-			<hr>
-			<!-- 여기에 가로선 추가 -->
-			<li>국제선 사전 좌석 배정한 경우 탑승 당일 언제까지 탑승 수속을 해야하나요?</li>
-		</ul>
-	</div>
-	<div th:replace="~{fragments/footer}"></div>
-
-
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.1/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 </body>
-</html>
 
+</html>

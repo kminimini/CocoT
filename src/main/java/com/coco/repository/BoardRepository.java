@@ -13,4 +13,5 @@ public interface BoardRepository extends JpaRepository<Board, Long>, QuerydslPre
 
 	@Query("SELECT b FROM Board b")
 	Page<Board> getBoardList(Pageable pageable);
+	
 }
