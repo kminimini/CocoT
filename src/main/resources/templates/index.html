@@ -96,72 +96,77 @@
 	z-index: -1;
 }
 
-
 #img-container {
-    min-width: 100%;
-    height: 100px;
-    background-size: cover; /* 이미지를 화면에ㅁ 맞게 조절 */
-    background-position: center; /* 이미지를 가운데 정렬 */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-top: 1px solid #bbb;
-    z-index: -1;
+	min-width: 100%;
+	height: 100px;
+	background-size: cover; /* 이미지를 화면에ㅁ 맞게 조절 */
+	background-position: center; /* 이미지를 가운데 정렬 */
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	z-index: -1;
 }
-
 
 .container.mt-5 {
-    background-color: white;
-    padding: 50px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    position: relative;
-    top: -100px; /* 위로 50px 올림 */
-    z-index: 1; /* 앞으로 이동 */
-     margin-bottom: 50px; /* 원하는 간격으로 조절하세요 */
+	background-color: white;
+	padding: 50px;
+	border-radius: 10px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	position: relative;
+	top: -100px; /* 위로 50px 올림 */
+	z-index: 1; /* 앞으로 이동 */
+	margin-bottom: 50px; /* 원하는 간격으로 조절하세요 */
 }
 
-* 공지사항과 자주 묻는 질문 섹션 가로 배치 및 스타일 조정 */
+* 공지사항과 자주 묻는 질문 섹션 가로 배치 및 스타일 조정 * /
 .container {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap; /* 작은 화면에서 아이템이 넘칠 경우 다음 라인으로 이동하도록 설정 */
-    align-items: flex-start; /* 섹션을 수직 정렬하고 가장 위에 정렬하도록 설정 */
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap; /* 작은 화면에서 아이템이 넘칠 경우 다음 라인으로 이동하도록 설정 */
+	align-items: flex-start; /* 섹션을 수직 정렬하고 가장 위에 정렬하도록 설정 */
 }
 
 .notice {
-    width: 48%;
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin: 10px; /* 간격 조정 */
-    box-sizing: border-box; /* padding이 width에 포함되도록 box-sizing 설정 */
-     margin-right: auto;
+	width: 35%;
+	border: 1px solid #ccc;
+	padding: 10px;
+	margin: 10px; /* 간격 조정 */
+	box-sizing: border-box; /* padding이 width에 포함되도록 box-sizing 설정 */
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	margin-left: 150px;
 }
 
 .ask {
-    width: 48%;
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin: 10px; /* 간격 조정 */
-    box-sizing: border-box; /* padding이 width에 포함되도록 box-sizing 설정 */
-    margin-left: auto; /* .ask를 오른쪽으로 이동시키기 */
-    margin-top: -280px;
+	width: 35%;
+	border: 1px solid #ccc;
+	padding: 10px;
+	margin: 10px; /* 간격 조정 */
+	box-sizing: border-box; /* padding이 width에 포함되도록 box-sizing 설정 */
+	margin-left: auto; /* .ask를 오른쪽으로 이동시키기 */
+	margin-top: -250px;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	margin-right: 150px;
 }
 
 .link {
-    text-decoration: none;
-    color: blue;
+	text-decoration: none;
+	color: blue;
+	margin-left: auto;
+	margin-top: -30px; /* 간격 조절 */
 }
-
 </style>
 </head>
 <body>
 	<div th:replace="~{fragments/header}"></div>
 
 	<!-- 메인 내용 -->
-		<div id="img-container">
-			<img src="/images/mainPage2.jpeg" alt="메인 페이지 이미지" class="img-fluid">
-		</div>
+	<div id="img-container">
+		<img src="/images/mainPage2.jpeg" alt="메인 페이지 이미지" class="img-fluid" style="width: 1200px; height: 450px;">
+	</div>
 	<div class="container mt-5">
 
 		<h1>기차 예매</h1>
@@ -239,34 +244,35 @@
 	<div class="modal" id="destinationModal" tabindex="-1" role="dialog">
 		<!-- 모달 내용 추가 -->
 	</div>
-	 <div class="container">
-        <div class="notice">
-            <h4>공지사항</h4>
-            <a th:href="@{/system/login}" class="link">+</a>
-            <hr>
-            <table>
-                <ul>홈페이지 구축 매뉴얼이 업데이트 되었습니다</ul>
-                <hr>
-                <ul>cocoTrain 서비스 오픈 </ul>
-                <hr>
-                <ul>cocoTrain 기본 매뉴얼 안내 </ul>
-            </table>
-        </div>
+	<div class="notice">
+		<h4>공지사항</h4>
+		<a th:href="@{/system/login}" class="link">+</a>
+		<hr>
+		<ul>
+			<li>홈페이지 구축 매뉴얼이 업데이트 되었습니다</li>
+			<hr>
+			<!-- 여기에 가로선 추가 -->
+			<li>cocoTrain 서비스 오픈</li>
+			<hr>
+			<!-- 여기에 가로선 추가 -->
+			<li>cocoTrain 기본 매뉴얼 안내</li>
+		</ul>
+	</div>
 
-        <div class="ask">
-            <h4>자주 묻는 질문</h4>
-            <a th:href="@{qna}" class="link">+</a>
-            <hr>
-            <table>
-                <ul>국내선에서 국제선으로 환승 시 수하물 연결 수속 가능한가요?</ul>
-                <hr>
-                <ul> 국제선 사전 좌석 배정한 경우 탑승 당일 언제까지 탑승 수속을 해야하나요?</ul>
-            </table>
-        </div>
-    </div>
-<div th:replace="~{fragments/footer}"></div>
+	<div class="ask">
+		<h4>자주 묻는 질문</h4>
+		<a th:href="@{qna}" class="link">+</a>
+		<hr>
+		<ul>
+			<li>국내선에서 국제선으로 환승 시 수하물 연결 수속 가능한가요?</li>
+			<hr>
+			<!-- 여기에 가로선 추가 -->
+			<li>국제선 사전 좌석 배정한 경우 탑승 당일 언제까지 탑승 수속을 해야하나요?</li>
+		</ul>
+	</div>
+	<div th:replace="~{fragments/footer}"></div>
 
-	
+
 </body>
 </html>
 

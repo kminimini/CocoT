@@ -13,21 +13,20 @@ body {
 main {
   flex: 1;
    flex-grow: 1;
+   
 }
 
 footer {
   position: relative;
-  bottom: 0;
+  bottom: -100px;
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  border-top: 50px solid white;
   background-color: #f8f9fa;
   padding: 1rem 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: auto; /* 추가된 부분 */
 }
 
 .footer-message,
@@ -39,6 +38,8 @@ footer {
   margin: 0.6rem;
   display: flex;
   flex-direction: column;
+   margin-top: 40px; /* 추가된 부분 */
+   
 }
 
 .footer-message {
@@ -55,10 +56,13 @@ footer {
 .footer-contact,
 .footer-copyright {
   align-items: center;
+  
 }
 
 .footer-contact img,
 .footer-copyright img {
   display: inline-block;
   margin: 0 0.5rem;
+  
 }
+

@@ -1,93 +1,92 @@
 @charset "EUC-KR";
 
-/*login.html*/
+/* login.html */
+
 .form-group {
-	margin-bottom: 30px;
+  margin-bottom: 30px;
 }
 
 .btn-primary {
-	width: 100%;
-	margin-bottom: 30px;
-	justify-content: space-between;
+  width: 100%;
+  margin-bottom: 30px;
+  justify-content: space-between;
 }
 
 .group {
-	justify-content: space-between;
-	align-items: center;
-	margin-top: 15px;
-	text-align: center;
-	padding-bottom: 40px;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+  text-align: center;
+  padding-bottom: 40px;
 }
 
 .group a {
-	margin-right: 30px;
-	margin-left: 30px;
-	margin-bottom: 20px;
-	/* ì›í•˜ëŠ” ì—¬ë°±ìœ¼ë¡œ ì¡°ì ˆí•˜ì„¸ìš” */
-	text-decoration: none;
-	/* í…ìŠ¤íŠ¸ì— ë°‘ì¤„ ì œê±° */
+  margin-right: 30px;
+  margin-left: 30px;
+  margin-bottom: 20px;
+  /* ´Ù¾çÇÑ ½ºÅ¸ÀÏ Àû¿ë °¡´É */
+  text-decoration: none;
+  /* ¹ØÁÙ Á¦°Å */
 }
 
-/* ì…ë ¥ ì¹¸ ìŠ¤íƒ€ì¼ */
+/* ÀÔ·Â ÇÊµå ½ºÅ¸ÀÏ¸µ */
 .form-group {
-	position: relative;
-	margin-bottom: 70px;
+  position: relative;
+  margin-bottom: 80px; /* Á¶Á¤µÈ ºÎºĞ */
 }
 
 .form-group input {
-	width: 100%;
-	padding: 5px;
-	border: none;
-	border-bottom: 1px solid #ccc;
-	outline: none;
-	margin-top: 5px;
-	/* ë°‘ì¤„ ì‚¬ì´ì˜ ê³µê°„ ì¡°ì ˆ */
+  width: 100%;
+  padding: 5px;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  outline: none;
+  margin-top: 5px;
+  /* ÀÔ·Â ÇÊµå »çÀÌÀÇ °£°İ */
 }
 
 .form-group label {
-	position: absolute;
-	top: 10px;
-	left: 0;
-	pointer-events: none;
-	transition: 0.2s ease-out;
-	margin-top: -40px;
-	/* ë°‘ì¤„ê³¼ ê¸€ì ê°„ì˜ ê°„ê²© ì¡°ì ˆ */
+  position: absolute;
+  top: 10px;
+  left: 0;
+  pointer-events: none;
+  transition: 0.2s ease-out;
+  margin-top: -40px;
+  /* ÀÔ·Â ½Ã ¶óº§ À§·Î ÀÌµ¿ÇÏ¿© °ãÄ¡´Â È¿°ú */
 }
 
 .form-group input:focus+label,
 .form-group input:valid+label {
-	top: -12px;
-	font-size: 12px;
-	color: #007bff;
+  top: -12px;
+  font-size: 12px;
+  color: #007bff;
 }
 
 .form-group input:focus {
-	border-bottom: 2px solid #007bff;
+  border-bottom: 2px solid #007bff;
 }
 
-/* ë¡œê·¸ì¸ ë²„íŠ¼ ìŠ¤íƒ€ì¼ ìˆ˜ì • */
+/* Á¦Ãâ ¹öÆ° ½ºÅ¸ÀÏ */
 .form-group button[type="submit"] {
-    background-color: navy;
-    color: white;
-    /* í…ìŠ¤íŠ¸ë¥¼ í°ìƒ‰ìœ¼ë¡œ ì„¤ì • */
+  background-color: navy;
+  color: white;
+  /* È°¼ºÈ­ ½Ã ¹è°æ»ö°ú ±ÛÀÚ»ö º¯°æ */
 }
 
-/* íšŒì›ê°€ì… ë²„íŠ¼ ìŠ¤íƒ€ì¼ ìˆ˜ì • */
+/* Ãë¼Ò ¹öÆ° ½ºÅ¸ÀÏ */
 .form-group button[type="button"] {
-    background-color: white;
-    color: navy;
-    /* í…ìŠ¤íŠ¸ë¥¼ ë‚¨ìƒ‰ìœ¼ë¡œ ì„¤ì • */
+  background-color: white;
+  color: navy;
+  /* È°¼ºÈ­ ½Ã ¹è°æ»ö°ú ±ÛÀÚ»ö º¯°æ */
 }
 
-
-
-/*ì—¬ê¸° 2ê°œëŠ” footerë¥¼ ë°‘ìœ¼ë¡œ ë‚´ë¦¬ëŠ” ì‘ì—…*/
+/* 2ÁÙ·Î ±¸¼ºµÈ footer ½ºÅ¸ÀÏ¸µ */
 
 div {
-    position: relative;
-    padding-bottom: 15px;
+  position: relative;
+  padding-bottom: 15px;
 }
 
 footer {
-    bottom: 0;
+  bottom: 0;
 }
