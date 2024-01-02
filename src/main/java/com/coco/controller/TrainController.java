@@ -184,9 +184,9 @@ public class TrainController {
                                   @RequestParam("arrTime") String arrTime,
                                   @RequestParam("adultCharge") Long adultCharge,
                                   Model model) {
-    	// Generate the order ID using the createOrderNum method
+    	// createOrderNum 메서드를 사용하여 주문 ID를 생성합니다.
         String orderId = trainService.createOrderNum();
-        // Save the selected train ticket to the database
+        // 선택한 기차표를 데이터베이스에 저장
     	TrainReservation reservation = new TrainReservation();
     	reservation.setOrderId(orderId);
     	reservation.setTrainNo(trainNo);
@@ -199,7 +199,7 @@ public class TrainController {
 
         reservationRepository.save(reservation);
 
-        // Add the selected train details to the model for display
+        // 선택한 열차 세부 정보를 모델에 추가하여 표시합니다.
         model.addAttribute("trainNo", trainNo);
         model.addAttribute("trainGrade", trainGrade);
         model.addAttribute("depPlace", depPlace);

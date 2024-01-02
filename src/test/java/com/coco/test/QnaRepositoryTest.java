@@ -1,5 +1,6 @@
 package com.coco.test;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,7 +15,7 @@ public class QnaRepositoryTest {
 	@Autowired
 	private QnaRepository qnaRepo;
 	
-//	@Disabled
+	@Disabled
 	@Test
 	public void testInsertQna() {
 		

@@ -25,17 +25,16 @@ import com.coco.security.SecurityUser;
 @Service
 public class MemberServiceImpl implements MemberService {
 
-
 	@Autowired
 	private EntityManager entityManager;
 
 	private final MemberRepository memberRepository;
 	private final PasswordEncoder passwordEncoder;
-	
-	@Autowired
+
+	//@Autowired
 	public MemberServiceImpl(MemberRepository memberRepository, PasswordEncoder passwordEncoder) {
-		 this.memberRepository = memberRepository;
-	        this.passwordEncoder = passwordEncoder;
+		this.memberRepository = memberRepository;
+		this.passwordEncoder = passwordEncoder;
 	}
 
 	private static final Logger logger = LoggerFactory.getLogger(MemberServiceImpl.class);
@@ -50,25 +49,16 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	@Transactional
 	public String entitySave(JoinFormDto joinFormDto) {
-		Member member = Member.builder()
-				.id(joinFormDto.getId())
-				.name(joinFormDto.getName())
-				.ename(joinFormDto.getEname())
-				.rrnumber(joinFormDto.getRrnumber())
-				.address(joinFormDto.getAddress())
-				.detailAddress(joinFormDto.getDetailAddress())
-				.email(joinFormDto.getEmail())
-				.name(joinFormDto.getName())
-				.password(passwordEncoder.encode(joinFormDto.getPassword()))
-				.phone(joinFormDto.getPhone())
+		Member member = Member.builder().id(joinFormDto.getId()).name(joinFormDto.getName())
+				.ename(joinFormDto.getEname()).rrnumber(joinFormDto.getRrnumber()).address(joinFormDto.getAddress())
+				.detailAddress(joinFormDto.getDetailAddress()).email(joinFormDto.getEmail()).name(joinFormDto.getName())
+				.password(passwordEncoder.encode(joinFormDto.getPassword())).phone(joinFormDto.getPhone())
 				.enabled("true") // enabled 필드의 기본값 설정
 				.role(Role.ROLE_MEMBER) // role 필드의 기본값 설정
 				.build();
 
 		return memberRepository.save(member).getMid().toString();
 	}
-	
-	
 
 	/*
 	 * TODO - 회원 저장 이 메서드는 MemberRepository를 사용하여 Member 객체를 데이터베이스에 저장합니다. 이
@@ -81,31 +71,15 @@ public class MemberServiceImpl implements MemberService {
 
 	}
 
-	/*
-	 * TODO - 이름으로 멤버 가져오기 이 메서드는 제공된 이름을 기준으로 데이터베이스에서 멤버 객체를 검색합니다. 아직 구현되지 않았습니다
-	 */
-
-//	@Override
-//	public Member getMember(String email) {
-//		
-//		Optional<Member> result = memberRepository.findByEmail(email);
-//		
-//		if (result.isPresent()) {
-//			return result.get();
-//		} else {
-//			return null;
-//		}
-//	}
-
 	@Override
 	public Member getMember(String email) {
 		return memberRepository.findByEmail(email).orElse(null);
 	}
 
 	@Override
-    public boolean passwordMatches(String rawPassword, String encodedPassword) {
-        return passwordEncoder.matches(rawPassword, encodedPassword);
-    }
+	public boolean passwordMatches(String rawPassword, String encodedPassword) {
+		return passwordEncoder.matches(rawPassword, encodedPassword);
+	}
 
 	@Override
 	public List<Member> findId(String email) throws Exception {
@@ -171,12 +145,12 @@ public class MemberServiceImpl implements MemberService {
 		Member currentMember = getCurrentMember();
 		String userEmail = getCurrentMember().getEmail();
 
-			 // 새로운 비밀번호를 암호화하여 저장
-            currentMember.setPassword(passwordEncoder.encode(newPassword));
-            log.info("Changing password for user: {}", userEmail);
-            memberRepository.save(currentMember);
+		// 새로운 비밀번호를 암호화하여 저장
+		currentMember.setPassword(passwordEncoder.encode(newPassword));
+		log.info("Changing password for user: {}", userEmail);
+		memberRepository.save(currentMember);
 
-			return true;
+		return true;
 
 	}
 
@@ -202,47 +176,45 @@ public class MemberServiceImpl implements MemberService {
 		if (member != null) {
 			try {
 				memberRepository.delete(member);
-				entityManager.flush(); // 플러시 수행
+				entityManager.flush();
 			} catch (Exception e) {
-				// 예외 발생 시 롤백된 것인지 확인
 				System.out.println("Error deleting member: " + e.getMessage());
 				logger.error("Exception during member deletion", e);
 				throw new RuntimeException("Error deleting member", e);
 			}
 		}
 	}
-	
+
 	// 댓글
 	@Override
 	public Member getMemberByUsername(String username) {
-	    log.info("getMemberByUsername 호출 - username: {}", username);
-	    return memberRepository.findById(username)
-	            .orElseThrow(() -> new UsernameNotFoundException("Member not found for username: " + username));
+		log.info("getMemberByUsername 호출 - username: {}", username);
+		return memberRepository.findById(username)
+				.orElseThrow(() -> new UsernameNotFoundException("Member not found for username: " + username));
 	}
 
 	@Override
 	public boolean isMemberExists(String memberId) {
-		 return memberRepository.existsById(memberId);
+		return memberRepository.existsById(memberId);
 	}
-  
-	//마이페이지 암호화처리 비밀번호 변경 
+
+	// 마이페이지 암호화처리 비밀번호 변경
 	@Override
 	public String encodePassword(String rawPassword) {
-        return passwordEncoder.encode(rawPassword);
-    }
+		return passwordEncoder.encode(rawPassword);
+	}
 
-	
-		//회원 탈퇴 암호화
-	 @Override
-	    public String getMemberPasswordById(Long mid) {
-	        // Member 엔티티에서 비밀번호를 조회
-	        return memberRepository.findPasswordById(mid);
-	    }
+	// 회원 탈퇴 암호화
+	@Override
+	public String getMemberPasswordById(Long mid) {
+		// Member 엔티티에서 비밀번호를 조회
+		return memberRepository.findPasswordById(mid);
+	}
 
-	 // 회원탈퇴 비밀번호 비교 
-	 @Override
-	 public String getPasswordById(Long mid) {
-	     Optional<Member> memberOptional = memberRepository.findById(mid);
-	     return memberOptional.map(Member::getPassword).orElse(null);
-	 }
+	// 회원탈퇴 비밀번호 비교
+	@Override
+	public String getPasswordById(Long mid) {
+		Optional<Member> memberOptional = memberRepository.findById(mid);
+		return memberOptional.map(Member::getPassword).orElse(null);
+	}
 }

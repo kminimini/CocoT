@@ -25,6 +25,8 @@ public class QPaymentInfo extends EntityPathBase<PaymentInfo> {
 
     public final StringPath orderId = createString("orderId");
 
+    public final BooleanPath paymentConfirmed = createBoolean("paymentConfirmed");
+
     public final StringPath paymentKey = createString("paymentKey");
 
     public QPaymentInfo(String variable) {
@@ -40,3 +42,4 @@ public class QPaymentInfo extends EntityPathBase<PaymentInfo> {
     }
 
 }
+

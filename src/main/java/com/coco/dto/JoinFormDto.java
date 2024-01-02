@@ -1,10 +1,6 @@
 package com.coco.dto;
 
-
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.coco.domain.Role;
-import com.coco.service.MemberService;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

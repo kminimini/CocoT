@@ -44,21 +44,21 @@ public class CustomerRepositoryTest {
 
 	
 
-//        Member member2 = Member.builder()
-//                .name("관리자")
-//                .id("admin")
-//                .ename("ADMIN")
-//                .rrnumber("1998.01.05")
-//                .password(passwordEncoder.encode("admin1234@"))
-//                .address("서울시 강남구 서초구")
-//                .detailAddress("밍밍빌딩")
-//                .email("admin33@email.com")
-//                .phone("010-1111-2222")
-//                .role(Role.ROLE_ADMIN)
-//                .enabled("true")
-//                .build();
-//
-//        memberRepo.save(member2);
+        Member member2 = Member.builder()
+                .name("관리자")
+                .id("admin")
+                .ename("ADMIN")
+                .rrnumber("1998.01.05")
+                .password(passwordEncoder.encode("admin1234@"))
+                .address("서울시 강남구 서초구")
+                .detailAddress("밍밍빌딩")
+                .email("admin33@email.com")
+                .phone("010-1111-2222")
+                .role(Role.ROLE_ADMIN)
+                .enabled("true")
+                .build();
+
+        memberRepo.save(member2);
 
 	}
 }

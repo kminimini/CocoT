@@ -3,13 +3,10 @@ package com.coco.service;
 import com.coco.domain.Board;
 import com.coco.domain.Member;
 import com.coco.domain.Reply;
-import com.coco.repository.MemberRepository;
 import com.coco.repository.ReplyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,19 +15,11 @@ public class ReplyServiceImpl implements ReplyService {
 
     @Autowired
     private ReplyRepository replyRepository;
-    
-    @Autowired
-    private MemberService memberService;
-
-    @Autowired
-    private MemberRepository memberRepository;
 
     // 댓글 등록
     @Override
     public void addReply(Long boardBseq, Member member, String content) {
         // 댓글 추가 로직 구현
-        // boardBseq와 member, content를 활용하여 적절한 처리 수행
-
         Board board = new Board();
         board.setBseq(boardBseq);
 
@@ -39,7 +28,7 @@ public class ReplyServiceImpl implements ReplyService {
                 .board(board)
                 .member(member)
                 .rcontent(content)
-                .username(member.getUsername()) // 사용자 이름을 엔티티에서 가져오도록 수정
+                .username(member.getUsername())
                 .build();
 
         replyRepository.save(reply);
@@ -60,8 +49,6 @@ public class ReplyServiceImpl implements ReplyService {
         }
     }
 
-
-    
     @Override
     public List<Reply> getReplies(Long boardBseq) {
         return replyRepository.findByBoardBseq(boardBseq);
@@ -98,7 +85,6 @@ public class ReplyServiceImpl implements ReplyService {
             // 댓글이 없을 경우에 대한 처리
             // 여기에서는 간단히 댓글이 없다는 로그를 출력합니다.
             System.out.println("댓글이 없습니다. rseq: " + rseq);
-            // 또는 원하는 다른 동작을 수행할 수 있습니다.
         }
     }
     
