@@ -22,6 +22,7 @@
 				<li class="nav-item"><a href="#" class="nav-link">장바구니</a></li>
 				<li class="nav-item"><a th:href="@{/getBoardList}" class="nav-link">게시판</a></li>
 				<li class="nav-item"><a th:href="@{/myPage}" class="nav-link">마이페이지</a></li>
+				<li class="nav-item"><a th:href="@{/admin/adminPage}" class="nav-link">관리자</a></li>
 
 <!-- 로그인과 로그아웃 (오른쪽에 고정) -->
             <li class="nav-item" th:unless="${#authorization.expression('isAuthenticated()')}">
