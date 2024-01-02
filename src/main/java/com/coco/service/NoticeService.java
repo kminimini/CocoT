@@ -13,5 +13,9 @@ public interface NoticeService {
 	List<Notice> getNoticeList(Notice notice);
 	
 	void InsertNotice(Notice notice);
+	
+	void getNotice(Notice notice);
+	
+	Notice getNoticeById(Long nseq);
 
 }
