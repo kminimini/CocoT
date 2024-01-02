@@ -3,12 +3,10 @@ package com.coco.service;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.coco.domain.Member;
 import com.coco.dto.JoinFormDto;
-import com.coco.repository.MemberRepository;
 
 @Service
 public interface MemberService {

@@ -28,17 +28,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.coco.domain.TrainInfo;
-import com.coco.repository.TrainReservationRepository;
 
 @Service
 public class TrainServiceImpl implements TrainService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(TrainServiceImpl.class);
 	
+	// 날짜형식 강제
 	private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-	
-	@Autowired
-	private TrainReservationRepository reservationRepository;
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -244,7 +241,7 @@ public class TrainServiceImpl implements TrainService {
             // JSON 응답을 구문 분석하고 TrainResponse 객체를 반환
             return parseTrainInfoResponse(responseJson);
         } catch (Exception e) {
-            logger.error("Error getting train information: {}", e.getMessage());
+            logger.error("열차 정보 가져오기 오류: {}", e.getMessage());
             return null;
         }
     }
@@ -357,12 +354,11 @@ public class TrainServiceImpl implements TrainService {
     /* TODO 기차표 목록에서 기차표 선택 */
     public void saveReservation(String trainNo, String trainGrade, String depPlace, String depTime, String arrPlace, String arrTime, Long adultCharge) throws Exception {
         try {
-            // Implement logic to save reservation details to Oracle database
+            // 예약 세부 정보를 오라클 데이터베이스에 저장하는 로직 구현하기
             String sql = "INSERT INTO reservation (train_no, train_grade, dep_place, dep_time, arr_place, arr_time, adult_charge) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
             jdbcTemplate.update(sql, trainNo, trainGrade, depPlace, depTime, arrPlace, arrTime, adultCharge);
         } catch (Exception e) {
-            // Handle database-related exceptions
             throw new Exception("Error saving reservation details to the database", e);
         }
     }

@@ -6,7 +6,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.coco.domain.Board;
-import com.coco.domain.Notice;
 import com.coco.domain.Search;
 
 public interface BoardService {
@@ -26,6 +25,5 @@ public interface BoardService {
 	Board getBoardById(Long bseq);
 	
 	Board getBoard(Long bseq);
-	
 	
 }

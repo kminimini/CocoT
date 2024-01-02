@@ -9,7 +9,6 @@ import com.coco.domain.Qna;
 @Service
 public interface QnaService {
 
-
 	List<Qna> getQnaList(Qna qna);
 	
 	void InsertQna(Qna qna);

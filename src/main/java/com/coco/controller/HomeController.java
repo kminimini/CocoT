@@ -23,14 +23,12 @@ public class HomeController {
 
 	@GetMapping("/")
 	public String showIndexPage(Model model) {
-		// 기타 데이터 추가...
-
 		System.out.println(">>>>>> Requesting /index ");
 
-		List<Notice> noticeList = noticeService.getNoticeList(null); // 예시: NoticeService를 통해 공지사항 데이터를 가져옴
+		List<Notice> noticeList = noticeService.getNoticeList(null);
 		model.addAttribute("noticeList", noticeList);
 		
-		List<Qna> qnaList = qnaService.getQnaList(null); // 예시: NoticeService를 통해 공지사항 데이터를 가져옴
+		List<Qna> qnaList = qnaService.getQnaList(null);
 		model.addAttribute("qnaList", qnaList);
 
 

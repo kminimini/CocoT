@@ -24,7 +24,6 @@ import com.coco.domain.Board;
 import com.coco.domain.Member;
 import com.coco.domain.Reply;
 import com.coco.domain.Search;
-import com.coco.repository.BoardRepository;
 import com.coco.security.SecurityUser;
 import com.coco.service.BoardService;
 import com.coco.service.ReplyService;
@@ -36,9 +35,6 @@ public class BoardController {
 	
 	@Autowired
 	private BoardService boardService;
-	
-	@Autowired
-    private BoardRepository boardRepo;
 	
 	@Autowired
     private ReplyService replyService;
@@ -88,7 +84,6 @@ public class BoardController {
 	        // 사용자 정보를 모델에 추가
 	        model.addAttribute("loggedInMember", securityUser.getMember());
 
-	        // 여기에 추가로 처리할 로직이 있다면 추가하세요.
 	        // 예: 게시판 목록 가져오기 등
 
 	        return "insertBoard";
@@ -164,7 +159,6 @@ public class BoardController {
 	            boardService.updateBoard(board);
 	            return "redirect:/getBoardList";
 	        } else {
-	            // 작성자가 아니면 예외 처리 또는 다른 로직 수행
 	            return "redirect:/accessDenied";
 	        }
 	    } else {
@@ -186,20 +180,19 @@ public class BoardController {
 	        boardService.deleteBoard(board);
 	        return "redirect:/getBoardList";
 	    } else {
-	        // 일치하지 않을 경우 예외 처리 또는 다른 로직 수행
 	        return "redirect:/accessDenied";
 	    }
 	}
 	
 	@GetMapping("/accessDenied")
     public String accessDenied() {
-        return "accessDenied"; // accessDenied.html 뷰 파일 이름에 따라 수정
+        return "accessDenied";
     }
 	
 	@GetMapping("/qna")
 	public String showQnAPage() {
 	    
-	    return "qna"; // Thymeleaf 템플릿의 이름
+	    return "qna";
 	}
 	
 	@GetMapping("/getBoardDetail")

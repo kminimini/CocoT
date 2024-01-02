@@ -15,11 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.coco.domain.Board;
 import com.coco.domain.Member;
-import com.coco.domain.Notice;
 import com.coco.domain.QBoard;
 import com.coco.domain.Search;
 import com.coco.repository.BoardRepository;
-import com.coco.repository.MemberRepository;
 import com.querydsl.core.BooleanBuilder;
 
 @Service
@@ -27,9 +25,6 @@ public class BoardServiceImpl implements BoardService {
 
 	@Autowired
 	private BoardRepository boardRepo;
-	
-	@Autowired
-	private MemberRepository memberRepo;
 	
 	@Autowired
 	private HttpSession httpSession;
@@ -56,7 +51,7 @@ public class BoardServiceImpl implements BoardService {
             Board existingBoard = optionalBoard.get();
 
             // 현재 사용자가 글의 소유자인지 확인
-            boolean isOwner = checkIfUserIsOwner(existingBoard); // 사용자가 소유자인지 확인하는 메서드를 호출해야 합니다.
+            boolean isOwner = checkIfUserIsOwner(existingBoard); // 사용자가 소유자인지 확인하는 메서드를 호출해야함
 
             // 현재 세션에서 조회한 게시물인지 확인
             String sessionKey = "viewedBoard_" + seq;
@@ -124,7 +119,6 @@ public class BoardServiceImpl implements BoardService {
 		
 		return boardRepo.findAll(builder, pageable);
 	}
-
 
 	@Override
 	public Board getBoardById(Long bseq) {

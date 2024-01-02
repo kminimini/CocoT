@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Map;
 
 import com.coco.domain.TrainInfo;
-import com.coco.domain.TrainReservation;
 
 public interface TrainService {
 
