@@ -37,7 +37,6 @@ import lombok.RequiredArgsConstructor;
 public class KakaoService {
 
 	private final MemberRepository memberRepository;
-	private final HttpSession httpSession;
 	
     @Value("${kakao.client.id}")
     private String KAKAO_CLIENT_ID;

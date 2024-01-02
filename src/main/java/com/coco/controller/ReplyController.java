@@ -1,6 +1,5 @@
 package com.coco.controller;
 
-import com.coco.domain.Board;
 import com.coco.domain.Member;
 import com.coco.domain.Reply;
 import com.coco.service.BoardService;
@@ -13,12 +12,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -53,9 +50,8 @@ public class ReplyController {
             return "redirect:/getBoard?bseq=" + boardBseq;
         } catch (UsernameNotFoundException e) {
             log.error("멤버를 찾을 수 없음: {}", e.getMessage());
-            throw e; // 예외를 다시 던져서 예외 페이지로 전달
+            throw e;
         } catch (Exception e) {
-            // 그 외 예외 처리
             log.error("댓글 추가 중 예외 발생", e);
             return "redirect:/error";
         }
@@ -116,7 +112,6 @@ public class ReplyController {
                 return "redirect:/accessDenied";
             }
         } catch (Exception e) {
-            // 예외 처리
             log.error("댓글 삭제 중 예외 발생", e);
             return "redirect:/error";
         }
@@ -158,12 +153,12 @@ public class ReplyController {
                 return "redirect:/accessDenied";
             }
         } catch (Exception e) {
-            // 예외 처리
             log.error("댓글 수정 폼 표시 중 예외 발생", e);
             return "redirect:/error";
         }
     }
 
+    // 댓글 업데이트
     @PostMapping("/reply/update")
     public String updateReply(@RequestParam Long rseq, @RequestParam String content, @RequestParam Long boardBseq, Principal principal) {
         try {
@@ -183,7 +178,6 @@ public class ReplyController {
                 return "redirect:/accessDenied";
             }
         } catch (Exception e) {
-            // 예외 처리
             log.error("댓글 수정 중 예외 발생", e);
             return "redirect:/error";
         }

@@ -37,17 +37,15 @@ public class MyPageController {
     public String myPage(@AuthenticationPrincipal(expression = "#this == 'anonymousUser' ? null : member") Object principal, Model model) {
         // 사용자가 로그인하지 않은 경우
         if (principal == null) {
-            // 필요에 따라 로그인 페이지로 리다이렉트 또는 에러 메시지 표시 등의 처리를 수행할 수 있습니다.
             return "redirect:/system/login";
         }
 
-        // MemberService가 주입되었으므로 findById 메소드 호출 가능
         Member currentMember = memberService.findById(((Member) principal).getMid());
         model.addAttribute("currentMember", currentMember);
         return "myPage";
     }
       
- // 비밀번호 유효성 검사 핸들러
+    // 비밀번호 유효성 검사 핸들러
     @PostMapping("/myPage/changePassword")
     @ResponseBody
     public String validatePassword(

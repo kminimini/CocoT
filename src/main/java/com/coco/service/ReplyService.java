@@ -3,7 +3,6 @@ package com.coco.service;
 import com.coco.domain.Member;
 import com.coco.domain.Reply;
 
-import java.security.Principal;
 import java.util.List;
 
 public interface ReplyService {

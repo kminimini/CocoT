@@ -19,7 +19,7 @@ public class QnaController {
 	  @GetMapping("/qnaList")
 	    public String qnaList(Model model) {
 	        List<Qna> qnaList = qnaService.getQnaList(null);
-	        model.addAttribute("qnaList", qnaList); // 수정: "qnaList"로 변경
-	        return "qnaList"; // 수정: "/qnaList"에서 "qnaList"로 변경
+	        model.addAttribute("qnaList", qnaList);
+	        return "qnaList";
 }
 }

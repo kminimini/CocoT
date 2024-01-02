@@ -26,8 +26,8 @@ public class SendEmailService{
 	        String str = getTempPassword();
 	        MailDto dto = new MailDto();
 	        dto.setRecipient(email);
-	        dto.setTitle(id + "님의 coco항공 임시비밀번호 안내 이메일 입니다.");
-	        dto.setContent("안녕하세요. coco항공 임시비밀번호 안내 관련 이메일 입니다." + "[" + id + "]" + "님의 임시 비밀번호는 " + str + "입니다.");
+	        dto.setTitle(id + "님의 cocoTrain 임시비밀번호 안내 이메일 입니다.");
+	        dto.setContent("안녕하세요. cocoTrain 임시비밀번호 안내 관련 이메일 입니다." + "[" + id + "]" + "님의 임시 비밀번호는 " + str + "입니다.");
 	        updatePassword(email, str);
 	        return dto;
 	    }
@@ -36,7 +36,6 @@ public class SendEmailService{
 	    	 Member member = memberRepository.getMemberByEmail(email);
 
 	         if (member != null) {
-	             // Update the user's password
 	             memberRepository.updateUserPassword(member.getId(), passwordEncoder.encode(newPassword));
 	         }
 	    }

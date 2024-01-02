@@ -20,12 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.coco.domain.PaymentInfo;
 import com.coco.service.PaymentInfoService;
 import com.coco.service.TrainReservationService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.JSONObject;
@@ -99,7 +95,7 @@ public class PaymentViewController {
         paymentInfo.setOrderId(orderId);
         paymentInfo.setAmount(amount);
 
-        // Save the paymentInfo to the database using your service
+        // 서비스를 사용하여 결제 정보를 데이터베이스에 저장
         trainReservationService.savePaymentInfo(paymentInfo);
 
         return ResponseEntity.ok("PaymentInfo stored successfully");
@@ -113,7 +109,6 @@ public class PaymentViewController {
 	    String paymentKey;
 
 	    try {
-	        // Parse the JSON request body
 	        JSONObject requestData = (JSONObject) parser.parse(jsonBody);
 	        paymentKey = (String) requestData.get("paymentKey");
 	        orderId = (String) requestData.get("orderId");
@@ -122,7 +117,7 @@ public class PaymentViewController {
 	        return ResponseEntity.badRequest().body("Error parsing JSON body");
 	    }
 
-	    // Update the PaymentInfo entity with the received values
+	    // 수신된 값으로 PaymentInfo 엔티티를 업데이트합니다.
 	    Optional<PaymentInfo> optionalPaymentInfo = paymentInfoService.findByOrderId(orderId);
 
 	    if (optionalPaymentInfo.isPresent()) {
@@ -130,39 +125,36 @@ public class PaymentViewController {
 	        paymentInfo.setPaymentKey(paymentKey);
 	        paymentInfo.setAmount(amount);
 
-	        // Save the updated PaymentInfo entity
+	        // 업데이트된 결제 정보 엔티티 저장
 	        paymentInfoService.save(paymentInfo);
 
-	        // Call Toss Payments API for payment confirmation
+	        // 결제 확인을 위해 토스 결제 API 호출하기
 	        ResponseEntity<String> paymentConfirmationResponse = completePayment(paymentKey, orderId, amount);
 
-	        // Check the response from Toss Payments API
+	        // Toss 결제 API의 응답 확인
 	        if (paymentConfirmationResponse.getStatusCode().is2xxSuccessful()) {
 	            String successWidgetInfo = prepareSuccessWidgetInfo(paymentKey, orderId, amount);
 
 	            // TODO: 결제 성공 시에만 로깅하도록 수정
 	            logger.info("Payment confirmation successful for orderId: {}", orderId);
 
-	            // Payment completed successfully
+	            // 결제가 성공적으로 완료되었습니다.
 	            return ResponseEntity.ok(successWidgetInfo);
 	        } else {
 	            // TODO: 결제 실패 시에만 로깅하도록 수정
 	            logger.error("Error completing payment for orderId: {}, Reason: {}", orderId, paymentConfirmationResponse.getBody());
 
-	            // Handle error from Toss Payments API
+	            // Toss 결제 API에서 발생한 오류 처리
 	            return ResponseEntity.status(paymentConfirmationResponse.getStatusCode())
 	                    .body("Error completing payment: " + paymentConfirmationResponse.getBody());
 	        }
 	    } else {
-	        // Handle error, PaymentInfo not found
 	        return ResponseEntity.badRequest().body("PaymentInfo not found for orderId: " + orderId);
 	    }
 	}
 	
 	private String prepareSuccessWidgetInfo(String paymentKey, String orderId, Long amount) {
-	    // TODO: Prepare other success information if needed
-
-	    // Assuming "/success" is the URL where the payment success page with the widget is rendered
+	    // "/success"가 위젯이 포함된 결제 성공 페이지가 렌더링되는 URL이라고 가정합니다.
 	    String successUrl = "/success?orderId=" + orderId + "&amount=" + amount + "&paymentKey=" + paymentKey;
 	    
 	    return successUrl;
@@ -171,7 +163,7 @@ public class PaymentViewController {
         try {
             HttpHeaders headers = new HttpHeaders();
 
-            // Base64 encode the API key for Basic authentication
+            // 기본 인증을 위한 API 키를 Base64로 인코딩
             String encodedApiKey = Base64.getEncoder().encodeToString((secretApiKey + ":").getBytes("UTF-8"));
             headers.set("Authorization", "Basic " + encodedApiKey);
             headers.set("Content-Type", "application/json");
@@ -183,14 +175,13 @@ public class PaymentViewController {
 
             HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
 
-            // Specify the URL directly
+            // URL을 직접 지정하세요.
             String tossApiUrl = TOSS_API_URL;
 
-            // Make the HTTP POST request
+            // HTTP POST 요청하기
             RestTemplate restTemplate = new RestTemplate();
             return restTemplate.exchange(tossApiUrl, HttpMethod.POST, requestEntity, String.class);
         } catch (Exception e) {
-            // Handle exception
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error completing payment");
         }
     }

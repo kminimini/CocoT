@@ -30,7 +30,6 @@ public class PaymentInfoService {
             paymentInfo.setPaymentKey(paymentKey);
             paymentInfoRepository.save(paymentInfo);
         } else {
-            // Handle error, payment info not found
         }
     }
 
