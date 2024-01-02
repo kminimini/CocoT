@@ -131,6 +131,14 @@
             subReplyForm.style.display = 'block';
         }
     }
+    function submitOnEnter(event, textarea) {
+        if (event.key === 'Enter' && !event.shiftKey) {
+            event.preventDefault();
+            textarea.form.submit();
+            return false;
+        }
+        return true;
+    }
 </script>
 
 </head>
@@ -193,12 +201,12 @@
             </div>
 
         <!-- 대댓글 목록 표시 -->
-<ul class="sub-replies">
-    <li th:each="subReply : ${reply.children}" class="sub-reply">
-        <p th:text="${subReply.rcontent}" style="margin-bottom: 5px; font-size: 12px;"></p>
-        <small th:text="${'작성자 ID: ' + reply.member.id}" style="color: #888; font-size: 10px;"></small>
-    </li>
-</ul>
+			<ul class="sub-replies">
+			    <li th:each="subReply : ${reply.children}" class="sub-reply">
+			        <p th:text="${subReply.rcontent}" style="margin-bottom: 5px; font-size: 12px;"></p>
+			        <small th:text="${'작성자 ID: ' + reply.member.id}" style="color: #888; font-size: 10px;"></small>
+			    </li>
+			</ul>
         
         <!-- 수정 폼 -->
             <form th:id="'edit-form-' + ${reply.rseq}" th:action="@{/reply/update}" method="post" class="edit-form">
@@ -208,20 +216,21 @@
                 <input type="submit" value="수정" />
             </form>
 
-        <!-- 대댓글 등록 폼 -->
-        <form th:action="@{/reply/addSubReply}" method="post" th:id="'sub-reply-form-' + ${reply.rseq}" class="sub-reply-form">
-            <input type="hidden" name="parentReplyId" th:value="${reply.rseq}" />
-            <textarea name="content" rows="2" cols="30" placeholder="대댓글을 입력하세요"></textarea>
-            <input type="submit" value="대댓글 등록" style="padding: 4px 8px; background-color: #f2f2f2; color: black; border: none; border-radius: 5px; cursor: pointer; font-size: 12px;" />
-        </form>
+        <!-- 대댓글 입력 폼 -->
+<form th:action="@{/reply/addSubReply}" method="post" th:id="'sub-reply-form-' + ${reply.rseq}" class="sub-reply-form">
+    <input type="hidden" name="parentReplyId" th:value="${reply.rseq}" />
+    <textarea name="content" rows="2" cols="30" placeholder="대댓글을 입력하세요" onkeydown="return submitOnEnter(event, this)"></textarea>
+    <input type="submit" value="대댓글 등록" style="padding: 4px 8px; background-color: #f2f2f2; color: black; border: none; border-radius: 5px; cursor: pointer; font-size: 12px;" />
+</form>
+
     </li>
 </ul>
 
 <!-- 댓글 입력 폼 -->
 <form th:action="@{/reply/add}" method="post" style="margin-top: 20px; border-top: 1px solid #ccc; padding-top: 20px;">
     <input type="hidden" name="boardBseq" th:value="${board.bseq}" />
-    <textarea name="content" rows="3" cols="40" placeholder="댓글을 입력하세요" style="width: 100%; margin-bottom: 10px;"></textarea>
-    <input type="submit" value="댓글 등록" style="padding: 8px 16px; background-color: f2f2f2; color: black; border: none; border-radius: 5px; cursor: pointer; font-size: 14px;" />
+    <textarea name="content" rows="3" cols="40" placeholder="댓글을 입력하세요" style="width: 100%; margin-bottom: 10px;" onkeydown="return submitOnEnter(event, this)"></textarea>
+    <input type="submit" value="댓글 등록" style="padding: 8px 16px; background-color: #f2f2f2; color: black; border: none; border-radius: 5px; cursor: pointer; font-size: 14px;" />
 </form>
 
     <div th:replace="~{fragments/footer}"></div>
