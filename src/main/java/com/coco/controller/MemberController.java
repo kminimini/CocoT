@@ -18,11 +18,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.coco.domain.Notice;
+import com.coco.domain.Qna;
 //import com.coco.domain.kakaoProfile;
 import com.coco.dto.JoinFormDto;
 import com.coco.repository.MemberRepository;
 import com.coco.service.MemberService;
 import com.coco.service.NoticeService;
+import com.coco.service.QnaService;
 
 @Controller
 public class MemberController {
@@ -36,6 +38,9 @@ public class MemberController {
 	
 	@Autowired
 	private NoticeService noticeService;
+	
+	@Autowired
+	private QnaService qnaService; 
 
 	private JoinFormDto joinFormDto;
 
@@ -57,6 +62,9 @@ public class MemberController {
 
 		List<Notice> noticeList = noticeService.getNoticeList(null); // 예시: NoticeService를 통해 공지사항 데이터를 가져옴
 		model.addAttribute("noticeList", noticeList);
+		
+		List<Qna> qnaList = qnaService.getQnaList(null); // 예시: NoticeService를 통해 공지사항 데이터를 가져옴
+		model.addAttribute("qnaList", qnaList);
 		// 다른 로직을 추가할 수 있음
 
 		return "index";
