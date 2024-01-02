@@ -24,106 +24,142 @@
 </head>
 
 <body>
-    <div th:replace="~{fragments/header}"></div>
+	<div th:replace="~{fragments/header}"></div>
 
-    <!-- 메인 내용 -->
-    <div id="img-container">
-        <img src="/images/mainPage2.jpeg" alt="메인 페이지 이미지" class="img-fluid" style="width: 1200px; height: 450px;">
-    </div>
-    <div class="container mt-5">
+	<!-- 메인 내용 -->
+	<div id="img-container">
+		<img src="/images/mainPage2.jpeg" alt="메인 페이지 이미지" class="img-fluid"
+			style="width: 1200px; height: 450px;">
+	</div>
+	<div class="container mt-5">
 
-        <h1>기차 예매</h1>
-        <form th:action="@{/fs/searchFlight}" method="post" th:object="${flightSearchForm}">
-            <div class="form-row">
-                <div class="form-group col-md-2">
-                    <label for="departure">출발지:</label> <input type="text" id="departure" name="departure"
-                        class="form-control" data-toggle="modal" data-target="#departureModal" required>
-                </div>
+		<h1>기차 예매</h1>
+		<form th:action="@{/fs/searchFlight}" method="post"
+			th:object="${flightSearchForm}">
+			<div class="form-row">
+				<div class="form-group col-md-2">
+					<label for="departure">출발지:</label> <input type="text"
+						id="departure" name="departure" class="form-control"
+						data-toggle="modal" data-target="#departureModal" required>
+				</div>
 
-                <div class="form-group col-md-2">
-                    <label for="destination">도착지:</label> <input type="text" id="destination" name="destination"
-                        class="form-control" data-toggle="modal" data-target="#destinationModal" required>
-                </div>
+				<div class="form-group col-md-2">
+					<label for="destination">도착지:</label> <input type="text"
+						id="destination" name="destination" class="form-control"
+						data-toggle="modal" data-target="#destinationModal" required>
+				</div>
 
-                <div class="form-group col-md-2">
-                    <label for="departureDate">출발일:</label> <input type="date" id="departureDate"
-                        name="departureDate" class="form-control" required>
-                </div>
+				<div class="form-group col-md-2">
+					<label for="departureDate">출발일:</label> <input type="date"
+						id="departureDate" name="departureDate" class="form-control"
+						required>
+				</div>
 
-                <div class="form-group col-md-2">
-                    <label for="returnDate">도착일:</label> <input type="date" id="returnDate" name="returnDate"
-                        class="form-control" required>
-                </div>
+				<div class="form-group col-md-2">
+					<label for="returnDate">도착일:</label> <input type="date"
+						id="returnDate" name="returnDate" class="form-control" required>
+				</div>
 
-                <div class="form-group col-md-2">
-                    <label for="passengerCount">승객 수:</label> <input type="number" id="passengerCount"
-                        name="passengerCount" class="form-control" min="1" required>
-                </div>
-                <div class="form-group col-md-2">
-                    <label for="airline">항공사:</label> <input type="text" id="airline" name="airline"
-                        class="form-control">
-                </div>
+				<div class="form-group col-md-2">
+					<label for="passengerCount">승객 수:</label> <input type="number"
+						id="passengerCount" name="passengerCount" class="form-control"
+						min="1" required>
+				</div>
+				<div class="form-group col-md-2">
+					<label for="airline">항공사:</label> <input type="text" id="airline"
+						name="airline" class="form-control">
+				</div>
 
-                <div class="form-group col-md-2">
-                    <label></label>
-                    <button type="submit" class="btn btn-primary btn-block">검색하기</button>
-                </div>
+				<div class="form-group col-md-2">
+					<label></label>
+					<button type="submit" class="btn btn-primary btn-block">검색하기</button>
+				</div>
 
-            </div>
-        </form>
+			</div>
+		</form>
 
-    </div>
+	</div>
 
-    <!-- 출발지 검색 모달 -->
-    <div class="modal" id="departureModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">출발지 검색</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <!-- 출발지 검색 내용 추가 -->
-                    <!-- 예: 검색 폼, 검색 결과 테이블 등 -->
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-                    <button type="button" class="btn btn-primary">선택</button>
-                </div>
-            </div>
-        </div>
-    </div>
+	<!-- 출발지 검색 모달 -->
+	<div class="modal" id="departureModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">출발지 검색</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<!-- 출발지 검색 내용 추가 -->
+					<!-- 예: 검색 폼, 검색 결과 테이블 등 -->
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">닫기</button>
+					<button type="button" class="btn btn-primary">선택</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
-    <!-- 도착지 모달 -->
-    <div class="modal" id="destinationModal" tabindex="-1" role="dialog">
-        <!-- 모달 내용 추가 -->
-    </div>
-    <div class="notice">
-        <table class="notice-table">
-            <h4>공지사항</h4>
-            <thead>
-                <tr>
-                    <th>제목</th>
-                    <th>등록일</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="notice, iterStat : ${noticeList}" th:height="50px">
-                    <td align="left">
-                        <a th:href="@{/Notice(nseq=${notice.nseq})}" th:text="${notice.ntitle}"></a>
-                    </td>
-                    <td><span th:text="${#dates.format(notice.createDate, 'yyyy-MM-dd')}"></span></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div th:replace="~{fragments/footer}"></div>
+	<!-- 도착지 모달 -->
+	<div class="modal" id="destinationModal" tabindex="-1" role="dialog">
+		<!-- 모달 내용 추가 -->
+	</div>
+	<div class="container">
+		<!-- 공지사항 -->
+		<div class="notice">
+			<div class="notice-header">
+				<h4>공지사항</h4>
+				<a th:href="@{/notice}"> <img src="/images/plus.png"
+					alt="플러스 이미지" class="img"
+					style="width: 12px; height: 10px; margin-top: -50px; margin-left: 480px;">
+				</a>
+			</div>
+			<table class="notice-table" th:href="@{/notice}">
+				<tbody>
+					<tr th:each="notice, iterStat : ${noticeList}" th:height="50px">
+						<td align="left"><a th:href="@{/Notice(nseq=${notice.nseq})}"
+							th:text="${notice.ntitle}"></a></td>
+						<td><span
+							th:text="${#dates.format(notice.createDate, 'yyyy-MM-dd')}"></span></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.1/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
+		<!-- Q&A 목록 -->
+		<div class="qnaList">
+			<div class="qna-header">
+				<h4>자주 묻는 질문</h4>
+				<a th:href="@{/qna}"> <img src="/images/plus.png"
+					alt="플러스 이미지" class="img"
+					style="width: 12px; height: 10px; margin-top: -50px; margin-left: 480px;">
+				</a>
+			</div>
+			<table class="qna-table">
+				<form th:action="@{/qnaList}">
+					<tbody>
+						<!-- 수정: qnaList를 반복하여 각각의 Qna에 접근 -->
+						<tr th:each="qna, iterStat : ${qnaList}" th:height="50px">
+							<td align="left">
+								<!-- 수정: 각 Qna의 제목을 표시 --> <a
+								th:href="@{/QnaList(qseq=${qna.qseq})}" th:text="${qna.qtitle}"></a>
+							</td>
+						</tr>
+					</tbody>
+				</form>
+			</table>
+		</div>
+	</div>
+	<div th:replace="~{fragments/footer}"></div>
+
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.1/js/bootstrap.min.js"
+		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+		crossorigin="anonymous"></script>
 </body>
 
 </html>

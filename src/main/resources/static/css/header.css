@@ -6,6 +6,7 @@
 	align-items: center;
 	padding: 20px;
 	/* 여백 및 정렬을 설정하는 박스 디자인 */
+	
 }
 
 .container {
@@ -16,6 +17,7 @@
 	/* 가운데 정렬 및 텍스트 굵게, 하단 선 디자인 */
 	padding-bottom: 10px;
 	/* 하단 여백 및 그림자 효과 디자인 */
+	
 }
 
 .fs-4 {
