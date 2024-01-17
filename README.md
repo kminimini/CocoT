@@ -46,6 +46,7 @@
 ![1-2 도시코드 기반 기차역 API조회](https://github.com/kminimini/CocoT/assets/138873285/a0836db8-bf24-4a0c-a20e-0cd5e9cb798c)
 ![2 기차표 검색](https://github.com/kminimini/CocoT/assets/138873285/2a5b19d5-8bee-48af-9017-537967540b33)
 ![3 기차표 목록 페이지 이동](https://github.com/kminimini/CocoT/assets/138873285/e156e420-dff3-4511-8720-33bff3961710)
+![4 결제하기 화면](https://github.com/kminimini/CocoT/assets/138873285/51806383-79ef-4dce-9a80-249d98695e3c)
 
 
 
