@@ -1,0 +1,61 @@
+/* getBoarList */
+body {
+	text-align: center;
+	font-family: 'Arial', sans-serif;
+}
+
+table {
+	border-collapse: collapse;
+	width: 700px;
+	margin: auto;
+}
+
+th, td {
+	border: 1px solid black;
+	padding: 10px;
+}
+
+th {
+	background-color: white;
+	color: black;
+}
+
+tr:nth-child(even) {
+	background-color: #f9f9f9; /* 번갈아가며 배경색 변경 */
+}
+
+tr:hover {
+	background-color: #f2f2f2; /* 마우스 호버시 배경색 변경 */
+}
+
+#searchForm {
+	margin-bottom: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#searchCondition, #searchKeyword, #searchButton, #newPostLink {
+	padding: 8px;
+	margin: 5px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	font-size: 14px;
+}
+
+#searchCondition, #searchKeyword {
+	width: 150px;
+}
+
+#searchButton, #newPostLink {
+	background-color: white;
+	color: black;
+	cursor: pointer;
+	text-decoration: none;
+	border: 1px solid #ccc; /* 테두리 추가 */
+}
+
+#searchButton:hover, #newPostLink:hover {
+	background-color: #f2f2f2;
+	color: white;
+}
