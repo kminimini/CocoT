@@ -42,3 +42,5 @@
 # 🔍 화면 흐름도
 ![화면 흐름도-수정](https://github.com/kminimini/CocoT/assets/138873285/c5c4fe94-9462-4b65-a337-afe79b69ee2f)
 # 📑 기능 구현 내용
+![메인 도시 기차역 선택](https://github.com/kminimini/CocoT/assets/138873285/adcb9f8c-b2a7-4aa2-a2bb-0c6c7d803ad8)
+
