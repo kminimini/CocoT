@@ -5,7 +5,7 @@
 # 👷 팀원 구성
 ### 팀장:[곽기민](https://github.com/kminimini), 팀원:[김양현](), 팀원:[조해준](https://github.com/ChoHaeJun)
 # 🔧 기술 스택
-## Front-end 
+## Front 
 <div>
  <img alt="JavaScript" src="https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E"/>
  <img alt="Bootstrap" src="https://img.shields.io/badge/bootstrap-%23563D7C.svg?style=for-the-badge&logo=bootstrap&logoColor=white"/>
@@ -14,7 +14,7 @@
  <img alt="CSS3" src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=CSS3&logoColor=white"/>
 </div>
 
-## Back-end 
+## Back
 <div>
  <img alt="Java" src="https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=java&logoColor=white"/>
  <img alt="Spring" src="https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white"/>
@@ -23,13 +23,14 @@
  <img alt="oracle" src="https://img.shields.io/badge/oracle-4479A1?style=for-the-badge&logo=oracle&logoColor=red"/>
 </div>
  
-## Communication Tools
+## Communication
 <div>
  <img alt="GitHub" src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white"/>   
  <img alt="Discord" src="https://img.shields.io/badge/Discord-%237289DA.svg?style=for-the-badge&logo=discord&logoColor=white"/>
 </div>
 
 # 🔐 데이터베이스 명세
+![ERD](https://github.com/kminimini/CocoT/assets/138873285/564e0dac-d911-4fa5-842e-59f0066c34a4)
 # 📃 API 사용 내역
 
 ### 1. 국토교통부_(TAGO)_열차정보 (공공데이터포털)
@@ -37,5 +38,5 @@
 ### 2. 결제 (토스페이먼츠)
 
 ### 3. 주소 검색 (다음API)
-
+# 🔍 화면 흐름도
 # 📑 기능 구현 내용
