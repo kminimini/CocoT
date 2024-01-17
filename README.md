@@ -50,6 +50,7 @@
 ![4-2 결제하기 진행](https://github.com/kminimini/CocoT/assets/138873285/c84d1038-522b-44e0-9045-06d9b558c077)
 ![5  회원가입](https://github.com/kminimini/CocoT/assets/138873285/175da7f2-f6e8-45a0-916c-14bee224c953)
 ![5-2 비밀번호 변경 및 회원 탈퇴](https://github.com/kminimini/CocoT/assets/138873285/7cf2900b-0f89-4bd3-b2df-260a4bedd5c8)
+![5-3  비밀번호 찾기 이메일 인증](https://github.com/kminimini/CocoT/assets/138873285/d08daf9b-1589-41df-b58f-8a2974ae7f20)
 
 
 
