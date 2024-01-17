@@ -52,6 +52,7 @@
 ![5-2 비밀번호 변경 및 회원 탈퇴](https://github.com/kminimini/CocoT/assets/138873285/7cf2900b-0f89-4bd3-b2df-260a4bedd5c8)
 ![5-3  비밀번호 찾기 이메일 인증](https://github.com/kminimini/CocoT/assets/138873285/d08daf9b-1589-41df-b58f-8a2974ae7f20)
 ![5-3  아이디 비밀번호 찾기](https://github.com/kminimini/CocoT/assets/138873285/e6fd8bc1-b8ad-41a4-8136-1f94a06baff5)
+![6  게시판 공지사항 댓글 + 비밀글](https://github.com/kminimini/CocoT/assets/138873285/82f5d1f8-604d-4167-88df-623134ec801f)
 
 
 
