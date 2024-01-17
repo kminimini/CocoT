@@ -47,6 +47,7 @@
 ![2 기차표 검색](https://github.com/kminimini/CocoT/assets/138873285/2a5b19d5-8bee-48af-9017-537967540b33)
 ![3 기차표 목록 페이지 이동](https://github.com/kminimini/CocoT/assets/138873285/e156e420-dff3-4511-8720-33bff3961710)
 ![4 결제하기 화면](https://github.com/kminimini/CocoT/assets/138873285/51806383-79ef-4dce-9a80-249d98695e3c)
+![4-2 결제하기 진행](https://github.com/kminimini/CocoT/assets/138873285/c84d1038-522b-44e0-9045-06d9b558c077)
 
 
 
