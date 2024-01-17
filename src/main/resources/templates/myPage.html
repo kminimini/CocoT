@@ -1,192 +1,20 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>My Page</title>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<style>
-body {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column; /* 세로 중앙 정렬을 위해 추가 */
-	height: 100vh;
-	margin: 0;
-	background-color: #f4f4f4;
-	font-family: 'Arial', sans-serif;
-}
-
-/* 스타일 직접 적용 */
-#myPageContainer {
-	text-align: center;
-	background-color: #ffffff;
-	padding: 20px;
-	border-radius: 10px;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-	width: 400px;
-	margin-top: 20px; /* 수정된 부분: 컨테이너 상단에 여백 추가 */
-}
-
-form {
-	margin-top: 20px;
-}
-
-label {
-	display: block;
-	margin-bottom: 5px;
-	font-weight: bold;
-}
-
-input, button {
-	width: 100%;
-	padding: 10px;
-	margin-bottom: 10px;
-	box-sizing: border-box;
-	border: 1px solid #ccc;
-	border-radius: 4px;
-	font-size: 16px;
-}
-
-input[type="button"], button {
-	background-color: #f9f9f9;
-	color: black;
-	cursor: pointer;
-}
-
-input[type="button"]:hover, button:hover {
-	background-color: #f2f2f2;
-}
-</style>
-<script>
-    function togglePasswordForm() {
-        var passwordForm = document.getElementById('passwordForm');
-        passwordForm.style.display = passwordForm.style.display === 'none' ? 'block' : 'none';
-    }
-
-    function validatePasswordForm() {
-        var currentPassword = document.getElementById('currentPassword').value;
-        var newPassword = document.getElementById('newPassword').value;
-        var confirmPassword = document.getElementById('confirmPassword').value;
-
-        // 콘솔에 입력값 출력
-        console.log("currentPassword:", currentPassword);
-        console.log("newPassword:", newPassword);
-        console.log("confirmPassword:", confirmPassword);
-
-        if (currentPassword == "") {
-            alert("현재 비밀번호를 입력해 주세요!.");
-            document.getElementById('currentPassword').focus();
-            return false;
-        } else if (newPassword == "") {
-            alert("새 비밀번호를 입력해 주세요!.");
-            document.getElementById('newPassword').focus();
-            return false;
-        } else if (newPassword != confirmPassword) {
-            alert("새로운 비밀번호가 맞지 않습니다. 다시 입력해 주세요!");
-            return false;
-        } else {
-            var confirmChange = confirm("비밀번호를 변경하시겠습니까?");
-
-            if (confirmChange) {
-                $.ajax({
-                    type: 'POST',
-                    url: '/myPage/changePassword',
-                    data: {
-                        currentPassword: currentPassword,
-                        newPassword: newPassword
-                    },
-                    success: function (response) {
-                        console.log("서버 응답:", response);
-
-                        if (response === 'success') {
-                            alert("비밀번호가 변경되었습니다. 로그아웃됩니다.");
-                            
-                            $.ajax({
-							    type: 'POST',
-							    url: '/system/logout', // 기본적으로 Spring Security에서 사용하는 로그아웃 경로
-							    success: function () {
-							        // 로그아웃 성공 시 로그인 페이지로 리디렉션
-							        window.location.replace('/system/login');
-							    },
-							    error: function () {
-							        alert('로그아웃 중 오류가 발생했습니다.');
-							        // 오류 발생 시 기본적으로 로그인 페이지로 이동
-							        window.location.replace('/system/login');
-							    }
-							});
-                        } else {
-                            alert('현재 비밀번호가 일치하지 않습니다.');
-                            document.getElementById('currentPassword').focus();
-                        }
-                    },
-                    error: function () {
-                        alert('서버 오류가 발생했습니다.');
-                    }
-                });
-            } else {
-                alert('비밀번호 변경이 취소되었습니다.');
-                // 변경 취소 시 폼을 감추도록 수정
-                document.getElementById('passwordForm').style.display = 'none';
-            }
-
-            return false;
-        }
-    }
-
-	function toggleWithdrawPassword() {
-        var withdrawPasswordForm = document.getElementById('withdrawPasswordForm');
-        withdrawPasswordForm.style.display = 'block';
-    }
-    
-	function confirmWithdraw() {
-        var withdrawPassword = document.getElementById('withdrawPassword').value;
-        var currentPassword = 'your_current_password_value_here'; // 이 부분에 현재 비밀번호 값을 추가
-
-        var confirmWithdraw = confirm('정말 탈퇴하시겠습니까?');
-
-        if (confirmWithdraw) {
-            $.ajax({
-                type: 'POST',
-                url: '/myPage/deleteAccount',
-                data: {
-                    withdrawPassword: withdrawPassword,
-                    currentPassword: currentPassword, // 이 부분을 추가
-                },
-                success: function (response) {
-                    console.log("서버 응답:", response);
-
-                    if (response == 'success') {
-                        // 탈퇴 성공 시, 로그인 페이지로 이동
-                    	location.reload(true);
-                    } else {
-                        // 현재 비밀번호가 유효하지 않은 경우
-                        alert('비밀번호가 틀렸습니다');
-                        document.getElementById('withdrawPassword').focus();
-                    }
-                },
-                error: function (xhr, status, error) {
-                    console.error('AJAX 오류:', status, error);
-                    alert('서버 오류가 발생했습니다.');
-                }
-            });
-        } else {
-            alert('탈퇴가 취소되었습니다.');
-        }
-    }
-</script>
-
-
+	<meta charset="UTF-8">
+	<title>My Page</title>
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+	<script type="text/javascript" src="/static/js/mypage.js"></script>
+	<link rel="stylesheet" type="text/css" href="/static/css/mypage.css">
 </head>
 <body>
 	<div th:replace="~{fragments/header}"></div>
 
 	<div id="myPageContainer">
 		<p>ID: <span th:text="${currentMember != null ? currentMember.id : 'N/A'}"></span></p>
-<p>Name: <span th:text="${currentMember != null ? currentMember.name : 'N/A'}"></span></p>
-<p>Email: <span th:text="${currentMember != null ? currentMember.email : 'N/A'}"></span></p>
-<p>Phone: <span th:text="${currentMember != null ? currentMember.phone : 'N/A'}"></span></p>
-
-		<!-- 추가적인 정보들을 필요에 따라 표시 -->
+		<p>Name: <span th:text="${currentMember != null ? currentMember.name : 'N/A'}"></span></p>
+		<p>Email: <span th:text="${currentMember != null ? currentMember.email : 'N/A'}"></span></p>
+		<p>Phone: <span th:text="${currentMember != null ? currentMember.phone : 'N/A'}"></span></p>
 
 		<!-- 비밀번호 변경 폼 추가 -->
 		<button type="button" onclick="togglePasswordForm()">비밀번호
@@ -211,18 +39,18 @@ input[type="button"]:hover, button:hover {
 		</form>
 		<br> <br>
 		<!-- 회원 탈퇴 폼 추가 -->
-<button type="button" onclick="toggleWithdrawPassword()">회원 탈퇴</button>
+		<button type="button" onclick="toggleWithdrawPassword()">회원 탈퇴</button>
 
-<form id="withdrawPasswordForm" action="/myPage/deleteAccount" method="post" style="display: none;">
-    <input type="hidden" name="memberId" th:value="${currentMember.id}" />
-
-    <!-- 추가: 현재 비밀번호 입력 필드 -->
-    <label for="withdrawPassword">현재 비밀번호 확인:</label>
-    <input type="password" id="withdrawPassword" name="withdrawPassword" required>
-
-    <!-- 수정: submit 버튼에 confirmWithdraw 함수 호출 추가 -->
-    <button type="button" onclick="confirmWithdraw()">회원 탈퇴</button>
-</form>
+		<form id="withdrawPasswordForm" action="/myPage/deleteAccount" method="post" style="display: none;">
+		    <input type="hidden" name="memberId" th:value="${currentMember.id}" />
+		
+		    <!-- 추가: 현재 비밀번호 입력 필드 -->
+		    <label for="withdrawPassword">현재 비밀번호 확인:</label>
+		    <input type="password" id="withdrawPassword" name="withdrawPassword" required>
+		
+		    <!-- 수정: submit 버튼에 confirmWithdraw 함수 호출 추가 -->
+		    <button type="button" onclick="confirmWithdraw()">회원 탈퇴</button>
+		</form>
 
 	</div>
 	<div th:replace="~{fragments/footer}"></div>

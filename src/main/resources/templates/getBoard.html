@@ -3,144 +3,9 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="/static/css/board.css">
+    <script type="text/javascript" src="/static/js/board.js"></script>
     <title>글 상세</title>
-<style>
-    body {
-        text-align: center;
-    }
-
-    table {
-        border-collapse: collapse;
-        width: 700px;
-        margin: auto;
-        margin-top: 20px;
-        /* 상단 마진 추가 */
-    }
-
-    .edit-form {
-        display: none;
-        margin-top: 10px;
-    }
-
-    .comments {
-        list-style: none;
-        padding: 0;
-        margin-top: 20px;
-    }
-
-    .comment {
-        margin-bottom: 15px;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        position: relative;
-    }
-
-    .comment-content {
-        margin-bottom: 5px;
-        font-size: 14px;
-    }
-
-    .comment-info {
-        color: #888;
-        font-size: 12px;
-    }
-
-    .comment-actions {
-        position: absolute;
-        top: 5px;
-        right: 5px;
-    }
-
-    .comment-actions button {
-        color: #007bff;
-        font-size: 12px;
-        background: none;
-        border: none;
-        cursor: pointer;
-        margin-right: 10px;
-    }
-
-    .comment-actions form {
-        display: inline;
-    }
-
-    .sub-replies {
-        margin-left: 20px;
-        list-style: none;
-        padding: 0;
-    }
-
-    .sub-reply {
-        margin-bottom: 10px;
-        padding: 5px;
-        border: 1px solid #eee;
-        border-radius: 5px;
-    }
-
-    .sub-reply-form {
-        display: none;
-        margin-top: 10px;
-    }
-
-    .sub-reply-actions {
-        margin-top: 10px;
-    }
-
-    .sub-reply-actions button {
-        color: #007bff;
-        font-size: 12px;
-        background: none;
-        border: none;
-        cursor: pointer;
-        margin-right: 10px;
-    }
-</style>
-
-<script>
-    function toggleEditForm(formId) {
-        console.log("Toggle edit form with ID:", formId);
-
-        var editForm = document.getElementById(formId);
-
-        // 선택된 댓글의 수정 폼을 제외한 모든 수정 폼을 숨김
-        var editForms = document.querySelectorAll('.edit-form');
-        editForms.forEach(function (form) {
-            form.style.display = 'none';
-        });
-
-        // 선택된 댓글의 수정 폼을 나타냄
-        if (editForm) {
-            editForm.style.display = 'block';
-        }
-    }
-
-    function toggleSubReplyForm(subReplyFormId) {
-        console.log("Toggle sub-reply form with ID:", subReplyFormId);
-
-        var subReplyForm = document.getElementById(subReplyFormId);
-
-        // 선택된 대댓글 등록 폼을 토글
-        var subReplyForms = document.querySelectorAll('.sub-reply-form');
-        subReplyForms.forEach(function (form) {
-            form.style.display = 'none';
-        });
-
-        // 해당 댓글에 속한 다른 대댓글 등록 폼을 숨김
-        if (subReplyForm) {
-            subReplyForm.style.display = 'block';
-        }
-    }
-    function submitOnEnter(event, textarea) {
-        if (event.key === 'Enter' && !event.shiftKey) {
-            event.preventDefault();
-            textarea.form.submit();
-            return false;
-        }
-        return true;
-    }
-</script>
-
 </head>
 
 <body>
@@ -217,11 +82,11 @@
             </form>
 
         <!-- 대댓글 입력 폼 -->
-<form th:action="@{/reply/addSubReply}" method="post" th:id="'sub-reply-form-' + ${reply.rseq}" class="sub-reply-form">
-    <input type="hidden" name="parentReplyId" th:value="${reply.rseq}" />
-    <textarea name="content" rows="2" cols="30" placeholder="대댓글을 입력하세요" onkeydown="return submitOnEnter(event, this)"></textarea>
-    <input type="submit" value="대댓글 등록" style="padding: 4px 8px; background-color: #f2f2f2; color: black; border: none; border-radius: 5px; cursor: pointer; font-size: 12px;" />
-</form>
+		<form th:action="@{/reply/addSubReply}" method="post" th:id="'sub-reply-form-' + ${reply.rseq}" class="sub-reply-form">
+		    <input type="hidden" name="parentReplyId" th:value="${reply.rseq}" />
+		    <textarea name="content" rows="2" cols="30" placeholder="대댓글을 입력하세요" onkeydown="return submitOnEnter(event, this)"></textarea>
+		    <input type="submit" value="대댓글 등록" style="padding: 4px 8px; background-color: #f2f2f2; color: black; border: none; border-radius: 5px; cursor: pointer; font-size: 12px;" />
+		</form>
 
     </li>
 </ul>
