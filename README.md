@@ -5,6 +5,13 @@
 # 👷 팀원 구성
 ### 팀장:[곽기민](https://github.com/kminimini), 팀원:[김양현](), 팀원:[조해준]()
 # 🔧 기술 스택
+## Front-end 
+<div>
+<img alt="HTML5" src="https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white"/>
+<img alt="JavaScript" src="https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E"/>
+<img alt="Bootstrap" src="https://img.shields.io/badge/bootstrap-%23563D7C.svg?style=for-the-badge&logo=bootstrap&logoColor=white"/>
+<img alt="jQuery" src="https://img.shields.io/badge/jquery-%230769AD.svg?style=for-the-badge&logo=jquery&logoColor=white"/>
+</div>
 # 🔐 데이터베이스 명세
 # 📃 API 사용 내역
 # 📑 기능 구현 내용
