@@ -43,5 +43,7 @@
 ![화면 흐름도-수정](https://github.com/kminimini/CocoT/assets/138873285/c5c4fe94-9462-4b65-a337-afe79b69ee2f)
 # 📑 기능 구현 내용
 ![1 메인 도시 기차역 선택](https://github.com/kminimini/CocoT/assets/138873285/648024d7-731d-4c40-9add-533d55f710a0)
+![1-2 도시코드 기반 기차역 API조회](https://github.com/kminimini/CocoT/assets/138873285/a0836db8-bf24-4a0c-a20e-0cd5e9cb798c)
+
 
 
