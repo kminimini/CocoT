@@ -54,6 +54,8 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private Role role;
     
+    private String provider; // 소셜 로그인 제공자 (카카오, 구글 등)
+    
     @Column(columnDefinition = "varchar(255) default 'true'") // 'true'로 기본값 설정
     private String 	enabled;
 
@@ -61,7 +63,11 @@ public class Member {
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Board> boardList;
 
-
+    // 댓글
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<Reply> replyList;
+    
+    private String username; 
     
     
 }

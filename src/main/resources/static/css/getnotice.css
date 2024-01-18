@@ -1,0 +1,90 @@
+body {
+	text-align: center;
+}
+
+table {
+	border-collapse: collapse;
+	width: 700px;
+	margin: auto;
+	margin-top: 20px;
+	/* 상단 마진 추가 */
+}
+
+.edit-form {
+	display: none;
+	margin-top: 10px;
+}
+
+.comments {
+	list-style: none;
+	padding: 0;
+	margin-top: 20px;
+}
+
+.comment {
+	margin-bottom: 15px;
+	padding: 10px;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	position: relative;
+}
+
+.comment-content {
+	margin-bottom: 5px;
+	font-size: 14px;
+}
+
+.comment-info {
+	color: #888;
+	font-size: 12px;
+}
+
+.comment-actions {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+}
+
+.comment-actions button {
+	color: #007bff;
+	font-size: 12px;
+	background: none;
+	border: none;
+	cursor: pointer;
+	margin-right: 10px;
+}
+
+.comment-actions form {
+	display: inline;
+}
+
+.sub-replies {
+	margin-left: 20px;
+	list-style: none;
+	padding: 0;
+}
+
+.sub-reply {
+	margin-bottom: 10px;
+	padding: 5px;
+	border: 1px solid #eee;
+	border-radius: 5px;
+}
+
+.sub-reply-form {
+	display: none;
+	margin-top: 10px;
+}
+
+.sub-reply-actions {
+	margin-top: 10px;
+}
+
+.sub-reply-actions button {
+	color: #007bff;
+	font-size: 12px;
+	background: none;
+	border: none;
+	cursor: pointer;
+	margin-right: 10px;
+}

@@ -1,207 +1,155 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+<meta charset="UTF-8">
+<title>CocoT</title>
+</head>
+<head>
     <meta charset="UTF-8">
-    <title>항공권 예매</title>
-
+    <title>기차 예매</title>
+	<link rel="stylesheet" type="text/css" href="css/train.css">
+	<script type="text/javascript" src="js/train.js"></script>
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <!-- jQuery and Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.8/dist/umd/popper.min.js" integrity="sha384-Vo3skhE0eeDaex7+9UjFq80+E5+Bb4LXXLjut73toP0jIcrzj2UENFI0+4mYELtD" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.8/dist/umd/popper.min.js"
+        integrity="sha384-Vo3skhE0eeDaex7+9UjFq80+E5+Bb4LXXLjut73toP0jIcrzj2UENFI0+4mYELtD"
+        crossorigin="anonymous"></script>
 
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.1/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
-   <style>
-        @media (max-width: 768px) {
-            /* 작은 화면일 때의 스타일 */
-
-            /* 햄버거 버튼을 오른쪽 끝에 배치 */
-            .navbar-toggler {
-                order: 1;
-            }
-
-            /* 메뉴가 햄버거로 대체되므로 메뉴는 숨김 */
-            .navbar-nav {
-                display: none;
-            }
-
-            /* 햄버거 메뉴가 보여질 때의 스타일 */
-            .navbar-toggler:hover + .navbar-nav {
-                display: block;
-            }
-        }
-
-        @media (min-width: 769px) {
-            /* 큰 화면일 때의 스타일 */
-
-            /* 메뉴가 보여지고 햄버거 버튼은 숨겨짐 */
-            .navbar-toggler {
-                display: none;
-            }
-
-            /* 로그인과 회원가입을 오른쪽에 배치 */
-            .navbar-nav.mr-auto {
-                order: 2;
-            }
-
-            /* 가운데 정렬을 위해 mx-auto 추가 */
-            .navbar-nav {
-                mx-auto: auto;
-            }
-        }
-        #modal {
-  position:relative;
-  width:100%;
-  height:100%;
-  z-index:1;
-}
-
-#modal h2 {
-  margin:0;   
-}
-
-#modal button {
-  display:inline-block;
-  width:100px;
-  margin-left:calc(100% - 100px - 10px);
-}
-
-#modal .modal_content {
-  width:300px;
-  margin:100px auto;
-  padding:20px 10px;
-  background:#fff;
-  border:2px solid #666;
-}
-
-#modal .modal_layer {
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:rgba(0, 0, 0, 0.5);
-  z-index:-1;
-}
-    </style>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.1/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/images/mainPage.css">
 </head>
+
 <body>
+	<div th:replace="~{fragments/header}"></div>
 
+	<!-- 메인 내용 -->
+	<div id="img-container">
+		<img src="/images/mainPage2.jpeg" alt="메인 페이지 이미지" class="img-fluid"
+			style="width: 1200px; height: 450px;">
+	</div>
+	<div class="container mt-5">
+    <h1>기차 예매</h1>
+    <form id="trainInfoForm" action="/train/trainInfo" method="get" class="mt-4">
 
-    <!-- 상단 헤더 -->
-    <header class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-
-        <!-- 로고 -->
-        <a class="navbar-brand" href="#">
-            로고
-        </a>
-
-        <!-- 햄버거 버튼 -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <h4>게시글 목록으로 <a th:href="@{/getBoardList}">이동</a></h4>
-        <a th:href="@{/myPage}">MyPage</a></h4>
-
-        <!-- 메뉴 (가운데 정렬, 큰 화면에서 보이게) -->
-        <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="">메뉴1</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">메뉴2</a>
-                </li>
-                <!-- 추가적인 메뉴 아이템은 이곳에 추가 -->
-            </ul>
-        </div>
-
-        <!-- 로그인과 로그아웃 (오른쪽에 고정) -->
-<ul class="navbar-nav ml-auto">
-    <li class="nav-item" th:if="${authenticated}">
-        <a class="nav-link" th:href="@{/system/logout}">로그아웃</a>
-    </li>
-    <li class="nav-item" th:unless="${authenticated}">
-        <a class="nav-link" th:href="@{/system/login}">로그인</a>
-    </li>
-</ul>
-     
-    </header>
-    <br>
-
-    <!-- 메인 내용 -->
-    <div class="container mt-5">
-        <h1>항공권 예매</h1>
-
-        <form th:action="@{/fs/searchFlight}" method="post" th:object="${flightSearchForm}">
-            <div class="form-row">
-                <div class="form-group col-md-2">
-                    <label for="departure">출발지:</label>
-                    <input type="text" id="departure" name="departure" class="form-control" data-toggle="modal" data-target="#departureModal" required>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="departureStationName">출발지</label>
+                <div class="input-group">
+                    <input type="text" id="departureStationName" class="form-control" placeholder="출발지 선택" readonly>
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-outline-primary" onclick="openDepartureLocationPopup()">검색</button>
+                    </div>
+                    <input type="hidden" id="departureStationId" name="depPlaceId">
                 </div>
-
-                <div class="form-group col-md-2">
-                    <label for="destination">도착지:</label>
-                    <input type="text" id="destination" name="destination" class="form-control" data-toggle="modal" data-target="#destinationModal" required>
-                </div>
-
-                <div class="form-group col-md-2">
-                    <label for="departureDate">출발일:</label>
-                    <input type="date" id="departureDate" name="departureDate" class="form-control" required>
-                </div>
-
-                <div class="form-group col-md-2">
-                    <label for="returnDate">도착일:</label>
-                    <input type="date" id="returnDate" name="returnDate" class="form-control" required>
-                </div>
-
-                <div class="form-group col-md-2">
-                    <label for="passengerCount">승객 수:</label>
-                    <input type="number" id="passengerCount" name="passengerCount" class="form-control" min="1" required>
-                </div>
-                <div class="form-group col-md-2">
-                   <label for="airline">항공사:</label>
-                   <input type="text" id="airline" name="airline" class="form-controller">
-                </div>
-
-                <div class="form-group col-md-2">
-                    <label></label>
-                    <button type="submit" class="btn btn-primary btn-block">검색하기</button>
-                </div>
-
             </div>
-        </form>
-    </div>
 
-    <!-- 출발지 검색 모달 -->
-    <div class="modal" id="departureModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">출발지 검색</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <!-- 출발지 검색 내용 추가 -->
-                    <!-- 예: 검색 폼, 검색 결과 테이블 등 -->
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-                    <button type="button" class="btn btn-primary">선택</button>
+            <div class="form-group col-md-6">
+                <label for="arrivalStationName">도착지</label>
+                <div class="input-group">
+                    <input type="text" id="arrivalStationName" class="form-control" placeholder="도착지 선택" readonly>
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-outline-primary" onclick="openArrivalLocationPopup()">검색</button>
+                    </div>
+                    <input type="hidden" id="arrivalStationId" name="arrPlaceId">
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- 도착지 모달 -->
-    <div class="modal" id="destinationModal" tabindex="-1" role="dialog">
-        <!-- 모달 내용 추가 -->
-    </div>
+        <div class="form-group">
+            <label for="depPlandTime">출발 날짜</label>
+            <input type="date" id="depPlandTime" name="depPlandTime" class="form-control">
+        </div>
 
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">기차표 검색</button>
+        </div>
+
+    </form>
+</div>
+	<!-- Departure location popup -->
+    <div id="departureLocationPopup" class="popup">
+        <div class="popup-content">
+            <span class="close" onclick="closeDepartureLocationPopup()">&times;</span>
+            <h2></h2>
+
+	        <!-- City and Train Station Selection -->
+	        <div class="location-selection">
+	            <!-- City selection -->
+	            <div class="citypopup-column">
+	                <h5>도시</h5>
+	                <ul class="city-list" id="cityCodeList"></ul>
+	            </div>
+	
+	            <!-- Train station selection -->
+	            <div class="stationpopup-column">
+	                <h5>기차역을 선택하세요.</h5>
+	                <ul class="location-list" id="trainStationList" data-current-page="1"></ul>
+    				<div class="pagination-container"></div>
+	            </div>
+	        </div>
+        </div>
+    </div>
+	
+	<div class="container">
+		<!-- 공지사항 -->
+		<div class="notice">
+			<div class="notice-header">
+				<h4>공지사항</h4>
+				<a th:href="@{/notice}"> <img src="/images/plus.png"
+					alt="플러스 이미지" class="img"
+					style="width: 12px; height: 10px; margin-top: -50px; margin-left: 480px;">
+				</a>
+			</div>
+			<table class="notice-table" th:href="@{/notice}">
+				<tbody>
+					<tr th:each="notice, iterStat : ${noticeList}" th:height="50px">
+						<td align="left"><a th:href="@{/getNotice(nseq=${notice.nseq})}"
+							th:text="${notice.ntitle}"></a></td>
+						<td><span
+							th:text="${#dates.format(notice.createDate, 'yyyy.MM.dd')}"></span></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<!-- Q&A 목록 -->
+		<div class="qnaList">
+			<div class="qna-header">
+				<h4>자주 묻는 질문</h4>
+				<a th:href="@{/qna}"> <img src="/images/plus.png"
+					alt="플러스 이미지" class="img"
+					style="width: 12px; height: 10px; margin-top: -50px; margin-left: 480px;">
+				</a>
+			</div>
+			<table class="qna-table">
+				<form th:action="@{/qnaList}">
+					<tbody>
+						<!-- 수정: qnaList를 반복하여 각각의 Qna에 접근 -->
+						<tr th:each="qna, iterStat : ${qnaList}" th:height="50px">
+							<td align="left">
+								<!-- 수정: 각 Qna의 제목을 표시 --> <a
+								th:href="@{/qna(qseq=${qna.qseq})}" th:text="${qna.qtitle}"></a>
+							</td>
+						</tr>
+					</tbody>
+				</form>
+			</table>
+		</div>
+	</div>
+	<div th:replace="~{fragments/footer}"></div>
+
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.1/js/bootstrap.min.js"
+		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+		crossorigin="anonymous"></script>
 </body>
-</html>
 
+</html>

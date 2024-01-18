@@ -2,6 +2,11 @@ package com.coco.controller;
 
 import java.util.Optional;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
@@ -13,11 +18,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.coco.domain.Member;
-import com.coco.domain.Role;
 import com.coco.dto.JoinFormDto;
 import com.coco.dto.MailDto;
 import com.coco.service.MemberService;
@@ -25,6 +31,7 @@ import com.coco.service.SendEmailService;
 
 @Controller
 @RequestMapping("/system")
+@SessionAttributes("user")
 public class SecurityController {
 
 	@Autowired
@@ -35,6 +42,12 @@ public class SecurityController {
 
 	@Autowired
 	private SendEmailService sendEmailService;
+	
+	@Autowired
+	private RestTemplate restTemplate;
+	
+	@Autowired
+	private HttpSession httpSession;
 
 	/* TODO 로그인 화면 이동 */
 	@GetMapping("/login")
@@ -62,6 +75,8 @@ public class SecurityController {
 	    // 예시: return passwordEncoder.matches(inputPassword, storedPassword);
 		return passwordMatches(inputPassword, storedPassword);
 	}
+		
+		
 
 	/* TODO 회원가입 화면 이동 */
 	@GetMapping("/join")
@@ -70,21 +85,12 @@ public class SecurityController {
 	}
 	
 	 // AJAX를 통한 아이디 중복 확인
-	@PostMapping("/checkIdAvailability")
+	@PostMapping("/checkEmailAvailability")
 	@ResponseBody
-	public String checkIdAvailability(@RequestParam String id) {
-	    int count = memberService.findidCheck(id);
+	public String checkEmailAvailability(@RequestParam String email) {
+	    int count = memberService.findEmailCheck(email);
 	    return (count > 0) ? "no_use" : "useable";
 	}
-	
-	 // AJAX를 통한 아이디 중복 확인
-//		@PostMapping("/checkEmailAvailability")
-//		@ResponseBody
-//		public String checkEmailAvailability(@RequestParam String email) {
-//		    int count = memberService.findemailCheck(email);
-//		    return (count > 0) ? "no_use" : "useable";
-//		}
-	
 	
 	/* TODO 회원가입 */
 	@PostMapping("/join")
@@ -125,11 +131,6 @@ public class SecurityController {
 		return result;
 	}
 
-	@GetMapping("/logout")
-	public String logout(SessionStatus status) {
-
-		status.setComplete();
-
-		return "redirect:index";
-	}
 }
+
+

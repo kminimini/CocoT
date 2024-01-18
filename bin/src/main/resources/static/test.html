@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>열차 예약 시스템</title>
+</head>
+<body>
+    <h1>백엔드 테스트 공간</h1>
+    <ul>
+        <li><a href="/train/cityCodes" th:href="@{/train/cityCodes}">도시 코드 보기</a></li>
+        <li><a href="#" onclick="promptForCityCode()">도시 번호로 기차역 보기</a></li>
+        <li><a href="/train/vhcleKndList" th:href="@{/train/vhcleKndList}">차량 종류 목록 보기</a></li>
+    </ul>
+
+	<form action="/train/trainInfo" method="get">
+	    <input type="text" name="depPlaceId" placeholder="Departure Place ID">
+	    <input type="text" name="arrPlaceId" placeholder="Arrival Place ID">
+	    <input type="text" name="depPlandTime" placeholder="Departure Planned Time">
+	    <input type="submit" value="Get Train Info">
+	</form>
+	
+    <script>
+        function promptForCityCode() {
+            var cityCode = prompt("Please enter the city code:", "");
+            if (cityCode != null && cityCode != "") {
+                window.location.href = "/train/stations?cityCode=" + cityCode;
+            }
+        }
+    </script>
+</body>
+</html>

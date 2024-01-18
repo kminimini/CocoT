@@ -14,17 +14,19 @@ public class ApiExplorer {
 	@Value("${api.ctyCode}")
 	private String ctyCode;
 	
-	@Value("${api.serviceKey}")
-	private String serviceKey;
+//	@Value("${api.serviceKey}")
+//	private String serviceKey;
+	
+	private static String serviceKey = "ilIH9RKW0FA%2Bn8PoaCZErC7%2BGPTuS5qS66c2Jrhv3df%2FAjyfXwcDdSS7JQMweynq1Ywq1TOgTojZa7ypRsTMRg%3D%3D";
 	
     public static void main(String[] args) throws IOException {
         StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1613000/TrainInfoService/getCtyCodeList"); /*URL*/
-        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=serviceKey"); /*Service Key*/
+        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=" + serviceKey); /*Service Key*/
         urlBuilder.append("&" + URLEncoder.encode("_type","UTF-8") + "=" + URLEncoder.encode("xml", "UTF-8")); /*데이터 타입(xml, json)*/
         URL url = new URL(urlBuilder.toString());
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
-        conn.setRequestProperty("Content-type", "application/json");
+        conn.setRequestProperty("Content-type", "application/xml");
         System.out.println("Response code: " + conn.getResponseCode());
         BufferedReader rd;
         if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {

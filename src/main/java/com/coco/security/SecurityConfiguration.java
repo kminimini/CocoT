@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -29,7 +29,7 @@ public class SecurityConfiguration {
       // authenticated - id.pwd를 통해 사용자 인증이 된 사람만 접근할 수 있는 url
       security.authorizeRequests().antMatchers("/board/**").authenticated();
       security.authorizeRequests().antMatchers("/admin/**").hasRole("ADMIN");
-
+      
       // csrf - Cross Site Request Forgery (sns 사용자 ID를 도용한 웹 사이트 공격)
       security.csrf().disable();
 
@@ -55,4 +55,12 @@ public class SecurityConfiguration {
 
       return security.build();
    }
+   /*
+	 * 비밀번호 암호화
+	 */
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		
+		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+	}
 }  

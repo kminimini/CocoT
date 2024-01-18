@@ -3,13 +3,12 @@ package com.coco.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.coco.domain.Member;
 import com.coco.dto.MailDto;
 import com.coco.repository.MemberRepository;
-
-import lombok.AllArgsConstructor;
 
 @Service
 public class SendEmailService{
@@ -20,13 +19,15 @@ public class SendEmailService{
 	    @Autowired
 	    private JavaMailSender mailSender;
 
+	    @Autowired
+	    private PasswordEncoder passwordEncoder;
 
 	    public MailDto createMailAndChangePassword(String email, String id) {
 	        String str = getTempPassword();
 	        MailDto dto = new MailDto();
 	        dto.setRecipient(email);
-	        dto.setTitle(id + "님의 coco항공 임시비밀번호 안내 이메일 입니다.");
-	        dto.setContent("안녕하세요. coco항공 임시비밀번호 안내 관련 이메일 입니다." + "[" + id + "]" + "님의 임시 비밀번호는 " + str + " 입니다.");
+	        dto.setTitle(id + "님의 cocoTrain 임시비밀번호 안내 이메일 입니다.");
+	        dto.setContent("안녕하세요. cocoTrain 임시비밀번호 안내 관련 이메일 입니다." + "[" + id + "]" + "님의 임시 비밀번호는 " + str + "입니다.");
 	        updatePassword(email, str);
 	        return dto;
 	    }
@@ -35,8 +36,7 @@ public class SendEmailService{
 	    	 Member member = memberRepository.getMemberByEmail(email);
 
 	         if (member != null) {
-	             // Update the user's password
-	             memberRepository.updateUserPassword(member.getId(), newPassword);
+	             memberRepository.updateUserPassword(member.getId(), passwordEncoder.encode(newPassword));
 	         }
 	    }
 

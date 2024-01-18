@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/static/css/qna.css">
+    <title>FAQ</title>
+</head>
+<body>
+<div th:replace="~{fragments/header}"></div>
+	<!-- 카테고리 및 FAQ 목록을 표시할 컨테이너 -->
+    <div class="category-container" id="category-list"></div>
+    
+    <div class="header-container">
+        <!-- 검색 입력 상자 및 버튼 추가 -->
+		<div>
+		    
+		    <input type="text" id="searchInput" placeholder="검색어를 입력하세요...">
+		    <button onclick="searchFAQ()">검색</button>
+		    <button id="goBackButton" onclick="goBack()">목록</button>
+		</div>
+		<div id="faqListElement"></div>
+
+        <!-- 추가적인 요소가 있다면 여기에 추가할 수 있습니다. -->
+    </div>
+   
+    <div class="faq-list" id="faq-list"></div>
+    
+    <!-- "상단으로" 버튼 추가 -->
+    <div class="scroll-button" id="scroll-top-button" onclick="scrollToTop()">▲</div>
+    
+
+    <script>
+		// 카테고리 및 Q&A 목록 데이터
+        const categories = [
+            {
+                name: "전체",
+                value: "all",
+            },
+            {
+                name: "승차권구매",
+                value: "category1",
+            },
+            {
+                name: "승차권 환불",
+                value: "category2",
+            },
+        ];
+		
+
+        const qnaList = [
+        	
+            {
+                category: "category1",
+                question: "승차권을 구입할 수 있는 방법이 궁금해요",
+                answer: "승차권은 온라인(홈페이지)와 역(자동발매기, 매표소), 네이버 기차예매 카카오T 등에서 구할 수 있습니다.",
+            },
+            
+            {
+                category: "category1",
+                question: "승차권은 언제부터 구매할 수 있나요?",
+                answer: "열차 출발 1개월 전 오전 7시부터 열차 출발 전까지(홈페이지는 열차 출발 20분전까) 승차권을 구매할 수 있습니다.",
+            },   
+            
+            {
+                category: "category1",
+                question: "매진된 열차의 승차권은 예매할 수 없나요?",
+                answer: "좌석이 매진된 열차는 역의 매표창구에서 입석 승차권을 구입하거나, 예약대기 신청 후 좌석을 지정받아 승차권을 구입할 수 있습니다.",
+            },   
+            
+            {
+                category: "category2",
+                question: "열차를 놓친 경우, 승차권을 환불신청할 수 있나요?",
+                answer: "승차권의 도착역 도착시간 전까지 역 창구에서 취소처리 해 드리며 취소 시점에 따른 환불 위약금이 발생합니다.",
+            },   
+        ];
+        
+     	// DOM 요소 가져오기
+        const categoryListElement = document.getElementById('category-list');
+        const faqListElement = document.getElementById('faq-list');
+        const arrowButtonElement = document.getElementById('scroll-top-button');
+        
+     	// "상단으로" 버튼 동적으로 생성 및 추가
+        const scrollTopButtonElement = document.createElement('div');
+		scrollTopButtonElement.className = 'scroll-button';
+		scrollTopButtonElement.id = 'scroll-top-button';	// ID 지정
+		scrollTopButtonElement.innerHTML = '▲';
+
+        // 오른쪽 하단에 추가
+        document.body.appendChild(scrollTopButtonElement);
+
+        // "상단으로" 버튼 클릭 시 상단으로 스크롤
+        scrollTopButtonElement.addEventListener('click', () => {
+		    window.scrollTo({ top: 0, behavior: 'smooth' });
+		});
+        
+        // 초기에는 숨겨진 상태로 설정
+        scrollTopButtonElement.style.display = 'none';
+
+        // 스크롤 이벤트 추가
+        window.addEventListener('scroll', handleScroll);
+
+     	// 스크롤 이벤트 핸들러
+        function handleScroll() {
+            // 스크롤이 100px 이상이면 버튼을 보이게, 그렇지 않으면 숨기게 설정
+            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                scrollTopButtonElement.style.display = 'block';
+            } else {
+                scrollTopButtonElement.style.display = 'none';
+            }
+        }
+     	
+     	// "이전으로" 버튼 클릭 시 이전 페이지로 돌아가기
+        function goBack() {
+            window.history.back();
+        }
+
+        // 버튼을 항상 오른쪽 하단에 고정하기 위한 스타일 추가
+        scrollTopButtonElement.style.position = 'fixed';
+        scrollTopButtonElement.style.bottom = '20px';
+        scrollTopButtonElement.style.right = '20px';
+
+        // 모든 카테고리를 보여주도록 설정
+        displayedCategories = categories.slice();
+        displayCategories();
+
+        function displayCategories() {
+            categoryListElement.innerHTML = '';
+            displayedCategories.forEach(category => {
+                const categoryTitleElement = document.createElement('div');
+                categoryTitleElement.className = 'category-button';
+                categoryTitleElement.textContent = category.name;
+                categoryTitleElement.addEventListener('click', () => {
+                    showFAQ(category.value);
+                });
+                categoryListElement.appendChild(categoryTitleElement);
+            });
+
+            // 초기에 첫 카테고리에 해당하는 FAQ 보여주기
+            showFAQ(displayedCategories[0].value);
+        } 
+
+     	// 카테고리에 해당하는 FAQ를 표시하는 함수
+        function showFAQ(category) {
+            faqListElement.innerHTML = '';
+
+            qnaList.forEach((item, index) => {
+                if (category === "all" || category === item.category) {
+                	// FAQ 카드 생성
+                    const faqCardElement = document.createElement('div');
+                    faqCardElement.className = 'faq-card';
+
+                 	// FAQ 제목 생성
+                    const faqCardTitleElement = document.createElement('div');
+                    faqCardTitleElement.className = 'faq-card-title';
+                    faqCardTitleElement.innerHTML = `
+                        <span class="question-mark">Q.</span>
+                        <span>${item.question}</span>
+                    `;
+
+                    // FAQ 답변 생성
+                    const faqCardAnswerElement = document.createElement('div');
+                    faqCardAnswerElement.className = 'faq-card-answer';
+                    faqCardAnswerElement.innerHTML = `
+                        <span class="answer-mark">A.</span>
+                        <span class="FAQ-card-answer">${item.answer}</span>
+                    `;
+
+                    // FAQ 제목 클릭 시 답변 토글
+                    faqCardTitleElement.addEventListener('click', () => {
+                        faqCardAnswerElement.style.display = faqCardAnswerElement.style.display === 'none' ? 'block' : 'none';
+                    });
+
+                 	// FAQ 카드에 제목과 답변 추가
+                    faqCardElement.appendChild(faqCardTitleElement);
+                    faqCardElement.appendChild(faqCardAnswerElement);
+                    faqListElement.appendChild(faqCardElement);
+                }
+                
+             // 검색 기능 구현
+                function searchFAQ() {
+                    const searchInput = document.getElementById('searchInput');
+                    const searchTerm = searchInput.value.toLowerCase(); // 입력된 검색어를 소문자로 변환
+                 // 검색 버튼 클릭 시 검색 함수 호출
+                    const searchButton = document.querySelector('button[onclick="searchFAQ()"]');
+                    if (searchButton) {
+                        searchButton.addEventListener('click', searchFAQ);
+                    }
+
+                    faqListElement.innerHTML = ''; // 기존 FAQ 목록 초기화
+
+                    qnaList.forEach((item, index) => {
+                        // 검색어가 포함된 경우에만 FAQ를 표시
+                        if (
+                            searchTerm === '' ||
+                            item.question.toLowerCase().includes(searchTerm)
+                        ) {
+                            const faqCardElement = document.createElement('div');
+                            faqCardElement.className = 'faq-card';
+
+                            const faqCardTitleElement = document.createElement('div');
+                            faqCardTitleElement.className = 'faq-card-title';
+                            faqCardTitleElement.innerHTML = `
+                                <span class="question-mark">Q.</span>
+                                <span>${item.question}</span>
+                            `;
+
+                            const faqCardAnswerElement = document.createElement('div');
+                            faqCardAnswerElement.className = 'faq-card-answer';
+                            faqCardAnswerElement.innerHTML = `
+                                <span class="answer-mark">A.</span>
+                                <span class="FAQ-card-answer">${item.answer}</span>
+                            `;
+
+                            faqCardTitleElement.addEventListener('click', () => {
+                                faqCardAnswerElement.style.display =
+                                    faqCardAnswerElement.style.display === 'none' ? 'block' : 'none';
+                            });
+
+                            faqCardElement.appendChild(faqCardTitleElement);
+                            faqCardElement.appendChild(faqCardAnswerElement);
+                            faqListElement.appendChild(faqCardElement);
+                        }
+                    });
+                }
+
+	
+	            // 엔터 키로도 검색할 수 있도록 이벤트 추가
+	            document.getElementById('searchInput').addEventListener('keyup', function (event) {
+	                if (event.key === 'Enter') {
+	                    searchFAQ();
+	                }
+	            });
+	            
+            });
+        }
+    </script>
+<div th:replace="~{fragments/footer}"></div>    
+</body>
+</html>

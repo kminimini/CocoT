@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="/static/css/notice.css">
+<title>Notice List</title>
+</head>
+<body>
+
+	<div th:replace="~{fragments/header}"></div>
+
+	<form th:action="@{/notice}" method="post" id="Form">
+		<section class="notice">
+			<div class="page-title">
+				<div class="container">
+					<h3>공지사항</h3>
+				</div>
+			</div>
+
+			<!-- board search area -->
+			<div id="board-search">
+				<div class="container">
+					<div class="search-window">
+						<form action="">
+							<div class="search-wrap">
+								<label for="search" class="blind">공지사항 내용 검색</label> <input
+									id="search" type="search" name="" placeholder="검색어를 입력해주세요."
+									value="">
+								<button type="submit" class="btn btn-dark">검색</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+
+			<!-- notice table -->
+			<table class="notice-table">
+				<thead>
+					<tr>
+						<th width="100">번호</th>
+						<th width="200">제목</th>
+						<th width="150">등록일</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="notice, iterStat : ${noticeList}" th:height="50px">
+						<td th:text="${iterStat.count}"></td>
+						<td align="left"><a
+							th:href="@{/getNotice(nseq=${notice.nseq})}"
+							th:text="${notice.ntitle}"></a></td>
+						<td><span
+							th:text="${#dates.format(notice.createDate, 'yyyy-MM-dd')}"></span></td>
+					</tr>
+				</tbody>
+			</table>
+		</section>
+	</form>
+
+	<div th:replace="~{fragments/footer}"></div>
+</body>
+</html>

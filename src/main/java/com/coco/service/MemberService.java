@@ -23,7 +23,7 @@ public interface MemberService {
 	String findEmailByNameAndPhone(String name, String phoneNumber) throws Exception;
 
 	// 아이디 중복체크
-	int findidCheck(String id);
+	int findEmailCheck(String email);
 
 	// 아이디와 이메일로 멤버 찾기
 	Member getMemberByIdAndEmail(String id, String email);
@@ -45,5 +45,20 @@ public interface MemberService {
 	boolean changePassword(String currentPassword, String newPassword);
 
 	Member getCurrentMember();
+	
+	//댓글
+	public Member getMemberByUsername(String username);
+	
+	// 카카오 로그인(회원가입 여부 확인)
+	public boolean isMemberExists(String memberId);
+
+	boolean passwordMatches(String currentPassword, String userCurrentPassword);
+
+	String encodePassword(String newPassword);
+
+	String getMemberPasswordById(Long mid);
+
+	// 회원탈퇴 비밀번호 비교 
+	String getPasswordById(Long mid);
 
 }

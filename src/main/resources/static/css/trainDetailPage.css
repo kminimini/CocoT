@@ -1,0 +1,74 @@
+@charset "UTF-8";
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa; /* Light gray background */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Full viewport height */
+}
+
+h1 {
+    color: #007bff; /* Blue header color */
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+table {
+    width: 80%;
+    max-width: 800px;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #ffffff; /* White table background */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
+}
+
+table, th, td {
+    border: 1px solid #dee2e6; /* Light gray border */
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+}
+
+tr:nth-child(even) {
+    background-color: #f8f9fa; /* Alternate row background color */
+}
+
+#paymentButton {
+    margin-top: 30px;
+    background-color: #007bff; /* Blue button color */
+    color: #ffffff; /* White text color */
+    border: none;
+    padding: 15px 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+
+#paymentButton:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+a {
+    margin: 20px;
+    text-decoration: none;
+    color: #007bff; /* Blue link color */
+    display: block;
+    text-align: center;
+    font-size: 16px;
+    transition: color 0.3s ease; /* Smooth transition on hover */
+}
+
+a:hover {
+    color: #0056b3; /* Darker blue on hover */
+}

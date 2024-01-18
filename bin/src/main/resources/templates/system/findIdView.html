@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div class="text-center">
+        <h1 class="h4 text-gray-900 mb-2">아이디 찾기</h1>
+        <p class="mb-4">이메일을 입력해주세요!</p>
+    </div>
+    <form class="user" th:action="@{/findIdView}" method="POST">
+        <div class="form-group">
+            <input type="text" class="form-control form-control-user"
+                id="name" aria-describedby="nameHelp" name="name"
+                placeholder="이름을 입력하세요">
+        </div>
+         <div class="form-group">
+            <input type="text" class="form-control form-control-user"
+                id="phone" aria-describedby="phoneHelp" name="phone"
+                placeholder="전화번호를 입력하세요" maxlength="13">
+        </div>
+        <button type="submit" class="btn btn-primary btn-user btn-block">
+            아이디 찾기
+        </button>
+    </form>
+    <hr>
+  
+    <a th:href="@{/system/login}" class="btn btn-facebook btn-user btn-block">
+          로그인
+        </a>
+        <hr>
+       <div class="text-center">
+        <a class="small" th:href="@{/index}">메인페이지</a>
+    </div>
+     <script src="javascript/findIdView.js"></script>
+     <script>
+		 //전화번호 자동 - 추가
+(function () {
+    'use strict';
+
+    window.addEventListener('load', function () {
+        var forms = document.getElementsByClassName('needs-validation');
+
+        Array.prototype.filter.call(forms, function (form) {
+            form.addEventListener('submit', function (event) {
+                if (form.checkValidity() === false) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+
+                form.classList.add('was-validated');
+            }, false);
+        });
+
+        // 전화번호 입력 필드에 자동으로 하이픈 추가
+        var phoneInput = document.getElementById('phone');
+        phoneInput.addEventListener('input', function (event) {
+            var inputValue = event.target.value;
+            inputValue = inputValue.replace(/[^0-9]/g, ''); // 숫자 이외의 문자 제거
+            if (inputValue.length >= 3 && inputValue.length <= 7) {
+                inputValue = inputValue.replace(/(\d{3})(\d{1,4})/, '$1-$2');
+            } else if (inputValue.length > 7) {
+                inputValue = inputValue.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+            }
+            event.target.value = inputValue;
+        });
+    }, false);
+}());
+
+	 </script>
+</body>
+</html>

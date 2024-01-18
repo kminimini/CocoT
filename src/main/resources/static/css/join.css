@@ -1,0 +1,81 @@
+@charset "EUC-KR";
+
+/* join.css */
+
+.form-group input {
+   	width: 100%;
+	padding: 5px;
+	border: none;
+	border-bottom: 1px solid #ccc;
+	outline: none;
+	margin-top: 5px;
+	/* 諛�以� �ъ�댁�� 怨듦� 議곗�� */
+}
+
+
+/* ����: 以��� ���� 諛� ���� 移� 媛�寃� 議곗�� */
+.form-group {
+	margin-bottom: 15px;
+}
+/* 異�媛�: ���� 移몄�� �ъ빱�ㅺ� 媛��� �� �ㅽ���� 蹂�寃� */
+.form-control:focus {
+	box-shadow: none;
+	border-color: #007bff; /* �ъ빱�ㅼ�� ���� ���� 議곗�� */
+}
+
+
+#address {
+	flex: 1;
+	width: 140px; /* ����: �⑥��(px)瑜� 異�媛� */
+}
+
+#checkAvailabilityButton,
+#addressButton {
+	margin-left: 2px;
+	font-size: 14px;
+	width: 90px;
+	margin-bottom: 1px;
+	border-radius: 5px;
+}
+
+/* 異�媛�: 踰��� �ъ�� 媛�寃� 議곗�� */
+.container {
+    display: flex;
+    flex-direction: column; /* 踰��쇱�� �몃�濡� 諛곗�����濡� ���� */
+    margin-top: -70px;
+}
+
+/* ����: 踰��� �ъ�댁�� 媛�寃⑹�� 議곗�����ㅻ㈃ .container �대��� ���� */
+.container button {
+	margin-top: 8px;
+}
+
+/* ���� 踰��� �ㅽ���� ���� */
+.btn-container button:nth-child(2) {
+	background-color: navy;
+	color: white;
+	/* ���ㅽ�몃�� �곗���쇰� �ㅼ�� */
+}
+/* 痍⑥�� 踰��� �ㅽ���� ���� */
+.btn-container button:nth-child(1) {
+	background-color: white;
+	color: navy;
+	/* ���ㅽ�몃�� �⑥���쇰� �ㅼ�� */
+	
+}
+
+
+.btn-container button {
+	padding: 5px 10px;
+	/* 踰��� �대� �щ갚 議곗�� */
+	 margin: 15px 20px;
+    /* �쇱そ�쇰� 議곌� �대������濡� ���� */
+	width: 200px;
+	/* 踰��� ��鍮� 議곗�� */
+	height: 30px;
+	/* 踰��� ���� 議곗�� */
+	font-size: 14px;
+	/* �고�� �ш린 議곗�� */
+
+}
+

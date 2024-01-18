@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <script src="https://js.tosspayments.com/v1/payment-widget"></script>
+  </head>
+  <body>
+  <table>
+        <tr>
+            <td>열차번호:</td>
+            <td id="trainNo"></td>
+        </tr>
+        <tr>
+            <td>목적지:</td>
+            <td id="arrPlace"></td>
+        </tr>
+        <tr>
+            <td>금액:</td>
+            <td id="adultCharge"></td>
+        </tr>
+    </table>
+    <!-- 할인 쿠폰 -->
+    
+    <div>
+      <input type="checkbox" id="coupon-box" />
+      <label for="coupon-box"> </label>
+    </div>
+   
+    <!-- 결제 UI, 이용약관 UI 영역 -->
+    <div id="payment-method"></div>
+    <div id="agreement"></div>
+    <!-- 결제하기 버튼 -->
+    <button id="payment-button">결제하기</button>
+    
+    <script>
+    	var params = new URLSearchParams(window.location.search);
+
+    	document.getElementById("trainNo").textContent = params.get("trainNo");
+    	document.getElementById("arrPlace").textContent = params.get("arrPlace");
+    	// Retrieve and display other parameters
+
+    	document.getElementById("adultCharge").textContent = params.get("adultCharge");
+      	const coupon = document.getElementById("coupon-box");
+      	const button = document.getElementById("payment-button");
+      	
+      	const orderId = params.get("orderId");
+      	const amount = params.get("adultCharge")
+      	const orderName = params.get("arrPlace")
+      	// 구매자의 고유 아이디를 불러와서 customerKey로 설정하세요.
+      	// 이메일・전화번호와 같이 유추가 가능한 값은 안전하지 않습니다.
+      	const clientKey = "test_ck_26DlbXAaV0767AWPeqx03qY50Q9R";
+      	const paymentWidget = PaymentWidget(clientKey, orderId); // 회원 결제
+      	// const paymentWidget = PaymentWidget(clientKey, PaymentWidget.ANONYMOUS) // 비회원 결제
+
+      	const paymentMethodWidget = paymentWidget.renderPaymentMethods(
+        	"#payment-method",
+        	{ value: amount },
+        	{ variantKey: "DEFAULT" }
+      	);
+
+      	paymentWidget.renderAgreement(
+        	"#agreement", 
+        	{ variantKey: "AGREEMENT" }
+      	);
+
+      	coupon.addEventListener("change", function () {
+        	if (coupon.checked) {
+          	paymentMethodWidget.updateAmount(amount - 5000);
+        	} else {
+          	paymentMethodWidget.updateAmount(amount);
+        	}
+      	});
+		
+      	button.addEventListener("click", function () {
+            const formData = new FormData();
+            formData.append("orderId", orderId);
+            formData.append("amount", amount);
+
+            fetch("/store-payment-info", {
+              method: "POST",
+              body: formData
+            })
+              .then(response => response.json())
+              .then(data => {
+                console.log("PaymentInfo stored successfully:", data);
+              })
+              .catch(error => {
+                console.error("Error storing PaymentInfo:", error);
+              });
+
+            // Request payment after storing PaymentInfo
+            paymentWidget.requestPayment({
+              orderId: orderId,
+              orderName: orderName + "행 기차표",
+              amount: amount,
+              successUrl: window.location.origin + "/success",
+              failUrl: window.location.origin + "/fail",
+              customerEmail: "customer123@gmail.com",
+              customerName: "김토스",
+              customerMobilePhone: "01012341234",
+            });
+          });
+      	
+    </script>
+  </body>
+</html>
